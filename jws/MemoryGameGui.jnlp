@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="0.2 1.0" codebase="http://www.cs.ucsb.edu/~bryce3325/cs56/S12/issues/0000805/jws" href="MemoryGameGui.jnlp">
+ <information>
+   <title>UCSB CS56 S12 MemoryCardGame Bryce McGaw and Jonathan Yau</title>
+   <vendor>UCSB CS56</vendor>
+   <homepage href="." />
+   <description>A GUI for MemoryCardGame</description>
+  <icon href="Untitled-1.png" />
+  <offline-allowed />
+ </information>
+ <resources>
+  <j2se version="1.3+" />
+  <jar href="cs56_S12_0000805.jar" />
+ </resources>
+ <application-desc main-class="edu.ucsb.cs56.S12.issues.issue0000805.MemoryGameGui"/>
+</jnlp>
