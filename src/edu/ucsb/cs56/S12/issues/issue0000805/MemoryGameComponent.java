@@ -16,9 +16,11 @@ import java.lang.Math;
 
 /**
  * A Swing component for playing the Memory Card Game
-   @author Bryce McGaw and Jonathan Yau (with some of Phill Conrad's code as a basis)
-   @version CS56 Spring 2012
-   @see MemoryGrid 
+ * @author Bryce McGaw and Jonathan Yau (with some of Phill Conrad's code as a basis)
+ * @version CS56 Spring 2012
+ * @see MemoryGrid 
+ * @author Mathew Glodack, Christina Morris
+ * @version CS56, S13, 5/7/13
  */
 public class MemoryGameComponent extends JComponent
 {
@@ -29,13 +31,12 @@ public class MemoryGameComponent extends JComponent
     
     private JButton [] buttons;
 
-    /** Constructor
-	
-	@param game an object that implements the MemoryGrid interface to keep track
-	            of the moves in each game, ensuring the rules are followed and detecting
-	            when the user has won.
-    */
-       
+    /** Constructor for MemoryGame Component	
+     *	@param game an object that implements the MemoryGrid interface to keep track 
+     *	of the moves in each game, ensuring the rules are followed and detecting 
+     *	when the user has won.
+     */
+    
     public MemoryGameComponent(MemoryGrid game) {
 	super(); 
 	
@@ -83,16 +84,24 @@ public class MemoryGameComponent extends JComponent
 	    this.add(jb);  
 	}
     }
-
+    /** Creates an ActionListener named ButtonListener
+     * 
+     */
 
     class ButtonListener implements ActionListener {
 	private int num;
+
+	/**Constructor creates a ButtonListener from super class
+	 * @param Set the number of the button in the array 
+	 */
 
 	public ButtonListener(int i) {
 	    super();
 	    this.num = i;
 	}
-
+	/** Sets the ActionPerformed from the Action event
+	 * @param Event, Called when an event has happened
+	 */
         @Override
 	public void actionPerformed (ActionEvent event) {
 	    

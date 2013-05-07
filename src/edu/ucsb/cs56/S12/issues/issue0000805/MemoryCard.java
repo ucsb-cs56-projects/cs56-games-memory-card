@@ -1,62 +1,62 @@
 package edu.ucsb.cs56.S12.issues.issue0000805;
         
-/**
-* makes objects for cards
-*/
+/** Class MemoryCard creates objects for cards
+ * @author Mathew Glodack, Christina Morris
+ * @version CS56, S13, 5/7/13
+ */
 
 public class MemoryCard{
-    /**
-    * int for value of card
-    */
+   
     int val;
     boolean flipped;
     
-    /**	
-    *default constructor for MemoryCard (sets flipped as false)
-    */
+    /**Default constructor for MemoryCard (sets flipped as false)	
+     * 
+     */
     public MemoryCard(){
         flipped = false;
     }
     
-    /**
-    *constructor to set value (flipped still set as false)
-    */
+    /**Constructor to set value (flipped still set as false)
+     * @param tVal 
+     */
     public MemoryCard(int tVal){
         flipped = false;
         val = tVal;
     }
     
-    /**
-    *returns whether card is flipped
-    */
+    /**Returns whether card is flipped
+     * @return True or False whether the card is flipped 
+     */
     public boolean isFlipped(){
         return flipped;
     }
     
-    /**
-    *changes value of flipped (doesnt actually flip card)
-    */
+    /**Changes value of flipped (doesnt actually flip card)
+     * 
+     */
     public void flip(){
 	flipped = flipped ? false : true;
     }
     
-    /**
-    *returns value
-    */
+    /**Returns value
+     * @return The value on the card 
+     */
     public int getVal(){
         return val;
     }
     
-    /**
-    *Method to set value
-    */
+    /**Method to set value
+     * @param Value represents value on the card
+     */
     public void setVal(int value){
         val=value;
     }
     
-    /**
-    *Equals method to check if values are equal
-    */
+    /**Equals method to check if values are equal
+     * @param Takes an object o
+     * @return boolean True or False if values are equal
+     */
     public boolean Equals(Object o){
         final MemoryCard second = (MemoryCard) o;
         return(this.getVal()==second.getVal());
