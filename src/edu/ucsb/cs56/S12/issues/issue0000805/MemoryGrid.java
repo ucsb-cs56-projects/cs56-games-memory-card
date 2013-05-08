@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Random;
 /**
 * makes the grid (ArrayList of MemoryCards) for the game
+* @author Mathew Glodack, Christina Morris
+* @version CS556, S13, 5/8/13
 */
 
 public class MemoryGrid{
@@ -26,7 +28,7 @@ public class MemoryGrid{
     }
 
     /**
-    *returns the size of the grid (total number of MemoryCard objects)
+    *@return the size of the grid (total number of MemoryCard objects)
     */
     public int getSize(){
         return this.size;
@@ -35,6 +37,7 @@ public class MemoryGrid{
     /**
     *checks if array contains 2 of same value
     *used for testing
+    *@param temp check to see if temp memory card is in the memorycard arraylist twice
     */
     public boolean contains2(MemoryCard temp){
         int count=0;
@@ -47,6 +50,7 @@ public class MemoryGrid{
     
     /**
     *checks array if one object is flipped
+    *@return boolean true if one card is flipped, false otherwise
     */
     public boolean isOneFlipped(){
         int count=0;
@@ -59,6 +63,7 @@ public class MemoryGrid{
     
     /**
     *checks array to see if 2 objects are flipped
+    *@return boolean true if two cards are flipped, false otherwise
     */
     public boolean isTwoFlipped(){
         int count=0;
@@ -71,6 +76,8 @@ public class MemoryGrid{
     
     /**
     *checks if two MemoryCards are equal
+    *@param i the location in the arraylist of the memorycard that is being compared
+    *@return boolean true if the indexed card is equal to the memory card that is being compared
     */
     public boolean flippedEquals(int i){
        MemoryCard temp = memGrid.get(i);
@@ -79,7 +86,7 @@ public class MemoryGrid{
     }
        
     /**
-    *returns the position of the flipped MemoryCard
+    *@return retval the position of the flipped MemoryCard
     */
     public int getFlipped(){
         int retVal=-1, count=-1;
@@ -92,7 +99,7 @@ public class MemoryGrid{
     }
     
     /**
-    *returns the position of the flipped MemoryCard that is not index i
+    *@return retval the position of the flipped MemoryCard that is not index i
     */
     public int getFlipped(int i){
         int retVal=-1, count=-1;
@@ -105,14 +112,14 @@ public class MemoryGrid{
     }
     
     /**
-    *returns whether or not game is over
+    *@return boolean true if the came is over, false if the game is not over
     */
     public boolean isOver(){
         return isOver;
     }
     
     /**
-    *returns value of MemoryCard[i]
+    *@return value of MemoryCard[i]
     */
     public int getVal(int i){
         MemoryCard temp = memGrid.get(i);
@@ -121,6 +128,7 @@ public class MemoryGrid{
     
     /**
     *flips MemoryCard[i]
+    *@param i location in memory grid that should be flipped
     */
     public void flip(int i){
         MemoryCard temp = memGrid.get(i);

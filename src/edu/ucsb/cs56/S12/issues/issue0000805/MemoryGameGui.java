@@ -50,6 +50,10 @@ public class MemoryGameGui {
 
     private class RestartButtonHandler implements ActionListener{
 
+	/**Action Performed when restart button is pressed
+	 * @param e event that has happened
+	 */
+
 	public void actionPerformed(ActionEvent e){
 
 	    grid = new MemoryGrid();
