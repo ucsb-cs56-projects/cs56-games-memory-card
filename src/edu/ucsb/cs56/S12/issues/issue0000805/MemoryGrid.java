@@ -6,7 +6,7 @@ import java.util.Random;
 /**
 * makes the grid (ArrayList of MemoryCards) for the game
 * @author Mathew Glodack, Christina Morris
-* @version CS556, S13, 5/8/13
+* @version CS56, S13, 5/8/13
 */
 
 public class MemoryGrid{
