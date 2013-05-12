@@ -156,17 +156,25 @@ public class MemoryGameComponent extends JComponent
 				public void actionPerformed(ActionEvent e) {
 				    Class classs = this.getClass();
 				    Icon imgBlank = new ImageIcon(classs.getResource("/images/000.jpg"));
-				    JButton jb = buttons[grid.getFlipped()];
-				    jb.setEnabled(true);
-				    jb.setIcon(imgBlank);
-				    grid.flip(grid.getFlipped());
-				    jb = buttons[grid.getFlipped()];
-				    jb.setEnabled(true);
-				    jb.setIcon(imgBlank);
-				    grid.flip(grid.getFlipped());
+				    if(grid.isTwoFlipped()){
+
+               				JButton jb = buttons[grid.getFlipped()];
+                			jb.setEnabled(true);
+                			jb.setIcon(imgBlank);
+                			grid.flip(grid.getFlipped());
+                			jb = buttons[grid.getFlipped()];
+                			jb.setEnabled(true);
+                			jb.setIcon(imgBlank);
+                			grid.flip(grid.getFlipped());
+
+            			   }
+
+
 				}
 			};
-			new Timer(delay, listener).start();
+			Timer t = new Timer(delay, listener);
+			t.setRepeats(false);
+			t.start();
 	       }
             }
         }
