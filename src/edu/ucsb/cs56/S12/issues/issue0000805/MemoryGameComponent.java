@@ -38,7 +38,6 @@ public class MemoryGameComponent extends JComponent
        
     public MemoryGameComponent(MemoryGrid game) {
 	super(); 
-	
 	this.grid= game;
         int gridSize = grid.getSize();
 	buttons= new JButton[gridSize];
@@ -83,7 +82,6 @@ public class MemoryGameComponent extends JComponent
 	    this.add(jb);  
 	}
     }
-
 
     class ButtonListener implements ActionListener {
 	private int num;
@@ -169,13 +167,13 @@ public class MemoryGameComponent extends JComponent
 
             			   }
 
-
 				}
 			};
 			Timer t = new Timer(delay, listener);
 			t.setRepeats(false);
 			t.start();
 	       }
+		
             }
         }
     }

@@ -20,7 +20,9 @@ import java.awt.ComponentOrientation;
  */
 public class MemoryGameGui {
 
-    static JFrame frame = new JFrame();
+    static final int WINDOW_SIZE = 500;
+
+    static JFrame frame = new JFrame("Memory Card Game");
     static MemoryGrid grid = new MemoryGrid();
     static MemoryGameComponent mgc = new MemoryGameComponent(grid);
     //static JButton restartB = new JButton("Restart");
@@ -42,7 +44,7 @@ public class MemoryGameGui {
 	// to make sure that grids go left to right
 	
 	frame.applyComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-	frame.setSize(300,300);
+	frame.setSize(WINDOW_SIZE, WINDOW_SIZE);
 	frame.setVisible(true);
     }
 
