@@ -148,8 +148,26 @@ public class MemoryGameComponent extends JComponent
                         JOptionPane popup = new JOptionPane("Good Job!");
                         JOptionPane.showMessageDialog(popup,
 						      "-~*´¨¯¨`*·~-.¸-  You won!!  -,.-~*´¨¯¨`*·~-", "Good Job!",1);
-                    }
-                }
+                    } 
+                } else {
+			// start flip back timer here.
+			int delay = 1000;
+			ActionListener listener = new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				    Class classs = this.getClass();
+				    Icon imgBlank = new ImageIcon(classs.getResource("/images/000.jpg"));
+				    JButton jb = buttons[grid.getFlipped()];
+				    jb.setEnabled(true);
+				    jb.setIcon(imgBlank);
+				    grid.flip(grid.getFlipped());
+				    jb = buttons[grid.getFlipped()];
+				    jb.setEnabled(true);
+				    jb.setIcon(imgBlank);
+				    grid.flip(grid.getFlipped());
+				}
+			};
+			new Timer(delay, listener).start();
+	       }
             }
         }
     }
