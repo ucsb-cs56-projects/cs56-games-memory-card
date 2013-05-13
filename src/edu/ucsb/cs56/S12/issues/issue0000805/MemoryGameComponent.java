@@ -99,10 +99,11 @@ public class MemoryGameComponent extends JComponent
 	this.repaint();
 	int gridSize = grid.getSize();
 	this.setLayout(new GridLayout(0,(int)Math.sqrt(gridSize))); 
-	
+	System.out.println("gridsize: " + gridSize);
+	buttons = new JButton[gridSize];
 	for(int i=0; i<=(gridSize-1); i++) {
 	    JButton jb = new JButton(imgBlank);   //initially all buttons are blank
-	    buttons= new JButton[gridSize];
+	    
 	    buttons[i] = jb;
 	    jb.addActionListener(new ButtonListener(i));
 	    jb.setFocusPainted(false);          //get rid of annoying boxes appearing around icon next to clicked icon
@@ -130,13 +131,17 @@ public class MemoryGameComponent extends JComponent
             
 	    //if 2 MemoryCards are flipped, flip back over
 	    flipBack();
-            
             //if no MemoryCards are flipped, flip one
             if (!grid.isOneFlipped()){
 		grid.flip(num);
+		//System.out.println(num);
 		JButton jb = buttons[num];
-		System.out.println(grid.getVal(num)-1);
-		jb.setIcon(imgIcons.get(grid.getVal(num)-1));      //set image according to val
+		//System.out.println(grid.getVal(num)-1);
+		//if (jb == null) System.out.println("The button was null");
+		Icon i = imgIcons.get(grid.getVal(num)-1);
+		//if (i == null) System.out.println("The icon was null");
+		//loadImageIcons();
+		jb.setIcon(i);      //set image according to val
 		jb.setEnabled(false);                               //make unclickable
             }
 
@@ -217,7 +222,7 @@ public class MemoryGameComponent extends JComponent
 	for (String image : images8) {
 	    imgIcons.add(new ImageIcon(classs.getResource(image)));
 	}
-	for (String image : images8) {
+	for (String image : images10) {
 	    imgIcons.add(new ImageIcon(classs.getResource(image)));
 	}
 	imgBlank = new ImageIcon(classs.getResource("/images/000.jpg"));
