@@ -15,7 +15,8 @@ public class MemoryGrid{
     /**
     *default constructor makes new MemoryGrid
     */
-    public MemoryGrid(){
+    public MemoryGrid(int gridSize){
+	if (gridSize % 2 == 0) size = gridSize;
         for(int i=1; i<((size/2)+1); i++){
             MemoryCard temp  = new MemoryCard(i);
 	    MemoryCard temp2 = new MemoryCard(i);

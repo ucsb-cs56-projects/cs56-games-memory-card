@@ -23,7 +23,7 @@ public class MemoryGameGui {
     static final int WINDOW_SIZE = 500;
 
     static JFrame frame = new JFrame("Memory Card Game");
-    static MemoryGrid grid = new MemoryGrid();
+    static MemoryGrid grid = new MemoryGrid(16);
     static MemoryGameComponent mgc = new MemoryGameComponent(grid);
     //static JButton restartB = new JButton("Restart");
     static RestartButtonHandler RBHandler;
@@ -52,7 +52,7 @@ public class MemoryGameGui {
 
 	public void actionPerformed(ActionEvent e){
 
-	    grid = new MemoryGrid();
+	    grid = new MemoryGrid(16);
 	    mgc = new MemoryGameComponent(grid);
 	    
 	    frame.getContentPane().add(mgc);

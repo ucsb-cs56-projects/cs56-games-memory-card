@@ -27,8 +27,19 @@ public class MemoryGameComponent extends JComponent
     private ArrayList<Icon> imgIcons = new ArrayList<Icon>();
     public JComponent restartB = new JButton("Restart");
     private Icon imgBlank;
+    
+    private int currentLevel;
+    private MemoryGameLevel[] levels;
     private MemoryGameLevel level = new MemoryGameLevel(36, 100, 2000);
     private long startTime = 0;
+
+    private void loadLevelSet1() {
+	levels = new MemoryGameLevel[3];
+	levels[0] = new MemoryGameLevel(16, 750, 2000);
+	levels[1] = new MemoryGameLevel(36, 200, 1000);
+	levels[2] = new MemoryGameLevel(36, 2000, 1000);
+    }
+
     private String[] images8 = {
 	"/images/200.jpg",
 	"/images/201.jpg",
@@ -65,7 +76,8 @@ public class MemoryGameComponent extends JComponent
 	this.grid = game;
         int gridSize = grid.getSize();
 	buttons= new JButton[gridSize];
-
+	loadLevelSet1();
+	level = levels[0];
 	loadImageIcons(); // loads the array list of icons and sets imgBlank
 	
 	//set layout to a grid of length sqrt(grid size)
@@ -87,15 +99,16 @@ public class MemoryGameComponent extends JComponent
 	this.repaint();
 	int gridSize = grid.getSize();
 	this.setLayout(new GridLayout(0,(int)Math.sqrt(gridSize))); 
-
+	
 	for(int i=0; i<=(gridSize-1); i++) {
 	    JButton jb = new JButton(imgBlank);   //initially all buttons are blank
+	    buttons= new JButton[gridSize];
 	    buttons[i] = jb;
 	    jb.addActionListener(new ButtonListener(i));
 	    jb.setFocusPainted(false);          //get rid of annoying boxes appearing around icon next to clicked icon
 	    
 	    this.add(jb);  
-	}
+	    }
 	this.repaint();
 	this.validate();
 	startTime = new Date().getTime();
@@ -122,6 +135,7 @@ public class MemoryGameComponent extends JComponent
             if (!grid.isOneFlipped()){
 		grid.flip(num);
 		JButton jb = buttons[num];
+		System.out.println(grid.getVal(num)-1);
 		jb.setIcon(imgIcons.get(grid.getVal(num)-1));      //set image according to val
 		jb.setEnabled(false);                               //make unclickable
             }
@@ -170,6 +184,11 @@ public class MemoryGameComponent extends JComponent
 
     public void newGame(int gridSize) {
 	gameCounter = 0;
+	if (currentLevel < levels.length) {
+	    currentLevel++;
+	    level = levels[currentLevel];
+	}
+	gridSize = level.getGridSize();
 	grid = new MemoryGrid(gridSize);
 	buildTiles();
     }
@@ -198,10 +217,8 @@ public class MemoryGameComponent extends JComponent
 	for (String image : images8) {
 	    imgIcons.add(new ImageIcon(classs.getResource(image)));
 	}
-	if (level.getGridSize() == 36) {
-	    for (String image : images10) {
-		imgIcons.add(new ImageIcon(classs.getResource(image)));
-	    }
+	for (String image : images8) {
+	    imgIcons.add(new ImageIcon(classs.getResource(image)));
 	}
 	imgBlank = new ImageIcon(classs.getResource("/images/000.jpg"));
     }
