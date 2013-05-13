@@ -29,7 +29,19 @@ public class MemoryGameComponent extends JComponent
     private Icon imgBlank;
     private MemoryGameLevel level = new MemoryGameLevel(16, 100, 2000);
     private long startTime = 0;
-    
+    private String[] images8_1 = {
+	"/images/036.jpg",
+	"/images/033.jpg",
+	"/images/029.jpg",
+	"/images/025.jpg",
+	"/images/018.jpg",
+	"/images/013.jpg",
+	"/images/006.jpg",
+	"/images/005.jpg",
+    };
+    private String[] images8_2 = {
+
+    };
     private JButton [] buttons;
 
     /** Constructor
@@ -146,26 +158,15 @@ public class MemoryGameComponent extends JComponent
 	//                            (which is required for jws to work)
 	//ClassLoader classLoader = this.getClass().getClassLoader();
 	Class classs = this.getClass();
-
 	//load Icons 
+	for (String image : images8_1) {
+	    imgIcons.add(new ImageIcon(classs.getResource(image)));
+	}
+	if (level.getGridSize() == 36) {
+	    for (String image : images8_2) {
+		imgIcons.add(new ImageIcon(classs.getResource(image)));
+	    }
+	}
 	imgBlank = new ImageIcon(classs.getResource("/images/000.jpg"));
-	Icon img0     = new ImageIcon(classs.getResource("/images/036.jpg"));
-	Icon img1     = new ImageIcon(classs.getResource("/images/033.jpg"));
-	Icon img2     = new ImageIcon(classs.getResource("/images/029.jpg"));
-	Icon img3     = new ImageIcon(classs.getResource("/images/025.jpg"));
-	Icon img4     = new ImageIcon(classs.getResource("/images/018.jpg"));
-	Icon img5     = new ImageIcon(classs.getResource("/images/013.jpg"));
-	Icon img6     = new ImageIcon(classs.getResource("/images/006.jpg"));
-	Icon img7     = new ImageIcon(classs.getResource("/images/005.jpg"));
-	
-	//add all the images into the Icon ArrayList
-	imgIcons.add(img0);
-	imgIcons.add(img1);
-	imgIcons.add(img2);
-	imgIcons.add(img3);
-	imgIcons.add(img4);
-	imgIcons.add(img5);
-	imgIcons.add(img6);
-	imgIcons.add(img7);
     }
 }
