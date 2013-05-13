@@ -27,7 +27,7 @@ public class MemoryGameComponent extends JComponent
     private ArrayList<Icon> imgIcons = new ArrayList<Icon>();
     public JComponent restartB = new JButton("Restart");
     private Icon imgBlank;
-    private MemoryGameLevel level = new MemoryGameLevel(16, 100, 2000);
+    private MemoryGameLevel level = new MemoryGameLevel(36, 100, 2000);
     private long startTime = 0;
     private String[] images8 = {
 	"/images/200.jpg",
@@ -82,6 +82,25 @@ public class MemoryGameComponent extends JComponent
 	startTime = new Date().getTime();
     }
 
+    public void buildTiles() {
+	this.removeAll();
+	this.repaint();
+	int gridSize = grid.getSize();
+	this.setLayout(new GridLayout(0,(int)Math.sqrt(gridSize))); 
+
+	for(int i=0; i<=(gridSize-1); i++) {
+	    JButton jb = new JButton(imgBlank);   //initially all buttons are blank
+	    buttons[i] = jb;
+	    jb.addActionListener(new ButtonListener(i));
+	    jb.setFocusPainted(false);          //get rid of annoying boxes appearing around icon next to clicked icon
+	    
+	    this.add(jb);  
+	}
+	this.repaint();
+	this.validate();
+	startTime = new Date().getTime();
+    }
+
     class ButtonListener implements ActionListener {
 	private int num;
 
@@ -132,6 +151,7 @@ public class MemoryGameComponent extends JComponent
                         JOptionPane popup = new JOptionPane("Good Job!");
                         JOptionPane.showMessageDialog(popup,
 						      "-~*´¨¯¨`*·~-.¸-  You won!!  -,.-~*´¨¯¨`*·~-", "Good Job!",1);
+			newGame(16);
                     } 
                 } else {
 		    // start the flip back timer
@@ -146,6 +166,12 @@ public class MemoryGameComponent extends JComponent
 		
             } // end of outer if else
         }
+    }
+
+    public void newGame(int gridSize) {
+	gameCounter = 0;
+	grid = new MemoryGrid(gridSize);
+	buildTiles();
     }
 
     public void flipBack() {
