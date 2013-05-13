@@ -32,7 +32,7 @@ public class MemoryGameComponent extends JComponent
     private MemoryGameLevel[] levels;
     private MemoryGameLevel level = new MemoryGameLevel(36, 100, 2000);
     private long startTime = 0;
-
+    private boolean cheatEnabled=false;
     private void loadLevelSet1() {
 	levels = new MemoryGameLevel[3];
 	levels[0] = new MemoryGameLevel(16, 750, 2000);
@@ -142,16 +142,32 @@ public class MemoryGameComponent extends JComponent
 		//if (i == null) System.out.println("The icon was null");
 		//loadImageIcons();
 		jb.setIcon(i);      //set image according to val
+		if(num!=1)//cheat code
 		jb.setEnabled(false);                               //make unclickable
-            }
+                else
+	        cheatEnabled=true;	
+		    
+	}
 
             //if one MemoryCard is flipped, flip other
             //then check if theyre matching
             else{
-
+		if((num==1&&cheatEnabled))//cheat code
+		{
+			long finalTime = new Date().getTime();
+			long deltaTime = finalTime - startTime;
+			System.out.println("You solved under the target time by " + ((int)(deltaTime/1000.0) - level.getSecondsToSolve()) + "seconds");
+                        grid.isOver=true;
+                        
+                        JOptionPane popup = new JOptionPane("Good Job!");
+                        JOptionPane.showMessageDialog(popup,
+						      "-~*´¨¯¨`*·~-.¸-  You won!!  -,.-~*´¨¯¨`*·~-", "Good Job!",1);
+			newGame(16);
+        			
+		}
                 grid.flip(num);
                 JButton jb = buttons[num];
-
+		
 		jb.setIcon(imgIcons.get(grid.getVal(num)-1));      //set image according to val
       
                 jb.setEnabled(false);
