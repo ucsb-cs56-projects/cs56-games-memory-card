@@ -29,18 +29,28 @@ public class MemoryGameComponent extends JComponent
     private Icon imgBlank;
     private MemoryGameLevel level = new MemoryGameLevel(16, 100, 2000);
     private long startTime = 0;
-    private String[] images8_1 = {
-	"/images/036.jpg",
-	"/images/033.jpg",
-	"/images/029.jpg",
-	"/images/025.jpg",
-	"/images/018.jpg",
-	"/images/013.jpg",
-	"/images/006.jpg",
-	"/images/005.jpg",
+    private String[] images8 = {
+	"/images/200.jpg",
+	"/images/201.jpg",
+	"/images/202.jpg",
+	"/images/203.jpg",
+	"/images/204.jpg",
+	"/images/205.jpg",
+	"/images/206.jpg",
+	"/images/207.jpg",
     };
-    private String[] images8_2 = {
-
+    private String[] images10 = {
+	"/images/208.jpg",
+	"/images/209.jpg",
+	"/images/210.jpg",
+	"/images/211.jpg",
+	"/images/212.jpg",
+	"/images/213.jpg",
+	"/images/214.jpg",
+	"/images/215.jpg",
+       	"/images/216.jpg",
+	"/images/217.jpg",
+        
     };
     private JButton [] buttons;
 
@@ -159,11 +169,11 @@ public class MemoryGameComponent extends JComponent
 	//ClassLoader classLoader = this.getClass().getClassLoader();
 	Class classs = this.getClass();
 	//load Icons 
-	for (String image : images8_1) {
+	for (String image : images8) {
 	    imgIcons.add(new ImageIcon(classs.getResource(image)));
 	}
 	if (level.getGridSize() == 36) {
-	    for (String image : images8_2) {
+	    for (String image : images10) {
 		imgIcons.add(new ImageIcon(classs.getResource(image)));
 	    }
 	}
