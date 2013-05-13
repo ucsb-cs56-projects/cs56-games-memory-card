@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.*;
 import java.lang.Math;
+import java.util.Date;
 
 /**
  * A Swing component for playing the Memory Card Game
@@ -26,6 +27,8 @@ public class MemoryGameComponent extends JComponent
     private ArrayList<Icon> imgIcons = new ArrayList<Icon>();
     public JComponent restartB = new JButton("Restart");
     private Icon imgBlank;
+    private MemoryGameLevel level = new MemoryGameLevel(16, 100, 2000);
+    private long startTime = 0;
     
     private JButton [] buttons;
 
@@ -37,14 +40,14 @@ public class MemoryGameComponent extends JComponent
     */
     public MemoryGameComponent(MemoryGrid game) {
 	super(); 
-	this.grid= game;
+	this.grid = game;
         int gridSize = grid.getSize();
 	buttons= new JButton[gridSize];
 
 	loadImageIcons(); // loads the array list of icons and sets imgBlank
 	
 	//set layout to a grid of length sqrt(grid size)
-	this.setLayout(new GridLayout((int)Math.sqrt(gridSize),0)); 
+	this.setLayout(new GridLayout(0,(int)Math.sqrt(gridSize))); 
 
 	for(int i=0; i<=(gridSize-1); i++) {
 	    JButton jb = new JButton(imgBlank);   //initially all buttons are blank
@@ -54,6 +57,7 @@ public class MemoryGameComponent extends JComponent
 	    
 	    this.add(jb);  
 	}
+	startTime = new Date().getTime();
     }
 
     class ButtonListener implements ActionListener {
@@ -98,6 +102,9 @@ public class MemoryGameComponent extends JComponent
                     
                     //check if game is over
                     if(gameCounter==grid.getSize()/2){
+			long finalTime = new Date().getTime();
+			long deltaTime = finalTime - startTime;
+			System.out.println("You solved under the target time by " + ((int)(deltaTime/1000.0) - level.getSecondsToSolve()) + "seconds");
                         grid.isOver=true;
                         
                         JOptionPane popup = new JOptionPane("Good Job!");
@@ -106,7 +113,7 @@ public class MemoryGameComponent extends JComponent
                     } 
                 } else {
 		    // start the flip back timer
-		    int delay = 1000;
+		    int delay = level.getFlipTime();
 		    ActionListener listener = new ActionListener() {
 			    public void actionPerformed(ActionEvent e) { flipBack(); }
 			};
