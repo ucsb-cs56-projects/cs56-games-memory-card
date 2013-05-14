@@ -4,13 +4,19 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
-	The test class MemoryGameTest - tests the MemoryGame class
-	@author Bryce McGaw and Jonathan Yau
-	@version 1.0.0 5/14/2012
-	@see MemoryGame.java
+ * The test class MemoryGameTest - tests the MemoryGame class
+ * @author Bryce McGaw and Jonathan Yau
+ * @version 1.0.0 5/14/2012
+ * @see MemoryGame.java
+ * @author Mathew Glodack, Christina Morris
+ * @version cs56, S13, 5/13/2013
+ * Updated Javadoc comments
 */
 public class MemoryGameTest
 {
+    /**Test case for testConstructor01()
+     *
+     */
 	@Test public void testConstructor01()
 	{
               //counter to check if count at end is (size/2)-1 ((size/2) nums)
@@ -28,6 +34,9 @@ public class MemoryGameTest
                 assertEquals(count,((test1.size/2)-1));
                     
 	}
+    /**Test case for testRandom()
+     *
+     */
         
         @Test public void testRandom()
         {
@@ -47,7 +56,9 @@ public class MemoryGameTest
             }
             assertFalse(i==test1.size/2);
         }
-        
+    /**Test case for testEquals()
+     *
+     */
         @Test public void testEquals()
         {
             //two memory cards initialized to see if Equals works
@@ -55,14 +66,18 @@ public class MemoryGameTest
             MemoryCard t2 = new MemoryCard(4);
             assertTrue(t2.Equals(t1));
         }
-	
+    /**Test case for testisOneFlipped()
+     *
+     */
 	@Test public void testisOneFlipped()
         {
             MemoryGrid t1 = new MemoryGrid();
             t1.memGrid.get(4).flip();
             assertTrue(t1.isOneFlipped());
         }
-        
+    /**Test case for testisTwoFlipped()
+     *
+     */
         @Test public void testisTwoFlipped()
         {
             MemoryGrid t1 = new MemoryGrid();
@@ -70,14 +85,18 @@ public class MemoryGameTest
             t1.memGrid.get(6).flip();
             assertTrue(t1.isTwoFlipped());
         }
-        
+    /**Test case for testgetFlipped()
+     *
+     */
         @Test public void testgetFlipped()
         {
             MemoryGrid t1 = new MemoryGrid();
             t1.memGrid.get(13).flip();
             assertEquals(t1.getFlipped(), 13);
         }
-        
+    /**Test case for testgetFlipped2()
+     *
+     */
         @Test public void testgetFlipped2()
         {
             MemoryGrid t1 = new MemoryGrid();
@@ -85,7 +104,9 @@ public class MemoryGameTest
             t1.memGrid.get(4).flip();
             assertEquals(t1.getFlipped(10), 4);
         }
-        
+    /**Test case for testisOver()
+     *
+     */   
         @Test public void testisOver()
         {
             MemoryGrid t1 = new MemoryGrid();

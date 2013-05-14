@@ -19,6 +19,7 @@ import java.awt.ComponentOrientation;
  * Edited Professor Phill Conrad's code from Lab06
  * @author Mathew Glodack, Christina Morris
  * @version Edited, CS56, 5/7/13, S13
+ * Updated javadoc comments
  */
 public class MemoryGameGui {
 
@@ -47,7 +48,9 @@ public class MemoryGameGui {
 	frame.setSize(300,300);
 	frame.setVisible(true);
     }
-
+    /** Creates an ActionListener called RestartButtonHandler
+     *
+     */
     private class RestartButtonHandler implements ActionListener{
 
 	/**Action Performed when restart button is pressed

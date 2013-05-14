@@ -1,6 +1,7 @@
 package edu.ucsb.cs56.S12.issues.issue0000805;
         
 /** Class MemoryCard creates objects for cards
+ * Updated Javadoc comments
  * @author Mathew Glodack, Christina Morris
  * @version CS56, S13, 5/7/13
  */

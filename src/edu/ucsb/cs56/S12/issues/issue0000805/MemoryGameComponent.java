@@ -19,6 +19,7 @@ import java.lang.Math;
  * @author Bryce McGaw and Jonathan Yau (with some of Phill Conrad's code as a basis)
  * @version CS56 Spring 2012
  * @see MemoryGrid 
+ * Updated Javadoc comments
  * @author Mathew Glodack, Christina Morris
  * @version CS56, S13, 5/7/13
  */
