@@ -27,7 +27,7 @@ public class MemoryGameGui {
     static MemoryGameComponent mgc = new MemoryGameComponent(grid);
     //static JButton restartB = new JButton("Restart");
     static RestartButtonHandler RBHandler;
-
+    static JLabel label = new JLabel("0");
 
     /** main method to open JFrame 
      *
@@ -38,16 +38,17 @@ public class MemoryGameGui {
 
 	//restartB.addActionListener(RBHandler);
 	
-	frame.getContentPane().add(mgc);
+	frame.getContentPane().add(BorderLayout.NORTH,mgc);
 	//frame.getContentPane().add(restartB);
-	
+	frame.getContentPane().add(BorderLayout.SOUTH,label);
 	// to make sure that grids go left to right
 	
 	frame.applyComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 	frame.setSize(WINDOW_SIZE, WINDOW_SIZE);
 	frame.setVisible(true);
+        Thread time = new Thread(new MemoryGameTimer(mgc,label));
+	time.start();
     }
-
     private class RestartButtonHandler implements ActionListener{
 
 	public void actionPerformed(ActionEvent e){

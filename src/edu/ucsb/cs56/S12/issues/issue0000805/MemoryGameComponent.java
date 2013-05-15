@@ -173,7 +173,10 @@ public class MemoryGameComponent extends JComponent
             } // end of outer if else
         }
     }
-
+    /** Checks if Game is Over*/
+    public boolean isOver(){
+	return (gameCounter==grid.getSize()/2);
+    }
     /**
        Starts a new level or restarts the current level
      */
