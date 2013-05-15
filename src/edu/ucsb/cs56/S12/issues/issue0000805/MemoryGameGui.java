@@ -27,7 +27,7 @@ public class MemoryGameGui {
     static MemoryGameComponent mgc = new MemoryGameComponent(grid);
     //static JButton restartB = new JButton("Restart");
     static RestartButtonHandler RBHandler;
-    static JLabel label = new JLabel("0");
+    static JLabel label = new JLabel("Time Remaining: 10");
     static JFrame instruction = new JFrame("Instruction");
     static JTextArea text = new JTextArea(10,20);
 
@@ -40,14 +40,21 @@ public class MemoryGameGui {
 	instruction.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	
 	//restartB.addActionListener(RBHandler);
-	
+	//this.setLocation(screen.getWidth() / 2 - 
 	frame.getContentPane().add(mgc);
 	//frame.getContentPane().add(restartB);
 	frame.getContentPane().add(BorderLayout.SOUTH,label);
+
+	
+	
+
 	// to make sure that grids go left to right
 	mgc.setLabel(label);
 	frame.applyComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 	frame.setSize(WINDOW_SIZE, WINDOW_SIZE);
+
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	frame.setLocation((int)(screenSize.getWidth()/2 - frame.getSize().getWidth()/2), (int)(screenSize.getHeight()/2 - frame.getSize().getHeight()/2));
 	frame.setVisible(true);
 
 	JPanel panel = new JPanel();
@@ -61,11 +68,12 @@ public class MemoryGameGui {
 	instruction.getContentPane().add(panel);
         instruction.setSize(320,320);
 	addInstruction();
+	instruction.setLocation((int)(screenSize.getWidth()/2 - instruction.getSize().getWidth()/2), (int)(screenSize.getHeight()/2 - instruction.getSize().getHeight()/2));
 	instruction.setVisible(true);
 
     }
     public static void addInstruction(){
-	File file = new File("build/instructions.txt");
+	File file = new File("instructions.txt");
 	try {
 	    BufferedReader br = new BufferedReader(
 	                        new InputStreamReader(

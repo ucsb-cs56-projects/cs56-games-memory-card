@@ -31,6 +31,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     private int               gameCounter=0;
     private boolean	      isOver=false;
     private JLabel            timeLabel=null;
+    private boolean firstImageFlipped = false;
     Timer timer;
 
     public void actionPerformed(ActionEvent e) {
@@ -95,7 +96,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	super(); 
 	timeLabel = new JLabel("Time Remaining");
 	timer = new Timer(1000, this);
-	timer.start();
+	//timer.start();
 	this.grid = game;
         int gridSize = grid.getSize();
 	buttons= new JButton[gridSize];
@@ -150,6 +151,11 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	    flipBack();
             //if no MemoryCards are flipped, flip one
             if (!grid.isOneFlipped()){
+		if (!firstImageFlipped) {
+		    startTime = (new Date().getTime());
+		    timer.start();
+		    firstImageFlipped = true;
+		}
 		grid.flip(num);
 		JButton jb = buttons[num];
 		Icon i = imgIcons.get(grid.getVal(num)-1);
@@ -221,6 +227,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	grid = new MemoryGrid(gridSize);
 	buildTiles();
 	timer = new Timer(1000, this);
+	firstImageFlipped = false;
     }
 
     public void endGame() {
