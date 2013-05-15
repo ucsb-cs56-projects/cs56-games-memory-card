@@ -38,10 +38,12 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	long finalTime = new Date().getTime();
 	long deltaTime = (long)((finalTime - startTime) / 1000.0);
 	long timeRemaining = level.getSecondsToSolve() - deltaTime;
+	
 	if (timeRemaining < 0) {
 	    endGame();
 	    newGame(false);
 	}
+	if (timeRemaining < 0) timeRemaining = 0;
 	timeLabel.setText("Time Remaining: " + timeRemaining);
 	
     }
@@ -59,9 +61,9 @@ public class MemoryGameComponent extends JComponent implements ActionListener
      */
     private void loadLevelSet1() {
 	levels = new MemoryGameLevel[3];
-	levels[0] = new MemoryGameLevel(16, 10, 2000);
-	levels[1] = new MemoryGameLevel(36, 2000, 1000);
-	levels[2] = new MemoryGameLevel(36, 2000, 1000);
+	levels[0] = new MemoryGameLevel(16, 200, 3000);
+	levels[1] = new MemoryGameLevel(36, 2000, 2000);
+	levels[2] = new MemoryGameLevel(36, 1700, 1000);
 	currentLevel = 0;
 	level = levels[currentLevel];
     }
@@ -226,6 +228,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	int gridSize = level.getGridSize();
 	grid = new MemoryGrid(gridSize);
 	buildTiles();
+	if (timer != null) timer.stop();
 	timer = new Timer(1000, this);
 	firstImageFlipped = false;
     }
