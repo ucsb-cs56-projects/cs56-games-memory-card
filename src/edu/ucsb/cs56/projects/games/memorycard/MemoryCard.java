@@ -47,14 +47,14 @@ public class MemoryCard{
     }
     
     /**Method to set value
-     * @param Value represents value on the card
+     * @param value represents value on the card
      */
     public void setVal(int value){
         val=value;
     }
     
     /**Equals method to check if values are equal
-     * @param Takes an object o
+     * @param o is an Object
      * @return boolean True or False if values are equal
      */
     public boolean Equals(Object o){
