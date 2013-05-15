@@ -38,7 +38,7 @@ public class MemoryGameGui {
 
 	//restartB.addActionListener(RBHandler);
 	
-	frame.getContentPane().add(BorderLayout.NORTH,mgc);
+	frame.getContentPane().add(mgc);
 	//frame.getContentPane().add(restartB);
 	frame.getContentPane().add(BorderLayout.SOUTH,label);
 	// to make sure that grids go left to right

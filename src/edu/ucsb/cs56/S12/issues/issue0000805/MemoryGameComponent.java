@@ -29,7 +29,7 @@ public class MemoryGameComponent extends JComponent
     private long              startTime = 0;
     private boolean           cheatEnabled=false;
     private int               gameCounter=0;
-
+    private boolean		isOver=false;
     /**
        Loads a basic set of levels for the game
      */
@@ -140,6 +140,7 @@ public class MemoryGameComponent extends JComponent
             else{
 		if((num==1&&cheatEnabled))//cheat code
 		    {
+                        isOver=true;
 		        endGame();
 			newGame(true); // true to start the next level
 		    }
@@ -156,6 +157,7 @@ public class MemoryGameComponent extends JComponent
                     
                     //check if game is over
                     if(gameCounter==grid.getSize()/2){
+			isOver=true;
 		        endGame();
 			newGame(true); // true to start the next level
                     } 
@@ -175,7 +177,10 @@ public class MemoryGameComponent extends JComponent
     }
     /** Checks if Game is Over*/
     public boolean isOver(){
-	return (gameCounter==grid.getSize()/2);
+	return isOver;
+    }
+    public void setIsOver(boolean b){
+        isOver=b;
     }
     /**
        Starts a new level or restarts the current level
