@@ -16,14 +16,24 @@ public class MemoryGameTimer implements Runnable{
         Run stops only when the Thread is stopped by the user.
    */
    public void run(){
-      while(true){
-      while(!game.isOver()){
-	  label.setText("Time Remaining: "+(game.getLevelTime() - (new Date().getTime()-timeStarted)/1000));
-      }
-      timeStarted=new Date().getTime();
-      game.setIsOver(false);
-      }
+       while(true){
+	   while(!game.isOver()){
+	       long timeRemaining = game.getLevelTime() - (new Date().getTime()-timeStarted) / 1000;
+	       label.setText("Time Remaining: "+timeRemaining);
+	       if (timeRemaining < 0) {
+		   
+		   game.endGame();
+		   //game.setIsOver(false);
+	       }
+	   }
+	   timeStarted=new Date().getTime();
+	   game.setIsOver(false);
+	   try {
+	       Thread.sleep(2000);
+	   } catch (Exception e) {
 
-
+	   }
+	   
+       }
    }
 }

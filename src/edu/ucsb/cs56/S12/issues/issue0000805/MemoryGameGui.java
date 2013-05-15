@@ -45,7 +45,7 @@ public class MemoryGameGui {
 	//frame.getContentPane().add(restartB);
 	frame.getContentPane().add(BorderLayout.SOUTH,label);
 	// to make sure that grids go left to right
-	
+	mgc.setLabel(label);
 	frame.applyComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 	frame.setSize(WINDOW_SIZE, WINDOW_SIZE);
 	frame.setVisible(true);
@@ -63,8 +63,6 @@ public class MemoryGameGui {
 	addInstruction();
 	instruction.setVisible(true);
 
-        Thread time = new Thread(new MemoryGameTimer(mgc,label));
-	time.start();
     }
     public static void addInstruction(){
 	File file = new File("build/instructions.txt");
@@ -87,7 +85,6 @@ public class MemoryGameGui {
 
 	    grid = new MemoryGrid(16);
 	    mgc = new MemoryGameComponent(grid);
-	    
 	    frame.getContentPane().add(mgc);
 	    //frame.getContentPane().add(restartB);
 	    

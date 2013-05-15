@@ -14,7 +14,7 @@ import java.lang.Math;
    @version CS56 Spring 2012
    @see MemoryGrid 
  */
-public class MemoryGameComponent extends JComponent
+public class MemoryGameComponent extends JComponent implements ActionListener
 {
     
     private JButton []        buttons;
@@ -29,19 +29,37 @@ public class MemoryGameComponent extends JComponent
     private long              startTime = 0;
     private boolean           cheatEnabled=false;
     private int               gameCounter=0;
-    private boolean		isOver=false;
+    private boolean	      isOver=false;
+    private JLabel            timeLabel=null;
+    Timer timer;
 
-
+    public void actionPerformed(ActionEvent e) {
+	long finalTime = new Date().getTime();
+	long deltaTime = (long)((finalTime - startTime) / 1000.0);
+	long timeRemaining = level.getSecondsToSolve() - deltaTime;
+	if (timeRemaining < 0) {
+	    endGame();
+	    newGame(false);
+	}
+	timeLabel.setText("Time Remaining: " + timeRemaining);
+	
+    }
+    
     public int getLevelTime() {
 	return level.getSecondsToSolve();
     }
+
+    public void setLabel(JLabel label) {
+	this.timeLabel = label;
+    }
+
     /**
        Loads a basic set of levels for the game
      */
     private void loadLevelSet1() {
 	levels = new MemoryGameLevel[3];
-	levels[0] = new MemoryGameLevel(16, 750, 2000);
-	levels[1] = new MemoryGameLevel(36, 200, 1000);
+	levels[0] = new MemoryGameLevel(16, 10, 2000);
+	levels[1] = new MemoryGameLevel(36, 2000, 1000);
 	levels[2] = new MemoryGameLevel(36, 2000, 1000);
 	currentLevel = 0;
 	level = levels[currentLevel];
@@ -75,6 +93,9 @@ public class MemoryGameComponent extends JComponent
     */
     public MemoryGameComponent(MemoryGrid game) {
 	super(); 
+	timeLabel = new JLabel("Time Remaining");
+	timer = new Timer(1000, this);
+	timer.start();
 	this.grid = game;
         int gridSize = grid.getSize();
 	buttons= new JButton[gridSize];
@@ -199,25 +220,30 @@ public class MemoryGameComponent extends JComponent
 	int gridSize = level.getGridSize();
 	grid = new MemoryGrid(gridSize);
 	buildTiles();
+	timer = new Timer(1000, this);
     }
 
     public void endGame() {
 	long finalTime = new Date().getTime();
-	long deltaTime = finalTime - startTime;
-	
-	// Should be replaced with code to decide whether the user should pass
-	// the current level.
-        System.out.println("You solved under the target time by "
-	+ ((int)(deltaTime/1000.0) - level.getSecondsToSolve()) + "seconds");
+	long deltaTime = (long)((finalTime - startTime) / 1000.0);
 
         grid.isOver=true;
                         
-        JOptionPane popup = new JOptionPane("Good Job!");
-        JOptionPane.showMessageDialog(
+	if (deltaTime < level.getSecondsToSolve()) {
+	    JOptionPane popup = new JOptionPane("Good Job!");
+	    JOptionPane.showMessageDialog(
 		    popup,
 		    "-~*´¨¯¨`*·~-.¸-  You won!!  -,.-~*´¨¯¨`*·~-",
 		    "Good Job!",
 		    1);
+	} else {
+	    JOptionPane popup = new JOptionPane("Game Over");
+	    JOptionPane.showMessageDialog(
+		    popup,
+		    "Please Try Again",
+		    "Game Over",
+		    1);
+	}
     }
 
     /**
