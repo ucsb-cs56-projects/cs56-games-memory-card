@@ -1,6 +1,36 @@
-This is temporary instruction.
-Testing
-Testing2
-Testing 3 and 4 and 5 ...
+Goal:
 
-.
+Match all pairs of cards to go to next level 
+before the time runs out.
+
+Instructions:
+
+There are 3 levels.
+
+Click a card to flip the card.
+
+If the cards do not match, the cards will 
+flip back after a few seconds (this time 
+will decrease as the level increases). 
+
+If the cards match, the cards will stay flipped.
+
+If all of the cards are flipped before the time 
+runs out (this time also changes as the level 
+changes), you will win the level and move on 
+to the next one.
+
+The number of cards on the grid would also 
+change based on the level.
+
+Good Luck!
+
+
+
+
+
+
+
+
+
+(Cheat: click on the card on (0,1) twice)
