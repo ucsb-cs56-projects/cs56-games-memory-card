@@ -1,18 +1,12 @@
 package edu.ucsb.cs56.S12.issues.issue0000805;
-import java.awt.GridLayout;
-import javax.swing.JComponent;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
+
 import java.awt.*;
-import java.util.ArrayList;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
+import java.awt.event.*; // for ActionListener and ActionEvent
 import javax.swing.*;
-import java.lang.Math;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.lang.Math;
 
 /**
  * A Swing component for playing the Memory Card Game
@@ -22,48 +16,50 @@ import java.util.Date;
  */
 public class MemoryGameComponent extends JComponent
 {
-    private MemoryGrid grid;
-    private int gameCounter=0;
-    private ArrayList<Icon> imgIcons = new ArrayList<Icon>();
-    public JComponent restartB = new JButton("Restart");
-    private Icon imgBlank;
+    private MemoryGrid        grid;
+    private JButton []        buttons;
+    private int               gameCounter=0;
+    private ArrayList<Icon>   imgIcons = new ArrayList<Icon>();
+    public  JComponent        restartB = new JButton("Restart");
+    private Icon              imgBlank;
     
-    private int currentLevel;
+    private int               currentLevel;
     private MemoryGameLevel[] levels;
-    private MemoryGameLevel level = new MemoryGameLevel(36, 100, 2000);
-    private long startTime = 0;
-    private boolean cheatEnabled=false;
+    private MemoryGameLevel   level = new MemoryGameLevel(36, 100, 2000);
+    private long              startTime = 0;
+    private boolean           cheatEnabled=false;
+
+    /**
+       Loads a basic set of levels for the game
+     */
     private void loadLevelSet1() {
 	levels = new MemoryGameLevel[3];
 	levels[0] = new MemoryGameLevel(16, 750, 2000);
 	levels[1] = new MemoryGameLevel(36, 200, 1000);
 	levels[2] = new MemoryGameLevel(36, 2000, 1000);
+	currentLevel = 0;
+	level = levels[currentLevel];
     }
 
+    // The first 8 images. These will be used
+    // for a 4 by 4 game.
     private String[] images8 = {
-	"/images/200.jpg",
-	"/images/201.jpg",
-	"/images/202.jpg",
-	"/images/203.jpg",
-	"/images/204.jpg",
-	"/images/205.jpg",
-	"/images/206.jpg",
-	"/images/207.jpg",
+	"/images/200.jpg", "/images/201.jpg",
+	"/images/202.jpg", "/images/203.jpg",
+	"/images/204.jpg", "/images/205.jpg",
+	"/images/206.jpg", "/images/207.jpg",
     };
+    // The next ten images. These, in addition
+    // to the first 8 will be used for a
+    // 6 by 6 game.
     private String[] images10 = {
-	"/images/208.jpg",
-	"/images/209.jpg",
-	"/images/210.jpg",
-	"/images/211.jpg",
-	"/images/212.jpg",
-	"/images/213.jpg",
-	"/images/214.jpg",
-	"/images/215.jpg",
-       	"/images/216.jpg",
-	"/images/217.jpg",
+	"/images/208.jpg", "/images/209.jpg",
+	"/images/210.jpg", "/images/211.jpg",
+	"/images/212.jpg", "/images/213.jpg",
+	"/images/214.jpg", "/images/215.jpg",
+       	"/images/216.jpg", "/images/217.jpg",
         
     };
-    private JButton [] buttons;
 
     /** Constructor
 	
@@ -76,37 +72,30 @@ public class MemoryGameComponent extends JComponent
 	this.grid = game;
         int gridSize = grid.getSize();
 	buttons= new JButton[gridSize];
-	loadLevelSet1();
-	level = levels[0];
-	loadImageIcons(); // loads the array list of icons and sets imgBlank
 	
-	//set layout to a grid of length sqrt(grid size)
-	this.setLayout(new GridLayout(0,(int)Math.sqrt(gridSize))); 
-
-	for(int i=0; i<=(gridSize-1); i++) {
-	    JButton jb = new JButton(imgBlank);   //initially all buttons are blank
-	    buttons[i] = jb;
-	    jb.addActionListener(new ButtonListener(i));
-	    jb.setFocusPainted(false);          //get rid of annoying boxes appearing around icon next to clicked icon
-	    
-	    this.add(jb);  
-	}
+	loadLevelSet1();
+	loadImageIcons(); // loads the array list of icons and sets imgBlank
+	buildTiles();
+	
 	startTime = new Date().getTime();
     }
 
     public void buildTiles() {
 	this.removeAll();
-	this.repaint();
 	int gridSize = grid.getSize();
+
+	//set layout to a grid of length sqrt(grid size)
 	this.setLayout(new GridLayout(0,(int)Math.sqrt(gridSize))); 
-	System.out.println("gridsize: " + gridSize);
 	buttons = new JButton[gridSize];
 	for(int i=0; i<=(gridSize-1); i++) {
-	    JButton jb = new JButton(imgBlank);   //initially all buttons are blank
+	    //initially all buttons are blank
+	    JButton jb = new JButton(imgBlank);   
 	    
 	    buttons[i] = jb;
 	    jb.addActionListener(new ButtonListener(i));
-	    jb.setFocusPainted(false);          //get rid of annoying boxes appearing around icon next to clicked icon
+
+	    //get rid of annoying boxes appearing around icon next to clicked icon
+	    jb.setFocusPainted(false);          
 	    
 	    this.add(jb);  
 	    }
@@ -134,26 +123,21 @@ public class MemoryGameComponent extends JComponent
             //if no MemoryCards are flipped, flip one
             if (!grid.isOneFlipped()){
 		grid.flip(num);
-		//System.out.println(num);
 		JButton jb = buttons[num];
-		//System.out.println(grid.getVal(num)-1);
-		//if (jb == null) System.out.println("The button was null");
 		Icon i = imgIcons.get(grid.getVal(num)-1);
-		//if (i == null) System.out.println("The icon was null");
-		//loadImageIcons();
-		jb.setIcon(i);      //set image according to val
-		if(num!=1)//cheat code
-		jb.setEnabled(false);                               //make unclickable
+		jb.setIcon(i);        //set image according to val
+		if(num!=1)            //cheat code
+		    jb.setEnabled(false); //make unclickable
                 else
-	        cheatEnabled=true;	
+		    cheatEnabled=true;	
 		    
-	}
+	    }
 
             //if one MemoryCard is flipped, flip other
             //then check if theyre matching
             else{
 		if((num==1&&cheatEnabled))//cheat code
-		{
+		    {
 			long finalTime = new Date().getTime();
 			long deltaTime = finalTime - startTime;
 			System.out.println("You solved under the target time by " + ((int)(deltaTime/1000.0) - level.getSecondsToSolve()) + "seconds");
@@ -164,7 +148,7 @@ public class MemoryGameComponent extends JComponent
 						      "-~*´¨¯¨`*·~-.¸-  You won!!  -,.-~*´¨¯¨`*·~-", "Good Job!",1);
 			newGame(16);
         			
-		}
+		    }
                 grid.flip(num);
                 JButton jb = buttons[num];
 		
@@ -203,6 +187,9 @@ public class MemoryGameComponent extends JComponent
         }
     }
 
+    /**
+       Starts a new game
+     */
     public void newGame(int gridSize) {
 	gameCounter = 0;
 	if (currentLevel < levels.length) {
@@ -214,6 +201,9 @@ public class MemoryGameComponent extends JComponent
 	buildTiles();
     }
 
+    /**
+       If two cards are showing, flips them back over
+    */
     public void flipBack() {
 	
 	if(grid.isTwoFlipped()){
