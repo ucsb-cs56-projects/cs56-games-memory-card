@@ -42,7 +42,6 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	
 	if (timeRemaining < 0) {
 	    endGame();
-	    newGame(false);
 	}
 	if (timeRemaining < 0) timeRemaining = 0;
 	timeLabel.setText("Time Remaining: " + timeRemaining);
@@ -166,8 +165,8 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 		if(num!=1)                //cheat code
 		    jb.setEnabled(false); //make unclickable
                 else
-		    cheatEnabled=true;	//cheat code
-		    
+//cheat code. Needs to override the button so that button is same color as regular button.
+		    cheatEnabled=true;	
 	    }
 
             //if one MemoryCard is flipped, flip other
@@ -178,8 +177,6 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 			cheatEnabled=false;
                         isOver=true;
 		        endGame();
-			if(currentLevel<2)
-			newGame(true); // true to start the next level
 			return;
 		    }
 		cheatEnabled=false;//cheat code
@@ -198,8 +195,6 @@ public class MemoryGameComponent extends JComponent implements ActionListener
                     if(gameCounter==grid.getSize()/2){
 			isOver=true;
 		        endGame();
-			if(currentLevel<2)
-			newGame(true); // true to start the next level
                     } 
                 } else {
 		    // start the flip back timer
@@ -225,10 +220,10 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     /**
        Starts a new level or restarts the current level
      */
-    public void newGame(boolean startNextLevel) {
+    public void newGame(int lvl) {
 	gameCounter = 0;
-	if (startNextLevel && currentLevel < levels.length) {
-	    currentLevel++;
+	if (currentLevel < levels.length) {
+	    currentLevel=lvl;
 	    level = levels[currentLevel];
 	}
 	int gridSize = level.getGridSize();
@@ -239,6 +234,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	firstImageFlipped = false;
     }
 
+
     public void endGame() {
 	long finalTime = new Date().getTime();
 	long deltaTime = (long)((finalTime - startTime) / 1000.0);
@@ -247,28 +243,57 @@ public class MemoryGameComponent extends JComponent implements ActionListener
                         
 	if (deltaTime < level.getSecondsToSolve()&&currentLevel<2) {
 	    JOptionPane popup = new JOptionPane("Good Job!");
-	    JOptionPane.showMessageDialog(
-		    popup,
+	    Object[] options= {"Continue","Quit"};
+
+	    int selection=popup.showOptionDialog(
+		    null,
 		    "-~*´¨¯¨`*·~-.¸-  You beat the level!!  -,.-~*´¨¯¨`*·~-",
 		    "Good Job!",
-		    1);
+		    JOptionPane.YES_NO_OPTION,
+    		    JOptionPane.INFORMATION_MESSAGE, null,
+    		    options, options[0]);
+	
+            if(selection==JOptionPane.YES_OPTION)
+		    newGame(currentLevel+1);
+	    else	    
+		    System.exit(0);
+
 	}
         else if(deltaTime < level.getSecondsToSolve()&&currentLevel==2){
 	    JOptionPane popup = new JOptionPane("Good Job!");
-	    JOptionPane.showMessageDialog(
-		    popup,
+	    Object[] options= {"Play Again?","Quit"};
+	    int selection=popup.showOptionDialog(
+		    null,
 		    "-~*´¨¯¨`*·~-.¸-  You beat the game!!  -,.-~*´¨¯¨`*·~-",
 		    "Good Job!",
-		    1);
-	     System.exit(0);
+		    JOptionPane.YES_NO_OPTION,
+    		    JOptionPane.INFORMATION_MESSAGE, null,
+    		    options, options[0]);
+	    if(selection==JOptionPane.YES_OPTION)
+	    {
+		    newGame(0);
+	    }
+	    else
+	    	    System.exit(0);
+	
+	     	
 	} 
         else {
 	    JOptionPane popup = new JOptionPane("Game Over");
-	    JOptionPane.showMessageDialog(
-		    popup,
+	    Object[] options= {"Try Again?","Quit"};
+	    int selection=popup.showOptionDialog(
+		    null,
 		    "Please Try Again",
 		    "Game Over",
-		    1);
+		    JOptionPane.YES_NO_OPTION,
+    		    JOptionPane.INFORMATION_MESSAGE, null,
+    		    options, options[0]);
+	    if(selection==JOptionPane.YES_OPTION)
+	    {
+		    newGame(currentLevel);
+	    }
+	    else
+	    	    System.exit(0);
 	}
     }
 
