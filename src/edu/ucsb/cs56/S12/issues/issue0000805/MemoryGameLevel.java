@@ -1,6 +1,8 @@
 package edu.ucsb.cs56.S12.issues.issue0000805;
 
 /**
+ * @author Ryan Halbrook
+ * @version CS56 Spring 2013
    Class representing a level of the memory game including time to complete
    the level, time to flip two cards back over and the size of the grid
  */

@@ -11,7 +11,8 @@ import java.lang.Math;
 /**
  * A Swing component for playing the Memory Card Game
    @author Bryce McGaw and Jonathan Yau (with some of Phill Conrad's code as a basis)
-   @version CS56 Spring 2012
+   @author Ryan Halbrook and Yun Suk Chang
+   @version CS56 Spring 2013
    @see MemoryGrid 
  */
 public class MemoryGameComponent extends JComponent implements ActionListener
@@ -165,7 +166,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 		if(num!=1)                //cheat code
 		    jb.setEnabled(false); //make unclickable
                 else
-		    cheatEnabled=true;	
+		    cheatEnabled=true;	//cheat code
 		    
 	    }
 
@@ -174,10 +175,14 @@ public class MemoryGameComponent extends JComponent implements ActionListener
             else{
 		if((num==1&&cheatEnabled))//cheat code
 		    {
+			cheatEnabled=false;
                         isOver=true;
 		        endGame();
+			if(currentLevel<2)
 			newGame(true); // true to start the next level
+			return;
 		    }
+		cheatEnabled=false;//cheat code
                 grid.flip(num);
                 JButton jb = buttons[num];
 		
@@ -193,6 +198,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
                     if(gameCounter==grid.getSize()/2){
 			isOver=true;
 		        endGame();
+			if(currentLevel<2)
 			newGame(true); // true to start the next level
                     } 
                 } else {
@@ -239,14 +245,24 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 
         grid.isOver=true;
                         
-	if (deltaTime < level.getSecondsToSolve()) {
+	if (deltaTime < level.getSecondsToSolve()&&currentLevel<2) {
 	    JOptionPane popup = new JOptionPane("Good Job!");
 	    JOptionPane.showMessageDialog(
 		    popup,
-		    "-~*´¨¯¨`*·~-.¸-  You won!!  -,.-~*´¨¯¨`*·~-",
+		    "-~*´¨¯¨`*·~-.¸-  You beat the level!!  -,.-~*´¨¯¨`*·~-",
 		    "Good Job!",
 		    1);
-	} else {
+	}
+        else if(deltaTime < level.getSecondsToSolve()&&currentLevel==2){
+	    JOptionPane popup = new JOptionPane("Good Job!");
+	    JOptionPane.showMessageDialog(
+		    popup,
+		    "-~*´¨¯¨`*·~-.¸-  You beat the game!!  -,.-~*´¨¯¨`*·~-",
+		    "Good Job!",
+		    1);
+	     System.exit(0);
+	} 
+        else {
 	    JOptionPane popup = new JOptionPane("Game Over");
 	    JOptionPane.showMessageDialog(
 		    popup,

@@ -16,6 +16,8 @@ import java.io.*;
 /**
  *
  * @author Bryce McGaw and Jonathan Yau
+ * @author Ryan Halbrook and Yun Suk Chang
+ * @version CS56 Spring 2013
  * Edited Professor Phill Conrad's code from Lab06
  */
 public class MemoryGameGui {
