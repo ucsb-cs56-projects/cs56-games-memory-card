@@ -27,9 +27,9 @@ public class MemoryGameGui {
     static MemoryGameComponent mgc = new MemoryGameComponent(grid);
     //static JButton restartB = new JButton("Restart");
     static RestartButtonHandler RBHandler;
-    static JLabel label = new JLabel("Time Remaining: 10");
+    static JLabel label = new JLabel("Time Remaining: 200");
     static JFrame instruction = new JFrame("Instruction");
-    static JTextArea text = new JTextArea(10,20);
+    static JTextArea text = new JTextArea(15,25);
 
     /** main method to open JFrame 
      *
@@ -66,7 +66,7 @@ public class MemoryGameGui {
 	panel.add(scroller);
 	
 	instruction.getContentPane().add(panel);
-        instruction.setSize(320,320);
+        instruction.setSize(350,350);
 	addInstruction();
 	instruction.setLocation((int)(screenSize.getWidth()/2 - instruction.getSize().getWidth()/2), (int)(screenSize.getHeight()/2 - instruction.getSize().getHeight()/2));
 	instruction.setVisible(true);
@@ -80,7 +80,7 @@ public class MemoryGameGui {
 	                        new FileInputStream(file)));
 	    String line;
 	    while((line = br.readLine()) != null){
-		text.append(line+"A\n");
+		text.append(line+"\n");
 	    }
 	    br.close();
 	} catch	(IOException e) {
