@@ -1,12 +1,12 @@
-
 <project default ="compile">
   
   <!-- build.xml for Memory Card Game, S12, CS56
-       name: Bryce McGaw and Jonathan Yau -->
+       name: Bryce McGaw and Jonathan Yau 
+       name: Mathew Glodack, Christina Morris, S13, CS56
+  -->
 
   
   <property environment="env"/> <!-- load environment vars -->
-  
   <property name="webRoot" value="${env.HOME}/public_html/cs56/13S/${env.USER}/games_memory_card" />
   <property name="webBaseURL" value="http://www.cs.ucsb.edu/~${env.USER}/cs56" />
   <property name="webBaseURL1" value="https://foo.cs.ucsb.edu/56mantis/view.php?id=805" />
@@ -18,19 +18,12 @@
   <property name="javadocDest" value="${webRoot}/${projectName}/javadoc" />
   <property name="javadocURL" value="${webBaseURL}/${projectName}/javadoc" /> 
   <property name="mainClass" value="edu.ucsb.cs56.projects.games.memorycard.MemoryGameGui" />
-  <property name="manTick"	value="${webBaseURL1}" />
-
-  <property name="jwsDest" value="${webRoot}/${projectName}/jws"/>
-  <property name="jwsURL" value="${webBaseURL}/${projectName}/jws"/>
-  <property name="fullPkg" value="edu.ucsb.cs56.S12.bryce3325.${course}_${quarter}_${projectName}"/>
-
 
   <path id="project.class.path">
     <pathelement location="build"/>
     <pathelement location="lib/junit-4.8.2.jar"/>
   </path>
   
-
   <!-- target that compiles the src codes and make a build folder to store the class file -->
   <target name="compile" description="Compiles MemoryCardGame">
     <mkdir dir="build" />
@@ -41,13 +34,10 @@
     </javac>
   </target>
   
-  
   <!-- target that runs the program -->
   <target name="run" description="Runs MemoryCardGame" depends="compile,jar">
     <java jar="dist/${course}_${quarter}_${projectName}.jar" classpath="build" fork="true" />
   </target>
-  
-  
   
   <!-- target that deletes unnecessary files and directories -->
   <target name="clean" description="Deletes unnecessary files and dir" >
@@ -56,9 +46,7 @@
     </delete>
     <delete dir="javadoc" quiet="true" />
   </target>
-  
-
-
+    
   <!-- target that generates javadoc files for MemoryCardGame -->
   <target name="javadoc" description="Generates JavaDoc files for MemoryCardGame" depends="compile">
     <delete dir="javadoc"  quiet="true" />
@@ -70,8 +58,6 @@
     <copy todir="${javadocDest}" >
       <fileset dir="javadoc"/>
     </copy>
-
-    
     <!-- Note: this only does the chmod command on the javadoc
 	 subdirectory and its contents. You MIGHT have to MANUALLY do the
 	 chmod on the parent directories. However, you should only need to do
@@ -81,7 +67,6 @@
     <chmod dir="${javadocDest}" perm="755" type="file" includes="**/*" />
     <echo>Javadoc deployed to ${javadocURL}</echo>
   </target> 
-  
   
   <!-- target that create a jar file -->
   <target name="jar" description = "Creates a jar file" depends="compile">
@@ -97,8 +82,6 @@
     </jar>
   </target>
   
-  
-
   <!-- target that runs Junit Tests -->
   <target name="test" description="Run JUnit tests on MemoryCardGame" depends="compile">
     <junit haltonerror="no" haltonfailure="no">
