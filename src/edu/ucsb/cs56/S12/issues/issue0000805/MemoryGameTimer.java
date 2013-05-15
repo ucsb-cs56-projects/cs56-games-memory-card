@@ -18,7 +18,7 @@ public class MemoryGameTimer implements Runnable{
    public void run(){
       while(true){
       while(!game.isOver()){
-         label.setText(""+(new Date().getTime()-timeStarted)/1000);
+	  label.setText("Time Remaining: "+(game.getLevelTime() - (new Date().getTime()-timeStarted)/1000));
       }
       timeStarted=new Date().getTime();
       game.setIsOver(false);

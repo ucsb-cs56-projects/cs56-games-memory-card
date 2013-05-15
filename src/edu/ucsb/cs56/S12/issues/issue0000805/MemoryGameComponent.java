@@ -30,6 +30,11 @@ public class MemoryGameComponent extends JComponent
     private boolean           cheatEnabled=false;
     private int               gameCounter=0;
     private boolean		isOver=false;
+
+
+    public int getLevelTime() {
+	return level.getSecondsToSolve();
+    }
     /**
        Loads a basic set of levels for the game
      */
