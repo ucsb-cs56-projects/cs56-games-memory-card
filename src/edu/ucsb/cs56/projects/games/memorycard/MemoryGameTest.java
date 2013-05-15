@@ -7,7 +7,6 @@ import static org.junit.Assert.*;
  * The test class MemoryGameTest - tests the MemoryGame class
  * @author Bryce McGaw and Jonathan Yau
  * @version 1.0.0 5/14/2012
- * @see MemoryGame.java
  * @author Mathew Glodack, Christina Morris
  * @version cs56, S13, 5/13/2013
 */
