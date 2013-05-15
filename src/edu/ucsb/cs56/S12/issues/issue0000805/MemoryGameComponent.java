@@ -16,18 +16,19 @@ import java.lang.Math;
  */
 public class MemoryGameComponent extends JComponent
 {
-    private MemoryGrid        grid;
+    
     private JButton []        buttons;
-    private int               gameCounter=0;
     private ArrayList<Icon>   imgIcons = new ArrayList<Icon>();
     public  JComponent        restartB = new JButton("Restart");
     private Icon              imgBlank;
     
+    private MemoryGrid        grid;
     private int               currentLevel;
     private MemoryGameLevel[] levels;
     private MemoryGameLevel   level = new MemoryGameLevel(36, 100, 2000);
     private long              startTime = 0;
     private boolean           cheatEnabled=false;
+    private int               gameCounter=0;
 
     /**
        Loads a basic set of levels for the game
@@ -116,7 +117,8 @@ public class MemoryGameComponent extends JComponent
 	public void actionPerformed (ActionEvent event) {
 	    
 	    Class classs = this.getClass();
-	    Icon imgBlank = new ImageIcon(classs.getResource("/images/000.jpg"));
+	    Icon imgBlank = new ImageIcon(
+				classs.getResource("/images/000.jpg"));
             
 	    //if 2 MemoryCards are flipped, flip back over
 	    flipBack();
@@ -125,8 +127,8 @@ public class MemoryGameComponent extends JComponent
 		grid.flip(num);
 		JButton jb = buttons[num];
 		Icon i = imgIcons.get(grid.getVal(num)-1);
-		jb.setIcon(i);        //set image according to val
-		if(num!=1)            //cheat code
+		jb.setIcon(i);            //set image according to val
+		if(num!=1)                //cheat code
 		    jb.setEnabled(false); //make unclickable
                 else
 		    cheatEnabled=true;	
@@ -138,16 +140,8 @@ public class MemoryGameComponent extends JComponent
             else{
 		if((num==1&&cheatEnabled))//cheat code
 		    {
-			long finalTime = new Date().getTime();
-			long deltaTime = finalTime - startTime;
-			System.out.println("You solved under the target time by " + ((int)(deltaTime/1000.0) - level.getSecondsToSolve()) + "seconds");
-                        grid.isOver=true;
-                        
-                        JOptionPane popup = new JOptionPane("Good Job!");
-                        JOptionPane.showMessageDialog(popup,
-						      "-~*´¨¯¨`*·~-.¸-  You won!!  -,.-~*´¨¯¨`*·~-", "Good Job!",1);
-			newGame(16);
-        			
+		        endGame();
+			newGame(true); // true to start the next level
 		    }
                 grid.flip(num);
                 JButton jb = buttons[num];
@@ -162,15 +156,8 @@ public class MemoryGameComponent extends JComponent
                     
                     //check if game is over
                     if(gameCounter==grid.getSize()/2){
-			long finalTime = new Date().getTime();
-			long deltaTime = finalTime - startTime;
-			System.out.println("You solved under the target time by " + ((int)(deltaTime/1000.0) - level.getSecondsToSolve()) + "seconds");
-                        grid.isOver=true;
-                        
-                        JOptionPane popup = new JOptionPane("Good Job!");
-                        JOptionPane.showMessageDialog(popup,
-						      "-~*´¨¯¨`*·~-.¸-  You won!!  -,.-~*´¨¯¨`*·~-", "Good Job!",1);
-			newGame(16);
+		        endGame();
+			newGame(true); // true to start the next level
                     } 
                 } else {
 		    // start the flip back timer
@@ -188,17 +175,36 @@ public class MemoryGameComponent extends JComponent
     }
 
     /**
-       Starts a new game
+       Starts a new level or restarts the current level
      */
-    public void newGame(int gridSize) {
+    public void newGame(boolean startNextLevel) {
 	gameCounter = 0;
-	if (currentLevel < levels.length) {
+	if (startNextLevel && currentLevel < levels.length) {
 	    currentLevel++;
 	    level = levels[currentLevel];
 	}
-	gridSize = level.getGridSize();
+	int gridSize = level.getGridSize();
 	grid = new MemoryGrid(gridSize);
 	buildTiles();
+    }
+
+    public void endGame() {
+	long finalTime = new Date().getTime();
+	long deltaTime = finalTime - startTime;
+	
+	// Should be replaced with code to decide whether the user should pass
+	// the current level.
+        System.out.println("You solved under the target time by "
+	+ ((int)(deltaTime/1000.0) - level.getSecondsToSolve()) + "seconds");
+
+        grid.isOver=true;
+                        
+        JOptionPane popup = new JOptionPane("Good Job!");
+        JOptionPane.showMessageDialog(
+		    popup,
+		    "-~*´¨¯¨`*·~-.¸-  You won!!  -,.-~*´¨¯¨`*·~-",
+		    "Good Job!",
+		    1);
     }
 
     /**
