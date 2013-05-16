@@ -233,7 +233,9 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	timer = new Timer(1000, this);
 	firstImageFlipped = false;
     }
-
+    public void reset(){
+ 	newGame(currentLevel);
+    }
 
     public void endGame() {
 	long finalTime = new Date().getTime();

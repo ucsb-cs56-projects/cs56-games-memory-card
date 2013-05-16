@@ -27,8 +27,7 @@ public class MemoryGameGui {
     static JFrame frame = new JFrame("Memory Card Game");
     static MemoryGrid grid = new MemoryGrid(16);
     static MemoryGameComponent mgc = new MemoryGameComponent(grid);
-    //static JButton restartB = new JButton("Restart");
-    static RestartButtonHandler RBHandler;
+    static JButton reset = new JButton("Reset");
     static JLabel label = new JLabel("Time Remaining: 200");
     static JFrame instruction = new JFrame("Instruction");
     static JTextArea text = new JTextArea(15,25);
@@ -41,11 +40,29 @@ public class MemoryGameGui {
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	instruction.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	
-	//restartB.addActionListener(RBHandler);
-	//this.setLocation(screen.getWidth() / 2 - 
+	ActionListener resetListener = new ActionListener(){
+		public void actionPerformed(ActionEvent e){
+	            JOptionPane popup = new JOptionPane("Warning!");
+	            Object[] options= {"Start Over","Cancel"};
+	
+	            int selection=popup.showOptionDialog(
+	                    null,
+	                    "Do you want to restart this level?",
+	                    "Warning!",
+       		             JOptionPane.YES_NO_OPTION,
+        	            JOptionPane.INFORMATION_MESSAGE, null,
+        	            options, options[0]);
+
+        	    if(selection==JOptionPane.YES_OPTION)
+        	            mgc.reset();
+		}
+	};
+	reset.addActionListener(resetListener);
 	frame.getContentPane().add(mgc);
-	//frame.getContentPane().add(restartB);
-	frame.getContentPane().add(BorderLayout.SOUTH,label);
+	JPanel p = new JPanel(new BorderLayout());
+	p.add(BorderLayout.EAST,reset);
+	p.add(BorderLayout.WEST,label);
+	frame.getContentPane().add(BorderLayout.SOUTH,p);
 
 	
 	
@@ -89,9 +106,10 @@ public class MemoryGameGui {
 	   e.printStackTrace();
 	} 
     }
-    private class RestartButtonHandler implements ActionListener{
+/*    private class ResetListener implements ActionListener{
 
 	public void actionPerformed(ActionEvent e){
+	    mgc.reset();
 
 	    grid = new MemoryGrid(16);
 	    mgc = new MemoryGameComponent(grid);
@@ -99,6 +117,6 @@ public class MemoryGameGui {
 	    //frame.getContentPane().add(restartB);
 	    
 	}
-    }
+    }*/
 
 }
