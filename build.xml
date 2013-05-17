@@ -10,12 +10,12 @@
   <property name="webBaseURL1"  value="https://foo.cs.ucsb.edu/56mantis/view.php?id=805" />
 
   <property name="course"       value="cs56" />
-  <property name="quarter"      value="S12" />
-  <property name="projectName"  value="0000805" />
+  <property name="quarter"      value="13S" />
+  <property name="projectName"  value="memorycard" />
   <property name="projectPath"  value="${course}/${quarter}/issues/${projectName}"/>
   <property name="javadocDest"  value="${webRoot}/${projectName}/javadoc" />
   <property name="javadocURL"   value="${webBaseURL}/${projectName}/javadoc"/>
-  <property name="mainClass"    value="edu.ucsb.cs56.S12.issues.issue0000805.MemoryGameGui" />
+  <property name="mainClass"    value="edu.ucsb.cs56.projects.games.memorycard.MemoryGameGui" />
   <property name="manTick"	    value="${webBaseURL1}" />
 
   <property name="jwsDest"      value="${webRoot}/${projectName}/jws"/>

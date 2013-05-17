@@ -1,4 +1,4 @@
-package edu.ucsb.cs56.S12.issues.issue0000805;
+package edu.ucsb.cs56.projects.games.memorycard;
 import java.awt.GridLayout;
 import javax.swing.JComponent;
 import javax.swing.JButton;

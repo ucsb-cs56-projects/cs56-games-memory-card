@@ -1,4 +1,4 @@
-package edu.ucsb.cs56.S12.issues.issue0000805;
+package edu.ucsb.cs56.projects.games.memorycard;
 
 /**
  * @author Ryan Halbrook
