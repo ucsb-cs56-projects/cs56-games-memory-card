@@ -19,126 +19,32 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 {
     
     private JButton []        buttons;
-    private ArrayList<Icon>   imgIcons = new ArrayList<Icon>();
-    public  JComponent        restartB = new JButton("Restart");
+    private ArrayList<Icon>   imgIcons          = new ArrayList<Icon>();
+    public  JComponent        restartB          = new JButton("Restart");
     private Icon              imgBlank;
+     private JButton	      pauseButton;
+    private JLabel            timeLabel         = null;
+    private Timer             timer; // used to get an event every 250 ms to
+                                     // update the time remaining display
     
     private MemoryGrid        grid;
     private int               currentLevel;
     private MemoryGameLevel[] levels;
-    private MemoryGameLevel   level             = new MemoryGameLevel(36, 100, 2000);
-    private long              startTime         = 0;
+    private MemoryGameLevel   level;
+
+    private boolean           firstImageFlipped = false;
+    private int               gameCounter       = 0;
+    private long              startTime         = 0; // used to calculate the
+                                                     // total game time.
     private boolean           cheatEnabled      = false; // Cheat code related.
     private boolean	      isOver            = false; // Cheat code related.
-    private int               gameCounter       = 0;
-
-    private JLabel            timeLabel         = null;
-    private boolean           firstImageFlipped = false;
-    private Timer             timer;
-    private JButton	      pauseButton;
+    
     // For pausing. pausing just stops the timer and the play
     // time is computed as final time minus start time.
     // Therefore, this total pause time is used to
     // adjust the elapsed time to the actual play time.
     private long pauseTime = 0;
     private long pauseStart;
-
-    // Pause the game
-    public void pauseB() {
-	pauseStart = new Date().getTime();
-	timer.stop();
-        JOptionPane popup = new JOptionPane("PAUSED");
-        Object[] options= {"Resume"};
-
-        int selection=popup.showOptionDialog(
-					     null,
-					     "GAME PAUSED",
-					     "PAUSED",
-					      JOptionPane.OK_CANCEL_OPTION,
-					      JOptionPane.INFORMATION_MESSAGE, null,
-					      options, options[0]);
-	
-        if(selection==JOptionPane.YES_OPTION)
-	{
-		resume();
-	}
-    }
-    public void pause() {
-	pauseStart = new Date().getTime();
-	timer.stop();
- 
-    }
-
-    // resume the game
-    public void resume() {
-	long currentTime = new Date().getTime();
-	pauseTime += currentTime - pauseStart;
-	timer = new Timer(1000, this);
-	timer.start();
-    }
-
-    private void updateTimeLabel(long minutes, long seconds) {
-	String m = " minutes, ";
-	if (minutes == 1) m = " minute, ";
-	if (minutes > 0) {
-	    timeLabel.setText("Time Remaining: " + minutes + m + seconds + " seconds");
-	} else {
-	    timeLabel.setText("Time Remaining: " + seconds + " seconds");
-	}
-    }
-
-    public void actionPerformed(ActionEvent e) {
-	long finalTime = new Date().getTime();
-	long deltaTime = (long)((finalTime - startTime) / 1000.0);
-	long timeRemaining = (long)(level.getSecondsToSolve() - deltaTime + pauseTime  / 1000.0);
-	
-	if (timeRemaining < 0) {
-	    endGame();
-	}
-	if (timeRemaining < 0)
-	    timeRemaining = 0;
-
-        updateTimeLabel(timeRemaining / 60, timeRemaining % 60);
-    }
-
-    public void setLabel(JLabel label) {
-	this.timeLabel = label;
-    }
-    public void setPauseButton(JButton b){
-	pauseButton=b;
-	pauseButton.setEnabled(false);
-    }
-    /**
-       Loads a basic set of levels for the game
-    */
-    private void loadLevelSet1() {
-	levels = new MemoryGameLevel[3];
-	levels[0] = new MemoryGameLevel(16, 75, 1500);
-	levels[1] = new MemoryGameLevel(36, 300, 1000);
-	levels[2] = new MemoryGameLevel(36, 150, 500);
-	currentLevel = 0;
-	level = levels[currentLevel];
-    }
-
-    // The first 8 images. These will be used
-    // for a 4 by 4 game.
-    private String[] images8 = {
-	"/images/200.jpg", "/images/201.jpg",
-	"/images/202.jpg", "/images/203.jpg",
-	"/images/204.jpg", "/images/205.jpg",
-	"/images/206.jpg", "/images/207.jpg",
-    };
-    // The next ten images. These, in addition
-    // to the first 8 will be used for a
-    // 6 by 6 game.
-    private String[] images10 = {
-	"/images/208.jpg", "/images/209.jpg",
-	"/images/210.jpg", "/images/211.jpg",
-	"/images/212.jpg", "/images/213.jpg",
-	"/images/214.jpg", "/images/215.jpg",
-       	"/images/216.jpg", "/images/217.jpg",
-        
-    };
 
     /** Constructor
 	
@@ -161,6 +67,135 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	startTime = new Date().getTime();
     }
 
+    /** 
+	Pause the timer and the game by showing a dialog box,
+	preventing the user from playing the game until they resume.
+     */
+    public void pauseGame() {
+	pauseTimer();
+        JOptionPane popup = new JOptionPane("PAUSED");
+        Object[] options= {"Resume"};
+
+        int selection=popup.showOptionDialog(
+					     null,
+					     "GAME PAUSED",
+					     "PAUSED",
+					      JOptionPane.OK_CANCEL_OPTION,
+					      JOptionPane.INFORMATION_MESSAGE, null,
+					      options, options[0]);
+	
+        if(selection==JOptionPane.YES_OPTION)
+	{
+		resume();
+	}
+    }
+    
+    /**
+       Pause just the game timer.
+     */
+    public void pauseTimer() {
+	pauseStart = new Date().getTime();
+	timer.stop();
+ 
+    }
+
+    /**
+       Resume the game timer. In other words, recalculate total pause
+       time and start the timer.
+     */
+    public void resume() {
+	long currentTime = new Date().getTime();
+	pauseTime += currentTime - pauseStart;
+	timer = new Timer(1000, this);
+	timer.start();
+    }
+
+    /**
+       Updates the display showing the amount of time remaining
+       before the level ends.
+     */
+    private void updateTimeLabel(long minutes, long seconds) {
+	String m = " minutes, ";
+	if (minutes == 1) m = " minute, ";
+	if (minutes > 0) {
+	    timeLabel.setText("Time Remaining: " + minutes + m + seconds + " seconds");
+	} else {
+	    timeLabel.setText("Time Remaining: " + seconds + " seconds");
+	}
+    }
+
+    /**
+       Callback from the timer. This is used to update the time remaining
+       label and to check if the game has ended as a result of the level
+       time running out.
+     */
+    public void actionPerformed(ActionEvent e) {
+	long finalTime = new Date().getTime();
+	long deltaTime = (long)((finalTime - startTime) / 1000.0);
+	long timeRemaining = (long)(level.getSecondsToSolve() - deltaTime + pauseTime  / 1000.0);
+	
+	if (timeRemaining < 0) {
+	    endGame();
+	}
+	if (timeRemaining < 0)
+	    timeRemaining = 0;
+
+        updateTimeLabel(timeRemaining / 60, timeRemaining % 60);
+    }
+
+    /**
+       The label whose value will show the time remaining
+       should be passed in here. 
+     */
+    public void setLabel(JLabel label) {
+	this.timeLabel = label;
+    }
+    
+    /**
+       Setter for the pause button.
+     */
+    public void setPauseButton(JButton b){
+	pauseButton=b;
+	pauseButton.setEnabled(false);
+    }
+
+    /**
+       "Loads" a basic set of levels for the game into the array of levels.
+       Then sets the current level to the first of the three levels.
+    */
+    private void loadLevelSet1() {
+	levels = new MemoryGameLevel[3];
+	levels[0] = new MemoryGameLevel(16, 75, 1500);
+	levels[1] = new MemoryGameLevel(36, 300, 1000);
+	levels[2] = new MemoryGameLevel(36, 150, 500);
+	currentLevel = 0;
+	level = levels[currentLevel];
+    }
+
+    // The first 8 images. These will be used
+    // for a 4 by 4 game.
+    private String[] images8 = {
+	"/images/200.jpg", "/images/201.jpg",
+	"/images/202.jpg", "/images/203.jpg",
+	"/images/204.jpg", "/images/205.jpg",
+	"/images/206.jpg", "/images/207.jpg",
+    };
+
+    // The next ten images. These, in addition
+    // to the first 8 will be used for a
+    // 6 by 6 game.
+    private String[] images10 = {
+	"/images/208.jpg", "/images/209.jpg",
+	"/images/210.jpg", "/images/211.jpg",
+	"/images/212.jpg", "/images/213.jpg",
+	"/images/214.jpg", "/images/215.jpg",
+       	"/images/216.jpg", "/images/217.jpg",
+    };   
+
+    /**
+       Setup the grid of buttons which represent the game's memory cards
+       and allow the user to choose them.
+     */
     public void buildTiles() {
 	this.removeAll();
 	int gridSize = grid.getSize();
@@ -185,6 +220,9 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	startTime = new Date().getTime();
     }
 
+    /**
+       Inner class to deal with events sent by the buttons or "tiles".
+     */
     class ButtonListener implements ActionListener {
 	private int num;
 
@@ -212,33 +250,37 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 		}
 		grid.flip(num);
 		JButton jb = buttons[num];
-		Icon i = imgIcons.get(grid.getVal(num)-1);
+		Icon i = imgIcons.get(grid.getVal(num) - 1);
 		jb.setIcon(i);            //set image according to val
-		if(num!=1)                //cheat code
+		if(num! = 1)                //cheat code
 		    jb.setEnabled(false); //make unclickable
                 else
 		    //cheat code. Needs to override the button so that button is same color as regular button.
-		    cheatEnabled=true;	
+		    cheatEnabled = true;	
 	    }
 
             //if one MemoryCard is flipped, flip other
             //then check if theyre matching
             else{
-		if((num==1&&cheatEnabled))//cheat code
+		if((num == 1 && cheatEnabled))//cheat code
 		    {
-			cheatEnabled=false;
-                        isOver=true;
+			cheatEnabled = false;
+                        isOver = true;
 		        endGame();
 			return;
 		    }
-		cheatEnabled=false;//cheat code
+		cheatEnabled = false;//cheat code
                 grid.flip(num);
                 JButton jb = buttons[num];
 		
-		jb.setIcon(imgIcons.get(grid.getVal(num)-1));      //set image according to val
+		//set image according to val
+		jb.setIcon(imgIcons.get(grid.getVal(num)-1));      
       
                 jb.setEnabled(false);
-                if (grid.flippedEquals(num)){    //if they're matching keep num displayed and set flipped as false
+
+		//if they're matching keep num displayed 
+		//and set flipped as false
+                if (grid.flippedEquals(num)){    
                     gameCounter++;
                     grid.flip(num); 
                     grid.flip(grid.getFlipped());
@@ -252,7 +294,9 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 		    // start the flip back timer
 		    int delay = level.getFlipTime();
 		    ActionListener listener = new ActionListener() {
-			    public void actionPerformed(ActionEvent e) { flipBack(); }
+			    public void actionPerformed(ActionEvent e) { 
+				flipBack(); 
+			    }
 			};
 		    Timer t = new Timer(delay, listener);
 		    t.setRepeats(false);
@@ -282,7 +326,8 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     }
     public void reset() {
 	pauseTime = 0;
-	updateTimeLabel(level.getSecondsToSolve() / 60, level.getSecondsToSolve() % 60);	    
+	updateTimeLabel(level.getSecondsToSolve() / 60, 
+			level.getSecondsToSolve() % 60);	    
  	newGame(currentLevel);
 	firstImageFlipped = false;
 	pauseButton.setEnabled(false);
@@ -381,6 +426,9 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	}
     }
 
+    /**
+       "Loads" the image icons into the arraylist of icons.
+     */
     public void loadImageIcons() {
 	//get the current classloader (needed for getResource method..  )
 	//                            (which is required for jws to work)

@@ -44,12 +44,12 @@ public class MemoryGameGui {
 		
 	ActionListener pauseListener = new ActionListener(){
 		public void actionPerformed(ActionEvent e){
-				mgc.pauseB();
+				mgc.pauseGame();
 		}
 	};
 	ActionListener resetListener = new ActionListener(){
 		public void actionPerformed(ActionEvent e){
-		    mgc.pause();
+		    mgc.pauseTimer();
 	            JOptionPane popup = new JOptionPane("Warning!");
 	            Object[] options= {"Start Over","Cancel"};
 	
