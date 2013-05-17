@@ -35,10 +35,26 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     private boolean           firstImageFlipped = false;
     private Timer             timer;
 
+    private long pauseTime = 0;
+    private long pauseStart;
+
+    public void pause() {
+	pauseStart = new Date().getTime();
+	timer.stop();
+    }
+
+    public void resume() {
+	long currentTime = new Date().getTime();
+	pauseTime += currentTime - pauseStart;
+	timer = new Timer(1000, this);
+	timer.start();
+
+    }
+
     public void actionPerformed(ActionEvent e) {
 	long finalTime = new Date().getTime();
 	long deltaTime = (long)((finalTime - startTime) / 1000.0);
-	long timeRemaining = level.getSecondsToSolve() - deltaTime;
+	long timeRemaining = (long)(level.getSecondsToSolve() - deltaTime + pauseTime  / 1000.0);
 	
 	if (timeRemaining < 0) {
 	    endGame();
@@ -57,9 +73,9 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     */
     private void loadLevelSet1() {
 	levels = new MemoryGameLevel[3];
-	levels[0] = new MemoryGameLevel(16, 200, 3000);
-	levels[1] = new MemoryGameLevel(36, 2000, 2000);
-	levels[2] = new MemoryGameLevel(36, 1700, 1000);
+	levels[0] = new MemoryGameLevel(16, 75, 1500);
+	levels[1] = new MemoryGameLevel(36, 300, 1000);
+	levels[2] = new MemoryGameLevel(36, 150, 500);
 	currentLevel = 0;
 	level = levels[currentLevel];
     }
@@ -224,6 +240,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	firstImageFlipped = false;
     }
     public void reset() {
+	pauseTime = 0;
 	timeLabel.setText("Time Remaining: " + level.getSecondsToSolve());	    
  	newGame(currentLevel);
     }
@@ -233,10 +250,11 @@ public class MemoryGameComponent extends JComponent implements ActionListener
        from a dialog menu.
      */
     public void endGame() {
+	
 	timer.stop();
 	long finalTime = new Date().getTime();
-	long deltaTime = (long)((finalTime - startTime) / 1000.0);
-
+	long deltaTime = (long)((finalTime - startTime) / 1000.0) - pauseTime * 1000;
+	pauseTime = 0;
         grid.isOver=true;
                         
 	if (deltaTime < level.getSecondsToSolve()&&currentLevel<2) {
