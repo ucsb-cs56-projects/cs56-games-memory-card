@@ -29,26 +29,42 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     private MemoryGameLevel   level             = new MemoryGameLevel(36, 100, 2000);
     private long              startTime         = 0;
     private boolean           cheatEnabled      = false; // Cheat code related.
-    private int               gameCounter       = 0;
     private boolean	      isOver            = false; // Cheat code related.
+    private int               gameCounter       = 0;
+
     private JLabel            timeLabel         = null;
     private boolean           firstImageFlipped = false;
     private Timer             timer;
 
+    // For pausing. pausing just stops the timer and the play
+    // time is computed as final time minus start time.
+    // Therefore, this total pause time is used to
+    // adjust the elapsed time to the actual play time.
     private long pauseTime = 0;
     private long pauseStart;
 
+    // Pause the game
     public void pause() {
 	pauseStart = new Date().getTime();
 	timer.stop();
     }
 
+    // resume the game
     public void resume() {
 	long currentTime = new Date().getTime();
 	pauseTime += currentTime - pauseStart;
 	timer = new Timer(1000, this);
 	timer.start();
+    }
 
+    private void updateTimeLabel(long minutes, long seconds) {
+	String m = " minutes, ";
+	if (minutes == 1) m = " minute, ";
+	if (minutes > 0) {
+	    timeLabel.setText("Time Remaining: " + minutes + m + seconds + " seconds");
+	} else {
+	    timeLabel.setText("Time Remaining: " + seconds + " seconds");
+	}
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -59,9 +75,10 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	if (timeRemaining < 0) {
 	    endGame();
 	}
-	if (timeRemaining < 0) timeRemaining = 0;
-	timeLabel.setText("Time Remaining: " + timeRemaining);
-	
+	if (timeRemaining < 0)
+	    timeRemaining = 0;
+
+        updateTimeLabel(timeRemaining / 60, timeRemaining % 60);
     }
 
     public void setLabel(JLabel label) {
@@ -109,7 +126,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     public MemoryGameComponent(MemoryGrid game) {
 	super(); 
 	timeLabel = new JLabel("Time Remaining");
-	timer = new Timer(1000, this);
+	timer = new Timer(250, this);
 
 	this.grid = game;
         int gridSize = grid.getSize();
@@ -241,7 +258,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     }
     public void reset() {
 	pauseTime = 0;
-	timeLabel.setText("Time Remaining: " + level.getSecondsToSolve());	    
+	updateTimeLabel(level.getSecondsToSolve() / 60, level.getSecondsToSolve() % 60);	    
  	newGame(currentLevel);
     }
 
@@ -271,8 +288,9 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	
             if(selection==JOptionPane.YES_OPTION)
 		{
-			timeLabel.setText("Time Remaining: " + levels[currentLevel+1].getSecondsToSolve());
-			newGame(currentLevel+1);
+		    long time = levels[currentLevel+1].getSecondsToSolve();
+		    updateTimeLabel(time / 60, time % 60);
+		    newGame(currentLevel+1);
 		}
 	    else	    
 		System.exit(0);
@@ -290,7 +308,8 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 						 options, options[0]);
 	    if(selection==JOptionPane.YES_OPTION)
 		{
-		    timeLabel.setText("Time Remaining: " + levels[0].getSecondsToSolve());
+		    long time = levels[0].getSecondsToSolve();
+		    updateTimeLabel(time / 60, time % 60);
 		    newGame(0);
 		}
 	    else
@@ -309,7 +328,8 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 						 options, options[0]);
 	    if(selection==JOptionPane.YES_OPTION)
 		{
-		    timeLabel.setText("Time Remaining: " + level.getSecondsToSolve());
+		    long time = level.getSecondsToSolve();
+		    updateTimeLabel(time / 60, time % 60);
 		    newGame(currentLevel);
 		}
 	    else
