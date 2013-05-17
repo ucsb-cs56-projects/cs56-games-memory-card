@@ -18,8 +18,6 @@
   <property name="mainClass"    value="edu.ucsb.cs56.projects.games.memorycard.MemoryGameGui" />
   <property name="manTick"	    value="${webBaseURL1}" />
 
-  <property name="jwsDest"      value="${webRoot}/${projectName}/jws"/>
-  <property name="jwsURL"       value="${webBaseURL}/${projectName}/jws"/>
   <property name="fullPkg"      value="edu.ucsb.cs56.S12.bryce3325.${course}_${quarter}_${projectName}"/>
 
 
@@ -101,7 +99,7 @@
 
 
   <!-- target that publishes the JavaDocs and Dist files -->
-  <target name="publish" description="Publishes JavaDocs and Dist files" depends="linenumbers,jar,jws,javadoc,dist">
+  <target name="publish" description="Publishes JavaDocs and Dist files" depends="linenumbers,jar,javadoc,dist">
     <mkdir  dir="${webRoot}/${projectName}" />
 
     <delete dir="${webRoot}/${projectName}/browse" />
@@ -171,28 +169,6 @@
     </delete>
 
   </target>
-
-
-
-  <target name="jws" depends="compile,jar">
-
-    <delete dir="${webRoot}/${projectName}/jws" />
-    <mkdir  dir="${webRoot}/${projectName}/jws" />
-
-    <copy todir="${jwsDest}" file="dist/${course}_${quarter}_${projectName}.jar" />
-    <copy todir="${jwsDest}" >
-      <fileset dir="jws" includes="*.html"/>
-      <fileset dir="jws" includes="*.jnlp"/>
-      <fileset dir="jws" includes="*.png" />
-      <fileset dir="jws" includes="*.jpg" />
-      <fileset dir="jws" includes=".htaccess"/>
-    </copy>
-
-    <echo>Java web start at ${jwsURL}</echo>
-
-  </target>  
-
-
 
   <!-- target that runs Junit Tests -->
   <target name="test" description="Run JUnit tests on MemoryCardGame" depends="compile">
