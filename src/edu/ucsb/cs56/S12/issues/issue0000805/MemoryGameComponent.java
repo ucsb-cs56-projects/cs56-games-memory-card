@@ -224,6 +224,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	firstImageFlipped = false;
     }
     public void reset() {
+	timeLabel.setText("Time Remaining: " + level.getSecondsToSolve());	    
  	newGame(currentLevel);
     }
 
@@ -251,7 +252,10 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 						 options, options[0]);
 	
             if(selection==JOptionPane.YES_OPTION)
-		newGame(currentLevel+1);
+		{
+			timeLabel.setText("Time Remaining: " + levels[currentLevel+1].getSecondsToSolve());
+			newGame(currentLevel+1);
+		}
 	    else	    
 		System.exit(0);
 
@@ -268,6 +272,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 						 options, options[0]);
 	    if(selection==JOptionPane.YES_OPTION)
 		{
+		    timeLabel.setText("Time Remaining: " + levels[0].getSecondsToSolve());
 		    newGame(0);
 		}
 	    else
