@@ -29,7 +29,6 @@ public class MemoryGameGui {
     static MemoryGameComponent mgc = new MemoryGameComponent(grid);
     static JButton reset = new JButton("Reset");
     static JButton pause = new JButton("Pause");
-    static boolean isPaused = false;
     static JLabel label = new JLabel("Time Remaining: 1 minute, 15 seconds");
     static JFrame instruction = new JFrame("Instruction");
     static JTextArea text = new JTextArea(15,25);
@@ -44,15 +43,7 @@ public class MemoryGameGui {
 		
 	ActionListener pauseListener = new ActionListener(){
 		public void actionPerformed(ActionEvent e){
-			if(isPaused){
-				isPaused=false;
-				mgc.resume();
-				
-			}	
-			else{
-				isPaused=true;
-				mgc.pause();
-			}
+				mgc.pauseB();
 		}
 	};
 	ActionListener resetListener = new ActionListener(){
@@ -66,7 +57,7 @@ public class MemoryGameGui {
 	                    "Do you want to restart this level?",
 	                    "Warning!",
        		             JOptionPane.YES_NO_OPTION,
-        	            JOptionPane.INFORMATION_MESSAGE, null,
+        	            JOptionPane.WARNING_MESSAGE, null,
         	            options, options[0]);
 
         	    if(selection==JOptionPane.YES_OPTION)

@@ -44,9 +44,29 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     private long pauseStart;
 
     // Pause the game
+    public void pauseB() {
+	pauseStart = new Date().getTime();
+	timer.stop();
+        JOptionPane popup = new JOptionPane("PAUSED");
+        Object[] options= {"Resume"};
+
+        int selection=popup.showOptionDialog(
+					     null,
+					     "GAME PAUSED",
+					     "PAUSED",
+					      JOptionPane.OK_CANCEL_OPTION,
+					      JOptionPane.INFORMATION_MESSAGE, null,
+					      options, options[0]);
+	
+        if(selection==JOptionPane.YES_OPTION)
+	{
+		resume();
+	}
+    }
     public void pause() {
 	pauseStart = new Date().getTime();
 	timer.stop();
+ 
     }
 
     // resume the game
