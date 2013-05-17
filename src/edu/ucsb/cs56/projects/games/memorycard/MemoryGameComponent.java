@@ -22,7 +22,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     private ArrayList<Icon>   imgIcons          = new ArrayList<Icon>();
     public  JComponent        restartB          = new JButton("Restart");
     private Icon              imgBlank;
-     private JButton	      pauseButton;
+    private JButton	      pauseButton;
     private JLabel            timeLabel         = null;
     private Timer             timer; // used to get an event every 250 ms to
                                      // update the time remaining display
@@ -252,7 +252,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 		JButton jb = buttons[num];
 		Icon i = imgIcons.get(grid.getVal(num) - 1);
 		jb.setIcon(i);            //set image according to val
-		if(num! = 1)                //cheat code
+		if(num != 1)                //cheat code
 		    jb.setEnabled(false); //make unclickable
                 else
 		    //cheat code. Needs to override the button so that button is same color as regular button.
