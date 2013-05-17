@@ -35,7 +35,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     private JLabel            timeLabel         = null;
     private boolean           firstImageFlipped = false;
     private Timer             timer;
-
+    private JButton	      pauseButton;
     // For pausing. pausing just stops the timer and the play
     // time is computed as final time minus start time.
     // Therefore, this total pause time is used to
@@ -104,7 +104,10 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     public void setLabel(JLabel label) {
 	this.timeLabel = label;
     }
-
+    public void setPauseButton(JButton b){
+	pauseButton=b;
+	pauseButton.setEnabled(false);
+    }
     /**
        Loads a basic set of levels for the game
     */
@@ -155,7 +158,6 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	loadLevelSet1();
 	loadImageIcons(); // loads the array list of icons and sets imgBlank
 	buildTiles();
-	
 	startTime = new Date().getTime();
     }
 
@@ -206,6 +208,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 		    startTime = (new Date().getTime());
 		    timer.start();
 		    firstImageFlipped = true;
+		    pauseButton.setEnabled(true);
 		}
 		grid.flip(num);
 		JButton jb = buttons[num];
@@ -275,12 +278,14 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	if (timer != null) timer.stop();
 	
 	firstImageFlipped = false;
+	pauseButton.setEnabled(false);
     }
     public void reset() {
 	pauseTime = 0;
 	updateTimeLabel(level.getSecondsToSolve() / 60, level.getSecondsToSolve() % 60);	    
  	newGame(currentLevel);
 	firstImageFlipped = false;
+	pauseButton.setEnabled(false);
     }
 
     /**

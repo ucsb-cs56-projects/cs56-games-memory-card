@@ -38,6 +38,7 @@ public class MemoryGameGui {
      */
     
     public static void main (String[] args) {
+
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	instruction.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
@@ -83,6 +84,7 @@ public class MemoryGameGui {
 
 	// to make sure that grids go left to right
 	mgc.setLabel(label);
+	mgc.setPauseButton(pause);
 	frame.applyComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 	frame.setSize(WINDOW_SIZE, WINDOW_SIZE);
 
