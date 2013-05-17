@@ -28,6 +28,8 @@ public class MemoryGameGui {
     static MemoryGrid grid = new MemoryGrid(16);
     static MemoryGameComponent mgc = new MemoryGameComponent(grid);
     static JButton reset = new JButton("Reset");
+    static JButton pause = new JButton("Pause");
+    static boolean isPaused = false;
     static JLabel label = new JLabel("Time Remaining: 75");
     static JFrame instruction = new JFrame("Instruction");
     static JTextArea text = new JTextArea(15,25);
@@ -39,7 +41,19 @@ public class MemoryGameGui {
     public static void main (String[] args) {
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	instruction.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	
+		
+	ActionListener pauseListener = new ActionListener(){
+		public void actionPerformed(ActionEvent e){
+			if(isPaused){
+				isPaused = false;
+				mgc.resume();
+			}
+			else{
+				isPaused = true;
+				mgc.pause();
+			}
+		}
+	};
 	ActionListener resetListener = new ActionListener(){
 		public void actionPerformed(ActionEvent e){
 		    mgc.pause();
@@ -60,15 +74,42 @@ public class MemoryGameGui {
 			mgc.resume();
 		}
 	};
+	pause.addActionListener(pauseListener);
 	reset.addActionListener(resetListener);
 	frame.getContentPane().add(mgc);
-	JPanel p = new JPanel(new BorderLayout());
-	p.add(BorderLayout.EAST,reset);
-	p.add(BorderLayout.WEST,label);
+//	SpringLayout layout=new SpringLayout();
+/*	frame.getContentPane().setLayout(layout);
+	frame.getContentPane().add(SpringLayout.SOUTH,pause);
+	frame.getContentPane().add(SpringLayout.SOUTH,pause);
+	frame.getContentPane().add(SpringLayout.SOUTH,pause);*/
+	JPanel p = new JPanel();
+	p.add(label);
+	p.add(pause);
+	p.add(reset);
+/*	layout.putConstraint(SpringLayout.WEST, label,
+	                     5,
+	                     SpringLayout.WEST, frame.getContentPane());
+	layout.putConstraint(SpringLayout.NORTH, label,
+	                     5,
+	                     SpringLayout.NORTH, frame.getContentPane());
+	
+	layout.putConstraint(SpringLayout.EAST, reset,
+        	             5,
+        	             SpringLayout.EAST, frame.getContentPane());
+	layout.putConstraint(SpringLayout.NORTH, reset,
+        	             5,
+        	             SpringLayout.NORTH, frame.getContentPane());
+	layout.putConstraint(SpringLayout.EAST, pause,
+        	             5,
+        	             SpringLayout.EAST, reset);
+	layout.putConstraint(SpringLayout.NORTH, pause,
+        	             5,
+        	             SpringLayout.NORTH, frame.getContentPane());
+*/	
+
+
 	frame.getContentPane().add(BorderLayout.SOUTH,p);
 
-	
-	
 
 	// to make sure that grids go left to right
 	mgc.setLabel(label);
