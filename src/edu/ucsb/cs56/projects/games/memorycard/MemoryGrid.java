@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.Random;
 /**
 * makes the grid (ArrayList of MemoryCards) for the game
+  @version CS56 S13 Proj1
+  Ryan Halbrook made minor changes to this file to make the constructor
+  take a grid size. 
 */
 
 public class MemoryGrid{

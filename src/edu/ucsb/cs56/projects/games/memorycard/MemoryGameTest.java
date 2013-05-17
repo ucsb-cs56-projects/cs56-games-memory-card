@@ -6,6 +6,13 @@ import static org.junit.Assert.*;
 /**
 	The test class MemoryGameTest - tests the MemoryGame class
 	@author Bryce McGaw and Jonathan Yau
+	
+	Minor changes made by Ryan Halbrook for cs56 proj1, Spring 2013
+	I only made minor changes in this file because I added a parameter 
+	to the MemoryGrid constructor. I just put in a grid size of 16 to
+	all constructors to make this compile. A good change would be to test 
+	other parameters.
+	
 	@version 1.0.0 5/14/2012
 	@see MemoryGame.java
 */
