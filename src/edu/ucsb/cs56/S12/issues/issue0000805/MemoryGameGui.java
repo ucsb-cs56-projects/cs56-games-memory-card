@@ -28,7 +28,7 @@ public class MemoryGameGui {
     static MemoryGrid grid = new MemoryGrid(16);
     static MemoryGameComponent mgc = new MemoryGameComponent(grid);
     static JButton reset = new JButton("Reset");
-    static JLabel label = new JLabel("Time Remaining: 200");
+    static JLabel label = new JLabel("Time Remaining: 75");
     static JFrame instruction = new JFrame("Instruction");
     static JTextArea text = new JTextArea(15,25);
 
@@ -42,6 +42,7 @@ public class MemoryGameGui {
 	
 	ActionListener resetListener = new ActionListener(){
 		public void actionPerformed(ActionEvent e){
+		    mgc.pause();
 	            JOptionPane popup = new JOptionPane("Warning!");
 	            Object[] options= {"Start Over","Cancel"};
 	
@@ -55,6 +56,8 @@ public class MemoryGameGui {
 
         	    if(selection==JOptionPane.YES_OPTION)
         	            mgc.reset();
+		    else
+			mgc.resume();
 		}
 	};
 	reset.addActionListener(resetListener);
