@@ -1,6 +1,0 @@
-This is temporary instruction.
-Testing
-Testing2
-Testing 3 and 4 and 5 ...
-
-.
