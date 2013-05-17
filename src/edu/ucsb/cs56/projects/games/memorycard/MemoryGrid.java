@@ -1,10 +1,13 @@
-package edu.ucsb.cs56.S12.issues.issue0000805;
+package edu.ucsb.cs56.projects.games.memorycard;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 /**
 * makes the grid (ArrayList of MemoryCards) for the game
+  @version CS56 S13 Proj1
+  Ryan Halbrook made minor changes to this file to make the constructor
+  take a grid size. 
 */
 
 public class MemoryGrid{
@@ -15,7 +18,8 @@ public class MemoryGrid{
     /**
     *default constructor makes new MemoryGrid
     */
-    public MemoryGrid(){
+    public MemoryGrid(int gridSize){
+	if (gridSize % 2 == 0) size = gridSize;
         for(int i=1; i<((size/2)+1); i++){
             MemoryCard temp  = new MemoryCard(i);
 	    MemoryCard temp2 = new MemoryCard(i);
