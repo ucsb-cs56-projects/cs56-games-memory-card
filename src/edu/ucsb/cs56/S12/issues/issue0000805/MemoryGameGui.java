@@ -30,7 +30,7 @@ public class MemoryGameGui {
     static JButton reset = new JButton("Reset");
     static JButton pause = new JButton("Pause");
     static boolean isPaused = false;
-    static JLabel label = new JLabel("Time Remaining: 75");
+    static JLabel label = new JLabel("Time Remaining: 1 minute, 15 seconds");
     static JFrame instruction = new JFrame("Instruction");
     static JTextArea text = new JTextArea(15,25);
 

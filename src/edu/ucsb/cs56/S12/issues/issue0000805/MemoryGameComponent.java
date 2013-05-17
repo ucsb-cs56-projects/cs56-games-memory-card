@@ -260,6 +260,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	pauseTime = 0;
 	updateTimeLabel(level.getSecondsToSolve() / 60, level.getSecondsToSolve() % 60);	    
  	newGame(currentLevel);
+	firstImageFlipped = false;
     }
 
     /**
