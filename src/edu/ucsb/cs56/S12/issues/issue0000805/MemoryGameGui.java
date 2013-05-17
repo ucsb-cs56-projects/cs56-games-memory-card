@@ -45,11 +45,12 @@ public class MemoryGameGui {
 	ActionListener pauseListener = new ActionListener(){
 		public void actionPerformed(ActionEvent e){
 			if(isPaused){
-				isPaused = false;
+				isPaused=false;
 				mgc.resume();
-			}
+				
+			}	
 			else{
-				isPaused = true;
+				isPaused=true;
 				mgc.pause();
 			}
 		}
@@ -74,38 +75,16 @@ public class MemoryGameGui {
 			mgc.resume();
 		}
 	};
+
 	pause.addActionListener(pauseListener);
 	reset.addActionListener(resetListener);
 	frame.getContentPane().add(mgc);
-//	SpringLayout layout=new SpringLayout();
-/*	frame.getContentPane().setLayout(layout);
-	frame.getContentPane().add(SpringLayout.SOUTH,pause);
-	frame.getContentPane().add(SpringLayout.SOUTH,pause);
-	frame.getContentPane().add(SpringLayout.SOUTH,pause);*/
-	JPanel p = new JPanel();
-	p.add(label);
-	p.add(pause);
-	p.add(reset);
-/*	layout.putConstraint(SpringLayout.WEST, label,
-	                     5,
-	                     SpringLayout.WEST, frame.getContentPane());
-	layout.putConstraint(SpringLayout.NORTH, label,
-	                     5,
-	                     SpringLayout.NORTH, frame.getContentPane());
-	
-	layout.putConstraint(SpringLayout.EAST, reset,
-        	             5,
-        	             SpringLayout.EAST, frame.getContentPane());
-	layout.putConstraint(SpringLayout.NORTH, reset,
-        	             5,
-        	             SpringLayout.NORTH, frame.getContentPane());
-	layout.putConstraint(SpringLayout.EAST, pause,
-        	             5,
-        	             SpringLayout.EAST, reset);
-	layout.putConstraint(SpringLayout.NORTH, pause,
-        	             5,
-        	             SpringLayout.NORTH, frame.getContentPane());
-*/	
+	JPanel p = new JPanel(new BorderLayout());
+	p.add(BorderLayout.WEST,label);
+	JPanel p2 = new JPanel(new BorderLayout());
+	p.add(BorderLayout.EAST,p2);
+	p2.add(BorderLayout.WEST,pause);
+	p2.add(BorderLayout.EAST, reset);
 
 
 	frame.getContentPane().add(BorderLayout.SOUTH,p);
@@ -150,17 +129,4 @@ public class MemoryGameGui {
 	   e.printStackTrace();
 	} 
     }
-/*    private class ResetListener implements ActionListener{
-
-	public void actionPerformed(ActionEvent e){
-	    mgc.reset();
-
-	    grid = new MemoryGrid(16);
-	    mgc = new MemoryGameComponent(grid);
-	    frame.getContentPane().add(mgc);
-	    //frame.getContentPane().add(restartB);
-	    
-	}
-    }*/
-
 }
