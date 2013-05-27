@@ -7,6 +7,7 @@
 
   
   <property environment="env"/> <!-- load environment vars -->
+
   <property name="webRoot" value="${env.HOME}/public_html/cs56/13S/${env.USER}/games_memory_card" />
   <property name="webBaseURL" value="http://www.cs.ucsb.edu/~${env.USER}/cs56" />
   <property name="webBaseURL1" value="https://foo.cs.ucsb.edu/56mantis/view.php?id=805" />
@@ -18,6 +19,7 @@
   <property name="javadocDest" value="${webRoot}/${projectName}/javadoc" />
   <property name="javadocURL" value="${webBaseURL}/${projectName}/javadoc" /> 
   <property name="mainClass" value="edu.ucsb.cs56.projects.games.memorycard.MemoryGameGui" />
+
 
   <path id="project.class.path">
     <pathelement location="build"/>
@@ -81,7 +83,7 @@
       </manifest>
     </jar>
   </target>
-  
+
   <!-- target that runs Junit Tests -->
   <target name="test" description="Run JUnit tests on MemoryCardGame" depends="compile">
     <junit haltonerror="no" haltonfailure="no">

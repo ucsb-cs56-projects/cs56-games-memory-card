@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Random;
 /**
 * makes the grid (ArrayList of MemoryCards) for the game
+
 * @author Mathew Glodack, Christina Morris
 * @version CS56, S13, 5/8/13
 */
@@ -14,10 +15,11 @@ public class MemoryGrid{
     int size=16;
     boolean isOver=false;
     
-    /**
-     * default constructor makes new MemoryGrid
+    /** MemoryGrid constructor that takes in a parameter
+     * @param gridSize for the size the of the grid
      */
-    public MemoryGrid(){
+    public MemoryGrid(int gridSize){
+	if (gridSize % 2 == 0) size = gridSize;
         for(int i=1; i<((size/2)+1); i++){
             MemoryCard temp  = new MemoryCard(i);
 	    MemoryCard temp2 = new MemoryCard(i);
