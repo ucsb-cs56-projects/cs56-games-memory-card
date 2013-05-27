@@ -17,6 +17,7 @@ import java.io.*;
 *
 * @author Bryce McGaw and Jonathan Yau
 * @author Ryan Halbrook and Yun Suk Chang
+* @author Mathew Glodack, Christina Morris
 * @version CS56 Spring 2013
 * Edited Professor Phill Conrad's code from Lab06
 */
@@ -107,6 +108,10 @@ public class MemoryGameGui {
 	instruction.setVisible(true);
 	
     }
+
+    /**
+     *Adds instruction to the screen
+     */
     public static void addInstruction(){
 	File file = new File("instructions.txt");
 	try {
