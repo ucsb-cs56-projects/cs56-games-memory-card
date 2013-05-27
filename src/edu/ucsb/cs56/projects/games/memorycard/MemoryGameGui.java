@@ -1,4 +1,3 @@
-
 package edu.ucsb.cs56.projects.games.memorycard;
 import java.awt.GridLayout;
 import javax.swing.JComponent;
@@ -15,16 +14,16 @@ import javax.swing.*;
 import java.awt.ComponentOrientation;
 import java.io.*;
 /**
- *
- * @author Bryce McGaw and Jonathan Yau
- * @author Ryan Halbrook and Yun Suk Chang
- * @version CS56 Spring 2013
- * Edited Professor Phill Conrad's code from Lab06
- */
+*
+* @author Bryce McGaw and Jonathan Yau
+* @author Ryan Halbrook and Yun Suk Chang
+* @version CS56 Spring 2013
+* Edited Professor Phill Conrad's code from Lab06
+*/
 public class MemoryGameGui {
-    
+
     static final int WINDOW_SIZE = 500;
-    
+
     static JFrame frame = new JFrame("Memory Card Game");
     static MemoryGrid grid = new MemoryGrid(16);
     static MemoryGameComponent mgc = new MemoryGameComponent(grid);
@@ -33,7 +32,7 @@ public class MemoryGameGui {
     static JLabel label = new JLabel("Time Remaining: 1 minute, 15 seconds");
     static JFrame instruction = new JFrame("Instruction");
     static JTextArea text = new JTextArea(15,25);
-    
+
     /** main method to open JFrame
      *
      */
@@ -92,7 +91,7 @@ public class MemoryGameGui {
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	frame.setLocation((int)(screenSize.getWidth()/2 - frame.getSize().getWidth()/2), (int)(screenSize.getHeight()/2 - frame.getSize().getHeight()/2));
 	frame.setVisible(true);
-	
+
 	JPanel panel = new JPanel();
 	text.setLineWrap(true);
 	text.setEditable(false);
@@ -112,7 +111,7 @@ public class MemoryGameGui {
 	File file = new File("instructions.txt");
 	try {
 	    BufferedReader br = new BufferedReader(
-						   new InputStreamReader( 
+						   new InputStreamReader(
 									 new FileInputStream(file)));
 	    String line;
 	    while((line = br.readLine()) != null){
