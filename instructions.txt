@@ -3,6 +3,20 @@ Goal:
 Match all pairs of cards to go to 
 next level before the time runs out.
 
+Scoring:
+
+Matching a pair: 30 points
+
+Remaining Time Bonus:
+Remaining time * [(Current Level * 2)
++1 - (Current Level +1)/2] points
+
+<Calculation was done by integer 
+division>
+
+Warning: You will lose all points
+if you restart the level.
+
 Instructions:
 
 There are 3 levels.
@@ -25,6 +39,7 @@ and move on to the next one.
 
 The number of cards on the grid 
 would also change based on the level.
+
 
 Good Luck!
 

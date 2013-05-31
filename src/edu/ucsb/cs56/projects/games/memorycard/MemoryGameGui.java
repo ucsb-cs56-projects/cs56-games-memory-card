@@ -30,6 +30,7 @@ public class MemoryGameGui {
     static JButton reset = new JButton("Reset");
     static JButton pause = new JButton("Pause");
     static JLabel label = new JLabel("Time Remaining: 1 minute, 15 seconds");
+    static JLabel score = new JLabel("Score: 0");
     static JFrame instruction = new JFrame("Instruction");
     static JTextArea text = new JTextArea(15,25);
 
@@ -50,19 +51,20 @@ public class MemoryGameGui {
 	ActionListener resetListener = new ActionListener(){
 		public void actionPerformed(ActionEvent e){
 		    mgc.pauseTimer();
-	            JOptionPane popup = new JOptionPane("Warning!");
+		    JOptionPane popup = new JOptionPane("Warning!");
 	            Object[] options= {"Start Over","Cancel"};
 	
 	            int selection=popup.showOptionDialog(
 	                    null,
-	                    "Do you want to restart this level?",
+	                    "Do you want to restart this level?\nYou will lose all of your points!",
 	                    "Warning!",
        		             JOptionPane.YES_NO_OPTION,
         	            JOptionPane.WARNING_MESSAGE, null,
         	            options, options[0]);
 
-        	    if(selection==JOptionPane.YES_OPTION)
-        	            mgc.reset();
+        	    if(selection==JOptionPane.YES_OPTION){
+        	           	 mgc.reset();
+		    }
 		    else
 			mgc.resume();
 		}
@@ -78,13 +80,19 @@ public class MemoryGameGui {
 	p2.add(BorderLayout.WEST,pause);
 	p2.add(BorderLayout.EAST, reset);
 
-
 	frame.getContentPane().add(BorderLayout.SOUTH,p);
 
+	JPanel scorePanel = new JPanel();
+	scorePanel.setLayout(new BoxLayout(scorePanel,BoxLayout.Y_AXIS));
+	score.setAlignmentX(Component.CENTER_ALIGNMENT);
+	scorePanel.add(score);
+	
+	frame.getContentPane().add(BorderLayout.NORTH,scorePanel);
 
-	// to make sure that grids go left to right
 	mgc.setLabel(label);
 	mgc.setPauseButton(pause);
+	mgc.setScoreLabel(score);
+	// to make sure that grids go left to right
 	frame.applyComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 	frame.setSize(WINDOW_SIZE, WINDOW_SIZE);
 

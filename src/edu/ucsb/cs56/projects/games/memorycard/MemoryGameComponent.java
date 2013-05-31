@@ -24,6 +24,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     private Icon              imgBlank;
     private JButton	      pauseButton;
     private JLabel            timeLabel         = null;
+    private JLabel	      scoreLabel	= null;
     private Timer             timer; // used to get an event every 250 ms to
                                      // update the time remaining display
     
@@ -38,7 +39,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
                                                      // total game time.
     private boolean           cheatEnabled      = false; // Cheat code related.
     private boolean	      isOver            = false; // Cheat code related.
-    
+    private int 	      score		= 0; 
     // For pausing. pausing just stops the timer and the play
     // time is computed as final time minus start time.
     // Therefore, this total pause time is used to
@@ -55,6 +56,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     public MemoryGameComponent(MemoryGrid game) {
 	super(); 
 	timeLabel = new JLabel("Time Remaining");
+	scoreLabel = new JLabel("Score");
 	timer = new Timer(250, this);
 
 	this.grid = game;
@@ -123,7 +125,9 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	    timeLabel.setText("Time Remaining: " + seconds + " seconds");
 	}
     }
-
+    private void updateScore(){
+   	scoreLabel.setText("Score: "+score);
+    }
     /**
        Callback from the timer. This is used to update the time remaining
        label and to check if the game has ended as a result of the level
@@ -141,6 +145,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	    timeRemaining = 0;
 
         updateTimeLabel(timeRemaining / 60, timeRemaining % 60);
+	updateScore();
     }
 
     /**
@@ -149,6 +154,9 @@ public class MemoryGameComponent extends JComponent implements ActionListener
      */
     public void setLabel(JLabel label) {
 	this.timeLabel = label;
+    }
+    public void setScoreLabel(JLabel l){
+	scoreLabel=l;
     }
     
     /**
@@ -284,7 +292,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
                     gameCounter++;
                     grid.flip(num); 
                     grid.flip(grid.getFlipped());
-                    
+                    score+=30;
                     //check if game is over
                     if(gameCounter==grid.getSize()/2){
 			isOver=true;
@@ -326,6 +334,8 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     }
     public void reset() {
 	pauseTime = 0;
+	score=0;
+	updateScore();
 	updateTimeLabel(level.getSecondsToSolve() / 60, 
 			level.getSecondsToSolve() % 60);	    
  	newGame(currentLevel);
@@ -344,14 +354,18 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	long deltaTime = (long)((finalTime - startTime - pauseTime) / 1000.0);
 	pauseTime = 0;
         grid.isOver=true;
-                        
+	if(deltaTime < level.getSecondsToSolve())
+	score+=(level.getSecondsToSolve()-deltaTime)*((2*currentLevel+1)-(currentLevel+1)/2);
+    
+	updateScore();
+                    
 	if (deltaTime < level.getSecondsToSolve()&&currentLevel<2) {
 	    JOptionPane popup = new JOptionPane("Good Job!");
 	    Object[] options= {"Continue","Quit"};
 
 	    int selection=popup.showOptionDialog(
 						 null,
-						 "-~*´¨¯¨`*·~-.¸-  You beat the level!!  -,.-~*´¨¯¨`*·~-",
+						 "-~*´¨¯¨`*·~-.¸-  You beat the level!!  -,.-~*´¨¯¨`*·~-\nScore: "+score,
 						 "Good Job!",
 						 JOptionPane.YES_NO_OPTION,
 						 JOptionPane.INFORMATION_MESSAGE, null,
@@ -372,7 +386,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	    Object[] options= {"Play Again?","Quit"};
 	    int selection=popup.showOptionDialog(
 						 null,
-						 "-~*´¨¯¨`*·~-.¸-  You beat the game!!  -,.-~*´¨¯¨`*·~-",
+						 "-~*´¨¯¨`*·~-.¸-  You beat the game!!  -,.-~*´¨¯¨`*·~-\nScore: "+score,
 						 "Good Job!",
 						 JOptionPane.YES_NO_OPTION,
 						 JOptionPane.INFORMATION_MESSAGE, null,
@@ -382,29 +396,50 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 		    long time = levels[0].getSecondsToSolve();
 		    updateTimeLabel(time / 60, time % 60);
 		    newGame(0);
+		    score=0;
+		    updateScore();
 		}
 	    else
 		System.exit(0);
 	
 	} 
         else {
+	    while(true){
 	    JOptionPane popup = new JOptionPane("Game Over");
 	    Object[] options= {"Try Again?","Quit"};
 	    int selection=popup.showOptionDialog(
 						 null,
-						 "Please Try Again",
+						 "Please Try Again\nScore: "+score,
 						 "Game Over",
 						 JOptionPane.YES_NO_OPTION,
 						 JOptionPane.INFORMATION_MESSAGE, null,
 						 options, options[0]);
 	    if(selection==JOptionPane.YES_OPTION)
 		{
-		    long time = level.getSecondsToSolve();
-		    updateTimeLabel(time / 60, time % 60);
-		    newGame(currentLevel);
+		    JOptionPane popup2 = new JOptionPane("Warning");
+		    Object[] options2= {"Continue","Cancel"};
+		    int selection2=popup2.showOptionDialog(
+							 null,
+							 "You will lose all of your points if you restart the game\nScore: "+score,
+							 "Warning",
+							 JOptionPane.YES_NO_OPTION,
+							 JOptionPane.WARNING_MESSAGE, null,
+							 options2, options2[0]);
+		    if(selection2==JOptionPane.YES_OPTION)
+		    {
+	
+
+		    	long time = level.getSecondsToSolve();
+		    	updateTimeLabel(time / 60, time % 60);
+		    	newGame(currentLevel);
+		    	score=0;
+			break;
+		    }
+		    
 		}
 	    else
 		System.exit(0);
+	    }
 	}
     }
 
