@@ -291,6 +291,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
                 if (grid.flippedEquals(num)){    
                     gameCounter++;
                     grid.flip(num); 
+		    buttons[grid.getFlipped()].setEnabled(false);
                     grid.flip(grid.getFlipped());
                     score+=30;
                     //check if game is over
