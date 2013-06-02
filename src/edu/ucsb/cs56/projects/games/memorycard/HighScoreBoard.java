@@ -6,7 +6,10 @@ public class HighScoreBoard{
 	private int[] scores=new int[10];
 	private String[] names=new String[10];
 	public HighScoreBoard(){
+		getHighScores();
 
+	}
+	private void getHighScores(){
 		File file = new File("highscores.txt");
 		try{
 			BufferedReader b = new BufferedReader(
@@ -34,11 +37,7 @@ public class HighScoreBoard{
 		}
 	}
 	public int getLowestScore(){
-		for(int i=9;i>=0;i--){
-			if(scores[i]!=0)
-				return scores[i];
-		}
-		return 0;
+		return scores[9];
 	}
 	public void add(String name, int score){
 		int i=0;
@@ -57,7 +56,7 @@ public class HighScoreBoard{
 		}
 		String str=names[i];
 		names[i]=name;
-		for(int j=i;j<10;j++){
+		for(int j=i+1;j<10;j++){
 			String str2=names[j];
 			names[j]=str;
 			str=str2;
@@ -65,12 +64,12 @@ public class HighScoreBoard{
 		update();
 	}
 	private void update(){
-		File file = new File("highscore.txt");
+		File file = new File("highscores.txt");
 		try{
 			BufferedWriter writer = new BufferedWriter(
 						new FileWriter(file));
 			for(int i=0;i<10;i++){
-				if(scores[i]!=0)
+				if(scores[i]==0)
 					break;
 				writer.write(names[i]+"/"+scores[i]+"\n");
 			}
@@ -78,6 +77,7 @@ public class HighScoreBoard{
 		} catch(IOException e){
 			e.printStackTrace();
 		}
+		getHighScores();
 	}
 	public JTextArea getBoard(){
 		return board;

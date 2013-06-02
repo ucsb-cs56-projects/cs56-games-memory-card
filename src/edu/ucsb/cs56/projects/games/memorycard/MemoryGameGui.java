@@ -117,6 +117,7 @@ public class MemoryGameGui {
 	mgc.setLabel(label);
 	mgc.setPauseButton(pause);
 	mgc.setScoreLabel(score);
+	mgc.setHighScoreBoard(board);
 	// to make sure that grids go left to right
 	frame.applyComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 	frame.setSize(WINDOW_SIZE, WINDOW_SIZE);

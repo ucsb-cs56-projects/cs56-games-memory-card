@@ -40,6 +40,9 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     private boolean           cheatEnabled      = false; // Cheat code related.
     private boolean	      isOver            = false; // Cheat code related.
     private int 	      score		= 0; 
+    private JTextField        text              = new JTextField(20);//for inputing name for high score board
+    private JFrame 	      inputBoard        = new JFrame("ENTER YOUR NAME");//for inputing name for high score board
+    private HighScoreBoard    board		= null;
     // For pausing. pausing just stops the timer and the play
     // time is computed as final time minus start time.
     // Therefore, this total pause time is used to
@@ -58,7 +61,6 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	timeLabel = new JLabel("Time Remaining");
 	scoreLabel = new JLabel("Score");
 	timer = new Timer(250, this);
-
 	this.grid = game;
         int gridSize = grid.getSize();
 	buttons= new JButton[gridSize];
@@ -158,7 +160,9 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     public void setScoreLabel(JLabel l){
 	scoreLabel=l;
     }
-    
+    public void setHighScoreBoard(HighScoreBoard h){
+	board=h;
+    }
     /**
        Setter for the pause button.
      */
@@ -400,8 +404,14 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 		    score=0;
 		    updateScore();
 		}
-	    else
+	    else{
+		if(score>board.getLowestScore())
+		{
+			storeHighScore();		
+   		}
+		else
 		System.exit(0);
+	    }
 	
 	} 
         else {
@@ -439,7 +449,13 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 		    
 		}
 	    else
+		if(score>board.getLowestScore())
+		{
+			storeHighScore();		
+   		}
+		else
 		System.exit(0);
+	
 	    }
 	}
     }
@@ -479,4 +495,40 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	}
 	imgBlank = new ImageIcon(classs.getResource("/images/000.jpg"));
     }
+    public void storeHighScore(){			
+    		JOptionPane popup2 = new JOptionPane("Congratz!");
+   		 Object[] options2= {"Yes","No"};
+   		 int selection2=popup2.showOptionDialog(
+							 null,
+							 "You have recieved a high score!\nScore: "+score+"\nWould you like to save the score?",
+							 "Congratulation!",
+							 JOptionPane.YES_NO_OPTION,
+							 JOptionPane.INFORMATION_MESSAGE, null,
+							 options2, options2[0]);
+    		if(selection2==JOptionPane.YES_OPTION)
+		{
+			JButton b = new JButton("Submit");
+			text.setColumns(20);
+			ActionListener bListener = new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+					String n = text.getText();
+					board.add(n,score);
+					inputBoard.dispatchEvent(new WindowEvent(inputBoard,WindowEvent.WINDOW_CLOSING));
+				}
+			};
+			b.addActionListener(bListener);
+			inputBoard.getContentPane().add(BorderLayout.WEST,text);
+			inputBoard.getContentPane().add(BorderLayout.EAST,b);
+			inputBoard.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			inputBoard.applyComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+			inputBoard.setSize(300, 100);
+
+			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+			inputBoard.setLocation((int)(screenSize.getWidth()/2 - inputBoard.getSize().getWidth()/2), (int)(screenSize.getHeight()/2 - inputBoard.getSize().getHeight()/2));
+			inputBoard.setVisible(true);
+		}
+		else{
+			System.exit(0);
+		}
+     }
 }
