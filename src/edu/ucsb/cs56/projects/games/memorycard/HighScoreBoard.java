@@ -1,5 +1,6 @@
 package edu.ucsb.cs56.projects.games.memorycard;
 import java.io.*;
+import java.awt.Font;
 import javax.swing.JTextArea;
 public class HighScoreBoard{
 	private JTextArea board;
@@ -29,10 +30,11 @@ public class HighScoreBoard{
 			e.printStackTrace();
 		}
 		board = new JTextArea(15,25);
+		board.setFont(new Font(Font.MONOSPACED,Font.PLAIN,12));
 		for(int i=0;i<10;i++){
 			if(scores[i]==0)
 				break;
-			board.append((i+1)+". "+names[i]+"\t\t"+scores[i]+"\n");
+			board.append((i+1)+". "+names[i]+scores[i]+"\n");
 
 		}
 	}
@@ -40,6 +42,10 @@ public class HighScoreBoard{
 		return scores[9];
 	}
 	public void add(String name, int score){
+		if(name.length()>20)
+		name=name.substring(0,20);
+		while(name.length()<=35)//adds spaces for space between name and score
+			name+=" ";
 		int i=0;
 		for(i=0;i<10;i++){
 			if(scores[i]<score)

@@ -41,7 +41,8 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     private boolean	      isOver            = false; // Cheat code related.
     private int 	      score		= 0; 
     private JTextField        text              = new JTextField(20);//for inputing name for high score board
-    private JFrame 	      inputBoard        = new JFrame("ENTER YOUR NAME");//for inputing name for high score board
+    private JFrame 	      inputBoard        = new JFrame("ENTER FIRST 20 CHARACTERS OF YOUR NAME");//for inputing name for high score board
+    private JLabel	      textLabel		= new JLabel("ENTER YOUR NAME: ");//for inputing name for high score board
     private HighScoreBoard    board		= null;
     // For pausing. pausing just stops the timer and the play
     // time is computed as final time minus start time.
@@ -514,21 +515,43 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 					String n = text.getText();
 					board.add(n,score);
 					inputBoard.dispatchEvent(new WindowEvent(inputBoard,WindowEvent.WINDOW_CLOSING));
+
+					showHighScoreBoard();
 				}
 			};
 			b.addActionListener(bListener);
-			inputBoard.getContentPane().add(BorderLayout.WEST,text);
+
+			inputBoard.getContentPane().add(BorderLayout.WEST,textLabel);
 			inputBoard.getContentPane().add(BorderLayout.EAST,b);
+			inputBoard.getContentPane().add(BorderLayout.CENTER,text);
 			inputBoard.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			inputBoard.applyComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 			inputBoard.setSize(300, 100);
+			inputBoard.pack();
 
 			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 			inputBoard.setLocation((int)(screenSize.getWidth()/2 - inputBoard.getSize().getWidth()/2), (int)(screenSize.getHeight()/2 - inputBoard.getSize().getHeight()/2));
 			inputBoard.setVisible(true);
+			text.requestFocus();
 		}
 		else{
 			System.exit(0);
 		}
+     }
+     public void showHighScoreBoard(){
+		JFrame scoreboard = new JFrame("High Score Board");
+		scoreboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JTextArea txt = board.getBoard();
+		txt.setLineWrap(true);
+		txt.setEditable(false);
+		JScrollPane scroller2 = new JScrollPane(txt);
+		scroller2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scroller2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scoreboard.add(scroller2);
+		scoreboard.getContentPane().add(txt);
+	        scoreboard.setSize(350,350);
+		Dimension screenSize2 = Toolkit.getDefaultToolkit().getScreenSize();
+		scoreboard.setLocation((int)(screenSize2.getWidth()/2 - scoreboard.getSize().getWidth()/2), (int)(screenSize2.getHeight()/2 - scoreboard.getSize().getHeight()/2));
+		scoreboard.setVisible(true);
      }
 }
