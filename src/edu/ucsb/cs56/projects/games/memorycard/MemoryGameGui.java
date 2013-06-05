@@ -41,7 +41,7 @@ public class MemoryGameGui {
     
     public static void main (String[] args) {
 
-	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	instruction.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 	ActionListener pauseListener = new ActionListener(){
@@ -114,6 +114,7 @@ public class MemoryGameGui {
 	
 	frame.getContentPane().add(BorderLayout.NORTH,scorePanel);
 
+	mgc.setMainFrame(frame);
 	mgc.setLabel(label);
 	mgc.setPauseButton(pause);
 	mgc.setScoreLabel(score);

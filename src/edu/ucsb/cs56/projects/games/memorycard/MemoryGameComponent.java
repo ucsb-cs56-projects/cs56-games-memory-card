@@ -43,6 +43,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     private JTextField        text              = new JTextField(20);//for inputing name for high score board
     private JFrame 	      inputBoard        = new JFrame("ENTER FIRST 20 CHARACTERS OF YOUR NAME");//for inputing name for high score board
     private JLabel	      textLabel		= new JLabel("ENTER YOUR NAME: ");//for inputing name for high score board
+    private JFrame	      mainFrame		= null;
     private HighScoreBoard    board		= null;
     // For pausing. pausing just stops the timer and the play
     // time is computed as final time minus start time.
@@ -61,6 +62,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	super(); 
 	timeLabel = new JLabel("Time Remaining");
 	scoreLabel = new JLabel("Score");
+	mainFrame=new JFrame();
 	timer = new Timer(250, this);
 	this.grid = game;
         int gridSize = grid.getSize();
@@ -157,6 +159,9 @@ public class MemoryGameComponent extends JComponent implements ActionListener
      */
     public void setLabel(JLabel label) {
 	this.timeLabel = label;
+    }	
+    public void setMainFrame(JFrame f){
+	mainFrame =f;
     }
     public void setScoreLabel(JLabel l){
 	scoreLabel=l;
@@ -517,6 +522,9 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 					inputBoard.dispatchEvent(new WindowEvent(inputBoard,WindowEvent.WINDOW_CLOSING));
 
 					showHighScoreBoard();
+					mainFrame.dispatchEvent(new WindowEvent(mainFrame,WindowEvent.WINDOW_CLOSING));
+
+
 				}
 			};
 			b.addActionListener(bListener);
