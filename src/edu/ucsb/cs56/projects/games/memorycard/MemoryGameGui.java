@@ -14,12 +14,13 @@ import javax.swing.*;
 import java.awt.ComponentOrientation;
 import java.io.*;
 /**
- *
- * @author Bryce McGaw and Jonathan Yau
- * @author Ryan Halbrook and Yun Suk Chang
- * @version CS56 Spring 2013
- * Edited Professor Phill Conrad's code from Lab06
- */
+*
+* @author Bryce McGaw and Jonathan Yau
+* @author Ryan Halbrook and Yun Suk Chang
+* @author Mathew Glodack, Christina Morris
+* @version CS56 Spring 2013
+* Edited Professor Phill Conrad's code from Lab06
+*/
 public class MemoryGameGui {
 
     static final int WINDOW_SIZE = 500;
@@ -43,10 +44,10 @@ public class MemoryGameGui {
 
 	frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	instruction.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
+	
 	ActionListener pauseListener = new ActionListener(){
 		public void actionPerformed(ActionEvent e){
-				mgc.pauseGame();
+		    mgc.pauseB();
 		}
 	};
 	ActionListener highscoreListener = new ActionListener(){
@@ -122,7 +123,7 @@ public class MemoryGameGui {
 	// to make sure that grids go left to right
 	frame.applyComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 	frame.setSize(WINDOW_SIZE, WINDOW_SIZE);
-
+	
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	frame.setLocation((int)(screenSize.getWidth()/2 - frame.getSize().getWidth()/2), (int)(screenSize.getHeight()/2 - frame.getSize().getHeight()/2));
 	frame.setVisible(true);
@@ -140,21 +141,25 @@ public class MemoryGameGui {
 	addInstruction();
 	instruction.setLocation((int)(screenSize.getWidth()/2 - instruction.getSize().getWidth()/2), (int)(screenSize.getHeight()/2 - instruction.getSize().getHeight()/2));
 	instruction.setVisible(true);
-
+	
     }
+
+    /**
+     *Adds instruction to the screen
+     */
     public static void addInstruction(){
 	File file = new File("instructions.txt");
 	try {
 	    BufferedReader br = new BufferedReader(
-	                        new InputStreamReader(
-	                        new FileInputStream(file)));
+						   new InputStreamReader(
+									 new FileInputStream(file)));
 	    String line;
 	    while((line = br.readLine()) != null){
 		text.append(line+"\n");
 	    }
 	    br.close();
 	} catch	(IOException e) {
-	   e.printStackTrace();
-	} 
+	    e.printStackTrace();
+	}
     }
 }
