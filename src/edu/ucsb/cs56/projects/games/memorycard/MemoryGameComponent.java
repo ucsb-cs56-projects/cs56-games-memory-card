@@ -32,10 +32,6 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     private int currentLevel;
     private MemoryGameLevel[] levels;
     private MemoryGameLevel level = new MemoryGameLevel(36, 100, 2000);
-    private long startTime = 0;
-    private boolean cheatEnabled = false; // Cheat code related.
-    private boolean	isOver = false; // Cheat code related.
-    private int gameCounter = 0;
 
     private boolean           firstImageFlipped = false;
     private int               gameCounter       = 0;
@@ -82,6 +78,36 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	Pause the timer and the game by showing a dialog box,
 	preventing the user from playing the game until they resume.
      */
+    public void pauseGame() {
+	pauseTimer();
+        JOptionPane popup = new JOptionPane("PAUSED");
+        Object[] options= {"Resume"};
+
+        int selection=popup.showOptionDialog(
+					     null,
+					     "GAME PAUSED",
+					     "PAUSED",
+					      JOptionPane.OK_CANCEL_OPTION,
+					      JOptionPane.INFORMATION_MESSAGE, null,
+					      options, options[0]);
+
+        if(selection==JOptionPane.YES_OPTION)
+	{
+		resume();
+	}
+    }
+    /**
+         Pause just the game timer.
+    */
+    public void pauseTimer() {
+	pauseStart = new Date().getTime();
+	timer.stop();
+ 
+    }
+    /**
+          Resume the game timer. In other words, recalculate total pause
+          time and start the timer.
+    */
     public void pauseB() {
 	pauseStart = new Date().getTime();
 	timer.stop();
@@ -101,7 +127,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 		resume();
 	    }
     }
-    /**puase() pauses the time
+    /**pause() pauses the time
      */
     public void pause() {
 	pauseStart = new Date().getTime();
@@ -209,11 +235,6 @@ public class MemoryGameComponent extends JComponent implements ActionListener
         
     };
     
-    /** Constructor
-	@param game an object that implements the MemoryGrid interface
-	to keep track of the moves in each game, ensuring the rules are
-	followed and detecting when the user has won.
-    */
    
     /**buildTiles() constructs the tiles
      */
