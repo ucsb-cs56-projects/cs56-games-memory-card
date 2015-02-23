@@ -543,6 +543,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 			ActionListener bListener = new ActionListener(){
 				public void actionPerformed(ActionEvent e){
 					String n = text.getText();
+					n = removeCommas(n);
 					board.add(n,score);
 					inputBoard.dispatchEvent(new WindowEvent(inputBoard,WindowEvent.WINDOW_CLOSING));
 
@@ -571,6 +572,15 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 			System.exit(0);
 		}
      }
+
+ /**Method to remove commas from a highscore name
+ * @param name - a String
+ * @return String name without commas
+   */
+	private static String removeCommas(String name){
+		return name.replaceAll(",","");		
+	}
+
      public void showHighScoreBoard(){
 		JFrame scoreboard = new JFrame("High Score Board");
 		scoreboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
