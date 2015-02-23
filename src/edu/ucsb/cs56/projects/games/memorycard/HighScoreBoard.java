@@ -25,7 +25,7 @@ public class HighScoreBoard{
     }
 
     /**Appends rank (from 1-10), name (max 10 char), and score (max 10 char) to display board.
-@return Appends the User's rank (from 1-10), name (max 10 char), and score (max 10 char) to the display board.
+       @return Appends the User's rank (from 1-10), name (max 10 char), and score (max 10 char) to the display board.
     */
 	private void getHighScores(){
 		File file = new File("highscores.txt");
