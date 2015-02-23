@@ -36,9 +36,10 @@ public class MemoryGrid{
         return this.size;
     }
     
-    /**Method contains2
+    /**Method contains2(MemoryCard temp)
      * Checks if array contains 2 of same value
      * @param temp check to see if temp memory card is in the memorycard arraylist twice
+     * @return boolean true if it contains two of same value, otherwise false
      */
     public boolean contains2(MemoryCard temp){
         int count=0;
@@ -62,7 +63,7 @@ public class MemoryGrid{
         return (count==1);
     }
     
-    /**Method is TwoFlipped()
+    /**Method isTwoFlipped()
      * Checks array to see if 2 objects are flipped
      * @return boolean true if two cards are flipped, false otherwise
      */
@@ -87,7 +88,7 @@ public class MemoryGrid{
     }
     
     /**Method getFlipped()
-     * @return retval the position of the flipped MemoryCard
+     * @return int - the position of the flipped MemoryCard
      */
     public int getFlipped(){
         int retVal=-1, count=-1;
@@ -100,7 +101,7 @@ public class MemoryGrid{
     }
     
     /** Method getFlipped(int i)
-     * @return retval the position of the flipped MemoryCard that is not index i
+     * @return int - the position of the flipped MemoryCard that is not index i
      */
     public int getFlipped(int i){
         int retVal=-1, count=-1;
@@ -119,7 +120,8 @@ public class MemoryGrid{
         return isOver;
     }
     
-    /**Methd getVal(int i)
+    /**Method getVal(int i)
+     * @param i - the position of the card
      * @return value of MemoryCard[i]
      */
     public int getVal(int i){
