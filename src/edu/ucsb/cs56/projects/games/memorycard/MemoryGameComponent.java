@@ -577,7 +577,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
  * @param name - a String
  * @return String name without commas
    */
-	private static String removeCommas(String name){
+	public static String removeCommas(String name){
 		return name.replaceAll(",","");		
 	}
 
