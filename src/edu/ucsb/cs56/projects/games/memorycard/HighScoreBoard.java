@@ -4,19 +4,20 @@ import java.awt.Font;
 import javax.swing.JTextArea;
 
 
-public class HighScoreBoard{
 
 /**
- * A Highscore display for the Memory Card Game.
-
- @author Julio Maldonado and Shelby Elgood
- @version for CS56, Winter 2015, Conrad
+* A Highscore display for the Memory Card Game.
+*
+*  @author Julio Maldonado, Shelby Elgood
+*  @version CS56 Winter 2015
 */
 
-	private JTextArea board;
-	private int[] scores=new int[10];
-	private String[] names=new String[10];
-    
+public class HighScoreBoard{
+
+    private JTextArea board;
+    private int[] scores=new int[10];
+    private String[] names=new String[10];
+
     /** Contructor
 	Displays text versions of the top 10 scores that have been achieved by users on a JTextArea object.
     */
