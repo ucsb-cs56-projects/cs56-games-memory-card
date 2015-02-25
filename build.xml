@@ -3,14 +3,14 @@
   <!-- build.xml for Memory Card Game, S12, CS56
        name: Bryce McGaw and Jonathan Yau 
        name: Mathew Glodack, Christina Morris, S13, CS56
+       name: Julio Maldonado, Shelby Elgood, W15, CS56
   -->
 
   
   <property environment="env"/> <!-- load environment vars -->
 
-  <property name="webRoot" value="${env.HOME}/public_html/cs56/13S/${env.USER}/games_memory_card" />
+  <property name="webRoot" value="${env.HOME}/public_html/cs56/" />
   <property name="webBaseURL" value="http://www.cs.ucsb.edu/~${env.USER}/cs56" />
-  <property name="webBaseURL1" value="https://foo.cs.ucsb.edu/56mantis/view.php?id=805" />
   
   <property name="course" value="cs56" />
   <property name="quarter" value="13S" />
