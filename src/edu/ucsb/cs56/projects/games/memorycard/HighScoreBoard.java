@@ -19,7 +19,7 @@ public class HighScoreBoard{
 			String line;
 			int i=0;
 			while((line=b.readLine())!=null&&i<10){
-				String[] parse = line.split("/");
+				String[] parse = line.split(",");
 				scores[i]=Integer.parseInt(parse[1]);
 				names[i]=parse[0];
 				i++;
@@ -77,7 +77,7 @@ public class HighScoreBoard{
 			for(int i=0;i<10;i++){
 				if(scores[i]==0)
 					break;
-				writer.write(names[i]+"/"+scores[i]+"\n");
+				writer.write(names[i]+","+scores[i]+"\n");
 			}
 			writer.close();
 		} catch(IOException e){
