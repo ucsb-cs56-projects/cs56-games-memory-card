@@ -592,9 +592,19 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 		scroller2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scoreboard.add(scroller2);
 		scoreboard.getContentPane().add(txt);
+
+		//code i added for now
+                JButton newGame = new JButton("New Game"); //just added to reset game 
+		JPanel p = new JPanel(new BorderLayout());
+        	p.add(BorderLayout.EAST,newGame);
+        	
+	        scoreboard.getContentPane().add(BorderLayout.SOUTH,p);
+
+
 	        scoreboard.setSize(350,350);
 		Dimension screenSize2 = Toolkit.getDefaultToolkit().getScreenSize();
 		scoreboard.setLocation((int)(screenSize2.getWidth()/2 - scoreboard.getSize().getWidth()/2), (int)(screenSize2.getHeight()/2 - scoreboard.getSize().getHeight()/2));
 		scoreboard.setVisible(true);
+		scoreboard.add(new JButton("New Game"));
      }
 }
