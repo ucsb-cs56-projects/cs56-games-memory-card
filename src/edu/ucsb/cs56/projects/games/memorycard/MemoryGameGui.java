@@ -2,8 +2,7 @@ package edu.ucsb.cs56.projects.games.memorycard;
 import java.awt.GridLayout;
 import javax.swing.JComponent;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 import java.awt.Font;
 import java.awt.*;
 import java.util.ArrayList;
@@ -136,7 +135,21 @@ public class MemoryGameGui {
 	scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 	scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 	panel.add(scroller);
-	
+
+	//start game button on instructions frame	
+	JButton startGame = new JButton("Start Game");
+	JPanel ng = new JPanel(new BorderLayout());
+      	ng.add(BorderLayout.CENTER,startGame);
+      	instruction.getContentPane().add(BorderLayout.SOUTH,ng);
+
+        ActionListener startGameListener = new ActionListener(){
+                public void actionPerformed(ActionEvent e){
+			instruction.dispatchEvent(new WindowEvent(instruction, WindowEvent.WINDOW_CLOSING));    
+        	}
+        };
+        startGame.addActionListener(startGameListener);
+
+
 	instruction.getContentPane().add(panel);
         instruction.setSize(350,350);
 	addInstruction();
