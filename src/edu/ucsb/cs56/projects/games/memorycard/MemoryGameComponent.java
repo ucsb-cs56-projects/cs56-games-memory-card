@@ -28,6 +28,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     private JLabel	      scoreLabel	= null;
     private Timer             timer; // used to get an event every 250 ms to
                                      // update the time remaining display
+    
     private MemoryGrid grid;
     private int currentLevel;
     private MemoryGameLevel[] levels;
@@ -45,7 +46,8 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     private JLabel	      textLabel		= new JLabel("ENTER YOUR NAME: ");//for inputing name for high score board
     private JFrame	      mainFrame		= null;
     private HighScoreBoard    board		= null;
-    // For pausing. pausing just stops the timer and the play
+    private JFrame	      scoreboard 	= new JFrame("High Score Board");
+	// For pausing. pausing just stops the timer and the play
     // time is computed as final time minus start time.
     // Therefore, this total pause time is used to
     // adjust the elapsed time to the actual play time.
@@ -188,6 +190,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     }	
     public void setMainFrame(JFrame f){
 	mainFrame =f;
+	mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
     }
     public void setScoreLabel(JLabel l){
 	scoreLabel=l;
@@ -548,7 +551,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 					inputBoard.dispatchEvent(new WindowEvent(inputBoard,WindowEvent.WINDOW_CLOSING));
 
 					showHighScoreBoard();
-					mainFrame.dispatchEvent(new WindowEvent(mainFrame,WindowEvent.WINDOW_CLOSING));
+//					mainFrame.dispatchEvent(new WindowEvent(mainFrame,WindowEvent.WINDOW_CLOSING));
 
 
 				}
@@ -582,8 +585,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	}
 
      public void showHighScoreBoard(){
-		JFrame scoreboard = new JFrame("High Score Board");
-		scoreboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//	scoreboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JTextArea txt = board.getBoard();
 		txt.setLineWrap(true);
 		txt.setEditable(false);
@@ -593,18 +595,34 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 		scoreboard.add(scroller2);
 		scoreboard.getContentPane().add(txt);
 
-		//code i added for now
-                JButton newGame = new JButton("New Game"); //just added to reset game 
+		//newGame button
+                JButton newGame = new JButton("New Game");
 		JPanel p = new JPanel(new BorderLayout());
         	p.add(BorderLayout.EAST,newGame);
-        	
 	        scoreboard.getContentPane().add(BorderLayout.SOUTH,p);
+
+	        ActionListener newGameListener = new ActionListener(){
+	                public void actionPerformed(ActionEvent e){
+ 	      	                System.out.println("Button clicked\n");
+	                    	//reseting game 
+				long time = levels[0].getSecondsToSolve();
+         	            	updateTimeLabel(time / 60, time % 60);
+				newGame(0);
+                    		score=0;
+                   		updateScore();
+	        	        closeScoreboard();
+	          	}
+        	};
+      	 	newGame.addActionListener(newGameListener);
 
 
 	        scoreboard.setSize(350,350);
 		Dimension screenSize2 = Toolkit.getDefaultToolkit().getScreenSize();
 		scoreboard.setLocation((int)(screenSize2.getWidth()/2 - scoreboard.getSize().getWidth()/2), (int)(screenSize2.getHeight()/2 - scoreboard.getSize().getHeight()/2));
 		scoreboard.setVisible(true);
-		scoreboard.add(new JButton("New Game"));
      }
+
+	public void closeScoreboard(){
+		scoreboard.dispatchEvent(new WindowEvent(scoreboard,WindowEvent.WINDOW_CLOSING));
+	}
 }
