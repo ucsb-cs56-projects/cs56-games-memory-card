@@ -372,6 +372,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
      *
      */
     public void reset() {
+
 	pauseTime = 0;
 	score=0;
 	updateScore();
@@ -400,7 +401,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
                     
 	if (deltaTime < level.getSecondsToSolve()&&currentLevel<2) {
 	    JOptionPane popup = new JOptionPane("Good Job!");
-	    Object[] options= {"Continue","Quit"};
+	    Object[] options= {"Next Level","Quit"};
 	    
 	    int selection=popup.showOptionDialog(
 						 null,
@@ -410,7 +411,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 						 JOptionPane.INFORMATION_MESSAGE, null,
 						 options, options[0]);
 	    
-            if(selection==JOptionPane.YES_OPTION)
+if(selection==JOptionPane.YES_OPTION)
 		{
 		    long time = levels[currentLevel+1].getSecondsToSolve();
 		    updateTimeLabel(time / 60, time % 60);
@@ -422,7 +423,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 }
         else if(deltaTime < level.getSecondsToSolve()&&currentLevel==2){
 	    JOptionPane popup = new JOptionPane("Good Job!");
-	    Object[] options= {"Play Again?","Quit"};
+	    Object[] options= {"New Game","Quit"};
 	    int selection=popup.showOptionDialog(
 						 null,
 						 "-~*´¨¯¨`*·~-.¸-  You beat the game!!  -,.-~*´¨¯¨`*·~-\nScore: "+score,
