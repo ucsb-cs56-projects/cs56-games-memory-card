@@ -99,4 +99,13 @@ public class MemoryGameTest
             t1.isOver=true;
             assertEquals(t1.isOver(), true);
         }
+
+	@Test public void testRemoveCommas()
+	{
+		MemoryGrid grid = new MemoryGrid(16);
+		MemoryGameComponent m = new MemoryGameComponent(grid);
+		String name = "Saman,tha Sm,,ith";
+		assertEquals(m.removeCommas(name), "Samantha Smith");
+	}
+
 }
