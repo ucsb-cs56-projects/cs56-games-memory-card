@@ -6,6 +6,7 @@ next level before the time runs out.
 Scoring:
 
 Matching a pair: 30 points
+Two cards don't match: -10 points
 
 Remaining Time Bonus:
 Remaining time * [(Current Level * 2)

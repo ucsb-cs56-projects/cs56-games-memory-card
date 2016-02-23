@@ -335,13 +335,14 @@ public class MemoryGameComponent extends JComponent implements ActionListener
                     grid.flip(num); 
 		    buttons[grid.getFlipped()].setEnabled(false);
                     grid.flip(grid.getFlipped());
-                    score+=30;
+                    score += 30;
                     //check if game is over
                     if(gameCounter==grid.getSize()/2){
 			isOver=true;
 			endGame();
                     }
                 } else {
+		    score -= 10;
 		    // start the flip back timer
 		    int delay = level.getFlipTime();
 		    ActionListener listener = new ActionListener() {
