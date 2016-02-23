@@ -20,33 +20,33 @@ import sun.audio.*;
 public class MemoryGameComponent extends JComponent implements ActionListener
 {
     
-    private JButton []        buttons;
-    private ArrayList<ImageIcon>   imgIcons     = new ArrayList<ImageIcon>();
-    public  JComponent        restartB          = new JButton("Restart");
-    private Icon              imgBlank;
-    private JButton	      pauseButton;
-    private JButton         musicButton;
-    private JLabel            timeLabel         = null;
-    private JLabel	      scoreLabel	= null;
-    private Timer             timer; // used to get an event every 250 ms to
-                                     // update the time remaining display
-    private MemoryGrid grid;
-    private int currentLevel;
-    private MemoryGameLevel[] levels;
-    private MemoryGameLevel level = new MemoryGameLevel(36, 100, 2000);
+    private JButton []                   buttons;
+    private ArrayList<ImageIcon>         imgIcons = new ArrayList<ImageIcon>();
+    public  JComponent                   restartB = new JButton("Restart");
+    private Icon                         imgBlank;
+    private JButton	                  pauseButton;
+    private JButton                   musicButton;
+    private JLabel                       timeLabel = null;
+    private JLabel	                    scoreLabel = null;
+    private Timer                           timer; // used to get an event every 250 ms to
+                                                   // update the time remaining display
+    private MemoryGrid                       grid;
+    private int                      currentLevel;
+    private MemoryGameLevel[]              levels;
+    private MemoryGameLevel                  level = new MemoryGameLevel(36, 100, 2000);
 
-    private boolean           firstImageFlipped = false;
-    private int               gameCounter       = 0;
-    private long              startTime         = 0; // used to calculate the
+    private boolean              firstImageFlipped = false;
+    private int                        gameCounter = 0;
+    private long                         startTime = 0; // used to calculate the
                                                      // total game time.
-    private boolean           cheatEnabled      = false; // Cheat code related.
-    private boolean	      isOver            = false; // Cheat code related.
-    private int 	      score		= 0; 
-    private JTextField        text              = new JTextField(20);//for inputing name for high score board
-    private JFrame 	      inputBoard        = new JFrame("ENTER FIRST 20 CHARACTERS OF YOUR NAME");//for inputing name for high score board
-    private JLabel	      textLabel		= new JLabel("ENTER YOUR NAME: ");//for inputing name for high score board
-    private JFrame	      mainFrame		= null;
-    private HighScoreBoard    board		= null;
+    private boolean                   cheatEnabled = false; // Cheat code related.
+    private boolean	                        isOver = false; // Cheat code related.
+    private int 	                         score = 0; 
+    private JTextField                        text = new JTextField(20);//for inputing name for high score board
+    private JFrame 	                    inputBoard = new JFrame("ENTER FIRST 20 CHARACTERS OF YOUR NAME");//for inputing name for high score board
+    private JLabel	                     textLabel = new JLabel("ENTER YOUR NAME: ");//for inputing name for high score board
+    private JFrame	                     mainFrame = null;
+    private HighScoreBoard                   board = null;
     // For pausing. pausing just stops the timer and the play
     // time is computed as final time minus start time.
     // Therefore, this total pause time is used to
@@ -105,6 +105,41 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	pauseStart = new Date().getTime();
 	timer.stop();
  
+    }
+
+    /** Play sound from a WAV filepath
+        This is a helper method
+    */
+    public void playSound(String filepath){
+        AudioPlayer myPlyaer = AudioPlayer.player;
+        AudioStream sound;
+        try{
+            InputStream test = new FileInputStream(filepath);
+            sound = new AudioStream(test);
+            AudioPlayer.player.start(sound);
+        }
+        catch(FileNotFoundException e){
+            System.out.print(e.toString());
+        }
+        catch(IOException error){
+            System.out.print(error.toString());
+        }      
+    }
+    
+    /** Play sound effect after flipping
+    */
+    public void playFlipSound(){
+        playSound("./resource/wall_pickup_01.wav");
+    }
+    /** Play sound effect if two cards matched
+    */
+    public void playMatchSound(){
+        playSound("./resource/training_finished_03.wav");
+    }
+    /** Play sound effect after winning the game
+    */
+    public void playWinSound(){
+        playSound("./resource/Final Fantasy VII - Victory.wav");
     }
 
     /** Play background music
@@ -330,6 +365,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
             musicButton.setEnabled(true);
 		}
 		grid.flip(num);
+        playFlipSound();
 		JButton jb = buttons[num];
 		
 		ImageIcon i = imgIcons.get(grid.getVal(num)-1);
@@ -349,15 +385,16 @@ public class MemoryGameComponent extends JComponent implements ActionListener
             //then check if theyre matching
             else{
 		if((num==1&&cheatEnabled))//cheat code
-		    {
+		{
 			cheatEnabled=false;
-                        isOver=true;
+            isOver=true;
 			endGame();
 			return;
-		    }
+        }
 		cheatEnabled=false;//cheat code
-                grid.flip(num);
-                JButton jb = buttons[num];
+        grid.flip(num);
+        playFlipSound();
+        JButton jb = buttons[num];
 
 		ImageIcon i = imgIcons.get(grid.getVal(num)-1);
 		Image img = i.getImage();
@@ -371,6 +408,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
                     grid.flip(num); 
 		    buttons[grid.getFlipped()].setEnabled(false);
                     grid.flip(grid.getFlipped());
+                    playMatchSound();
                     score += 30;
                     //check if game is over
                     if(gameCounter==grid.getSize()/2){
@@ -378,7 +416,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 			endGame();
                     }
                 } else {
-		    score -= 10;
+		    score -= 5;
 		    // start the flip back timer
 		    int delay = level.getFlipTime();
 		    ActionListener listener = new ActionListener() {
@@ -446,7 +484,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	if (deltaTime < level.getSecondsToSolve()&&currentLevel<3) {
 	    JOptionPane popup = new JOptionPane("Good Job!");
 	    Object[] options= {"Continue","Quit"};
-	    
+	    playWinSound();
 	    int selection=popup.showOptionDialog(
 						 null,
 						 "-~*´¨¯¨`*·~-.¸-  You beat the level!!  -,.-~*´¨¯¨`*·~-\nScore: "+score,
@@ -553,7 +591,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	    jb.setEnabled(true);
 	    jb.setIcon(imgBlank);
 	    grid.flip(grid.getFlipped());
-	    
+        //playFlipSound();
 	}
     }
     
