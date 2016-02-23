@@ -30,6 +30,7 @@ public class MemoryGameGui {
     static MemoryGameComponent mgc = new MemoryGameComponent(grid);
     static JButton reset = new JButton("Reset");
     static JButton pause = new JButton("Pause");
+    static JButton music = new JButton("Music");
     static JLabel label = new JLabel("Time Remaining: 1 minute, 15 seconds");
     static JLabel score = new JLabel("Score: 0");
     static JFrame instruction = new JFrame("Instruction");
@@ -50,6 +51,13 @@ public class MemoryGameGui {
 		    mgc.pauseB();
 		}
 	};
+
+    ActionListener musicListener = new ActionListener(){
+        public void actionPerformed(ActionEvent e){
+            mgc.playMusic();
+        }
+    };
+
 	ActionListener highscoreListener = new ActionListener(){
 		public void actionPerformed(ActionEvent e){
 			JFrame scoreboard = new JFrame("High Score Board");
@@ -93,6 +101,7 @@ public class MemoryGameGui {
 	};
 	highscore.addActionListener(highscoreListener);
 	pause.addActionListener(pauseListener);
+    music.addActionListener(musicListener);
 	reset.addActionListener(resetListener);
 	frame.getContentPane().add(mgc);
 	JPanel p = new JPanel(new BorderLayout());
@@ -100,6 +109,7 @@ public class MemoryGameGui {
 	JPanel p2 = new JPanel(new BorderLayout());
 	p.add(BorderLayout.EAST,p2);
 	p2.add(BorderLayout.WEST,pause);
+    p2.add(BorderLayout.CENTER,music);
 	p2.add(BorderLayout.EAST, reset);
 
 	frame.getContentPane().add(BorderLayout.SOUTH,p);
@@ -118,6 +128,7 @@ public class MemoryGameGui {
 	mgc.setMainFrame(frame);
 	mgc.setLabel(label);
 	mgc.setPauseButton(pause);
+    mgc.setMusicButton(music);
 	mgc.setScoreLabel(score);
 	mgc.setHighScoreBoard(board);
 	// to make sure that grids go left to right

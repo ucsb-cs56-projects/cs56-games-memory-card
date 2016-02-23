@@ -7,7 +7,8 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.lang.Math;
-
+import java.io.*;
+import sun.audio.*;
 /**
 * A Swing component for playing the Memory Card Game
 @author Bryce McGaw and Jonathan Yau (with some of Phill Conrad's code as a basis)
@@ -24,6 +25,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     public  JComponent        restartB          = new JButton("Restart");
     private Icon              imgBlank;
     private JButton	      pauseButton;
+    private JButton         musicButton;
     private JLabel            timeLabel         = null;
     private JLabel	      scoreLabel	= null;
     private Timer             timer; // used to get an event every 250 ms to
@@ -104,6 +106,29 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	timer.stop();
  
     }
+
+    /** Play background music
+    */
+    public void playMusic(){       
+        AudioPlayer MGP = AudioPlayer.player;
+        AudioStream BGM;
+        AudioData MD;
+        System.out.println("Music button Pressed!");
+        ContinuousAudioDataStream loop = null;
+        try{
+            InputStream test = new FileInputStream("./resource/Hiromi Haneda.wav");
+            BGM = new AudioStream(test);
+            AudioPlayer.player.start(BGM);            
+        }
+        catch(FileNotFoundException e){
+            System.out.print(e.toString());
+        }
+        catch(IOException error){
+            System.out.print(error.toString());
+        }
+        MGP.start(loop);
+    }
+
     /**
           Resume the game timer. In other words, recalculate total pause
           time and start the timer.
@@ -203,6 +228,15 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	pauseButton=b;
 	pauseButton.setEnabled(false);
     }
+
+    /**setMusicButton
+     *@param b sets the musicButton
+     */
+    public void setMusicButton(JButton b){
+        musicButton=b;
+        musicButton.setEnabled(false);
+    }
+
     /**
      * Loads a basic set of levels for the game
      */
@@ -293,6 +327,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 		    timer.start();
 		    firstImageFlipped = true;
 		    pauseButton.setEnabled(true);
+            musicButton.setEnabled(true);
 		}
 		grid.flip(num);
 		JButton jb = buttons[num];
@@ -374,6 +409,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	
 	firstImageFlipped = false;
 	pauseButton.setEnabled(false);
+    musicButton.setEnabled(true);
     }
 
     /**Resets the game
@@ -388,6 +424,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
  	newGame(currentLevel);
 	firstImageFlipped = false;
 	pauseButton.setEnabled(false);
+	musicButton.setEnabled(true);
     }
     
     /**
