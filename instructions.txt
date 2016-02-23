@@ -6,6 +6,7 @@ next level before the time runs out.
 Scoring:
 
 Matching a pair: 30 points
+Two cards don't match: -10 points
 
 Remaining Time Bonus:
 Remaining time * [(Current Level * 2)
@@ -19,7 +20,7 @@ if you restart the level.
 
 Instructions:
 
-There are 3 levels.
+There are 4 levels.
 
 Click a card to flip the card.
 
@@ -37,7 +38,8 @@ time also changes as the level
 changes), you will win the level 
 and move on to the next one.
 
-The number of cards on the grid 
+The number of cards on the grid or
+the time you have before you lose
 would also change based on the level.
 
 
