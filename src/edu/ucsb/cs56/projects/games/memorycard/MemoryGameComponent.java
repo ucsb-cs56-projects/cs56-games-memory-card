@@ -207,10 +207,11 @@ public class MemoryGameComponent extends JComponent implements ActionListener
      * Loads a basic set of levels for the game
      */
     private void loadLevelSet1() {
-	levels = new MemoryGameLevel[3];
+	levels = new MemoryGameLevel[4];
 	levels[0] = new MemoryGameLevel(16, 75, 1500);
-	levels[1] = new MemoryGameLevel(36, 300, 1000);
-	levels[2] = new MemoryGameLevel(36, 150, 500);
+	levels[1] = new MemoryGameLevel(16, 40, 750);
+	levels[2] = new MemoryGameLevel(36, 300, 1000);
+	levels[3] = new MemoryGameLevel(36, 150, 500);
 	currentLevel = 0;
 	level = levels[currentLevel];
     }
@@ -405,7 +406,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     
 	updateScore();
                     
-	if (deltaTime < level.getSecondsToSolve()&&currentLevel<2) {
+	if (deltaTime < level.getSecondsToSolve()&&currentLevel<3) {
 	    JOptionPane popup = new JOptionPane("Good Job!");
 	    Object[] options= {"Continue","Quit"};
 	    
@@ -427,7 +428,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 		System.exit(0);
 	    
 }
-        else if(deltaTime < level.getSecondsToSolve()&&currentLevel==2){
+        else if(deltaTime < level.getSecondsToSolve()&&currentLevel==3){
 	    JOptionPane popup = new JOptionPane("Good Job!");
 	    Object[] options= {"Play Again?","Quit"};
 	    int selection=popup.showOptionDialog(
