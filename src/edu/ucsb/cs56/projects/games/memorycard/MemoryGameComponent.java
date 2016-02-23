@@ -20,7 +20,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 {
     
     private JButton []        buttons;
-    private ArrayList<Icon>   imgIcons          = new ArrayList<Icon>();
+    private ArrayList<ImageIcon>   imgIcons     = new ArrayList<ImageIcon>();
     public  JComponent        restartB          = new JButton("Restart");
     private Icon              imgBlank;
     private JButton	      pauseButton;
@@ -295,7 +295,12 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 		}
 		grid.flip(num);
 		JButton jb = buttons[num];
-		Icon i = imgIcons.get(grid.getVal(num)-1);
+		
+		ImageIcon i = imgIcons.get(grid.getVal(num)-1);
+		Image img = i.getImage();
+		Image newimg = img.getScaledInstance(jb.getWidth()*3, jb.getHeight()*3, java.awt.Image.SCALE_SMOOTH);
+		i = new ImageIcon(newimg);
+		
 		jb.setIcon(i); //set image according to val
 		if(num!=1) //cheat code
 		    jb.setEnabled(false); //make unclickable
@@ -317,8 +322,12 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 		cheatEnabled=false;//cheat code
                 grid.flip(num);
                 JButton jb = buttons[num];
-		
-		jb.setIcon(imgIcons.get(grid.getVal(num)-1)); //set image according to val
+
+		ImageIcon i = imgIcons.get(grid.getVal(num)-1);
+		Image img = i.getImage();
+		Image newimg = img.getScaledInstance(jb.getWidth()*3, jb.getHeight()*3, java.awt.Image.SCALE_SMOOTH);
+		i = new ImageIcon(newimg);
+		jb.setIcon(i); //set image according to val
 		
                 jb.setEnabled(false);
                 if (grid.flippedEquals(num)){ //if they're matching keep num displayed and set flipped as false
