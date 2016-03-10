@@ -149,7 +149,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
      */
     public void playMusic(){       
 
-        System.out.println("Music button Pressed!");
+        //System.out.println("Music button Pressed!");
         //ContinuousAudioDataStream loop = null;
         try{
             InputStream test = new FileInputStream("./resource/Hiromi Haneda.wav");
@@ -168,7 +168,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     /** Stop background music
     */
     public void stopMusic(){
-        System.out.println("Music should pause!");
+        //System.out.println("Music should pause!");
         AudioPlayer.player.stop(BGM);
     }
     
