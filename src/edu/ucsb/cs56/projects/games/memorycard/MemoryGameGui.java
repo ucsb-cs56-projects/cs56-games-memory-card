@@ -30,7 +30,7 @@ public class MemoryGameGui {
     static MemoryGameComponent mgc = new MemoryGameComponent(grid);
     static JButton reset = new JButton("Reset");
     static JButton pause = new JButton("Pause");
-    static JButton music = new JButton("Music");
+    static JButton music = new JButton("Music Off");
     static JLabel label = new JLabel("Time Remaining: 1 minute, 15 seconds");
     static JLabel score = new JLabel("Score: 0");
     static JFrame instruction = new JFrame("Instruction");
@@ -50,13 +50,13 @@ public class MemoryGameGui {
 		public void actionPerformed(ActionEvent e){
 		    mgc.pauseB();
 		}
-	    };
+	};
 	
 	ActionListener musicListener = new ActionListener(){
 		public void actionPerformed(ActionEvent e){
-            if (false){//e.getSource() == music){
+            if (e.getActionCommand() == "Music On"){
                 mgc.stopMusic();
-                System.out.println(e.getActionCommand());
+                music.setLabel("Music Off");
             }
             else{
 		        mgc.playMusic();
