@@ -12,8 +12,8 @@ import java.util.Random;
 
 public class MemoryGrid{
     ArrayList<MemoryCard> memGrid = new ArrayList<MemoryCard>();
-    int size=16;
-    boolean isOver=false;
+    int size = 16;
+    boolean isOver = false;
     
     /** MemoryGrid constructor that takes in a parameter
      * @param gridSize for the size the of the grid
@@ -41,12 +41,12 @@ public class MemoryGrid{
      * @param temp check to see if temp memory card is in the memorycard arraylist twice
      */
     public boolean contains2(MemoryCard temp){
-        int count=0;
+        int count = 0;
         for(MemoryCard comp: memGrid){
             if(comp.Equals(temp))    
                 count++;
         }
-        return (count==2);
+        return (count == 2);
     }
     
     /**Method isOneFlipped()
@@ -54,12 +54,12 @@ public class MemoryGrid{
      * @return boolean true if one card is flipped, false otherwise
      */
     public boolean isOneFlipped(){
-        int count=0;
+        int count = 0;
         for(MemoryCard comp: memGrid){
-            if(comp.isFlipped()==true)
+            if(comp.isFlipped() == true)
                 count++;
         }
-        return (count==1);
+        return (count == 1);
     }
     
     /**Method is TwoFlipped()
@@ -67,12 +67,12 @@ public class MemoryGrid{
      * @return boolean true if two cards are flipped, false otherwise
      */
     public boolean isTwoFlipped(){
-        int count=0;
+        int count = 0;
         for(MemoryCard comp: memGrid){
-            if(comp.isFlipped()==true)
+            if(comp.isFlipped() == true)
                 count++;
         }
-        return(count==2);
+        return(count == 2);
     }
     
     /**Method flippedEquals(int i)
@@ -90,11 +90,11 @@ public class MemoryGrid{
      * @return retval the position of the flipped MemoryCard
      */
     public int getFlipped(){
-        int retVal=-1, count=-1;
+        int retVal = -1, count = -1;
         for(MemoryCard comp: memGrid){
             count++;
-            if(comp.isFlipped()==true)
-                retVal=count;
+            if(comp.isFlipped() == true)
+                retVal = count;
         }
         return retVal;
     }
@@ -103,11 +103,11 @@ public class MemoryGrid{
      * @return retval the position of the flipped MemoryCard that is not index i
      */
     public int getFlipped(int i){
-        int retVal=-1, count=-1;
+        int retVal = -1, count = -1;
         for(MemoryCard comp: memGrid){
             count++;
-            if( (comp.isFlipped()==true) && (memGrid.get(i)!=comp))
-                retVal=count;
+            if( (comp.isFlipped() == true) && (memGrid.get(i) != comp))
+                retVal = count;
         }
         return retVal;
     }

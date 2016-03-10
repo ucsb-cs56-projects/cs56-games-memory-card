@@ -22,9 +22,9 @@ import java.io.*;
 * Edited Professor Phill Conrad's code from Lab06
 */
 public class MemoryGameGui {
-
+    
     static final int WINDOW_SIZE = 500;
-
+    
     static JFrame frame = new JFrame("Memory Card Game");
     static MemoryGrid grid = new MemoryGrid(16);
     static MemoryGameComponent mgc = new MemoryGameComponent(grid);
@@ -42,7 +42,7 @@ public class MemoryGameGui {
      */
     
     public static void main (String[] args) {
-
+	
 	frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	instruction.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	
@@ -50,58 +50,58 @@ public class MemoryGameGui {
 		public void actionPerformed(ActionEvent e){
 		    mgc.pauseB();
 		}
-	};
-
-    ActionListener musicListener = new ActionListener(){
-        public void actionPerformed(ActionEvent e){
-            mgc.playMusic();
-        }
-    };
-
+	    };
+	
+	ActionListener musicListener = new ActionListener(){
+		public void actionPerformed(ActionEvent e){
+		    mgc.playMusic();
+		}
+	    };
+	
 	ActionListener highscoreListener = new ActionListener(){
 		public void actionPerformed(ActionEvent e){
-			JFrame scoreboard = new JFrame("High Score Board");
-			scoreboard.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			JTextArea txt = board.getBoard();
-			txt.setLineWrap(true);
-			txt.setEditable(false);
-			JScrollPane scroller2 = new JScrollPane(txt);
-			scroller2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-			scroller2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-			scoreboard.add(scroller2);
-	
-			scoreboard.getContentPane().add(txt);
-		        scoreboard.setSize(350,350);
-			Dimension screenSize2 = Toolkit.getDefaultToolkit().getScreenSize();
-			scoreboard.setLocation((int)(screenSize2.getWidth()/2 - scoreboard.getSize().getWidth()/2), (int)(screenSize2.getHeight()/2 - scoreboard.getSize().getHeight()/2));
-			scoreboard.setVisible(true);
-			
+		    JFrame scoreboard = new JFrame("High Score Board");
+		    scoreboard.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		    JTextArea txt = board.getBoard();
+		    txt.setLineWrap(true);
+		    txt.setEditable(false);
+		    JScrollPane scroller2 = new JScrollPane(txt);
+		    scroller2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		    scroller2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		    scoreboard.add(scroller2);
+		    
+		    scoreboard.getContentPane().add(txt);
+		    scoreboard.setSize(350,350);
+		    Dimension screenSize2 = Toolkit.getDefaultToolkit().getScreenSize();
+		    scoreboard.setLocation((int)(screenSize2.getWidth()/2 - scoreboard.getSize().getWidth()/2), (int)(screenSize2.getHeight()/2 - scoreboard.getSize().getHeight()/2));
+		    scoreboard.setVisible(true);
+		    
 		}
-	};
+	    };
 	ActionListener resetListener = new ActionListener(){
 		public void actionPerformed(ActionEvent e){
 		    mgc.pauseTimer();
 		    JOptionPane popup = new JOptionPane("Warning!");
 	            Object[] options= {"Start Over","Cancel"};
-	
+		    
 	            int selection=popup.showOptionDialog(
-	                    null,
-	                    "Do you want to restart this level?\nYou will lose all of your points!",
-	                    "Warning!",
-       		             JOptionPane.YES_NO_OPTION,
-        	            JOptionPane.WARNING_MESSAGE, null,
-        	            options, options[0]);
-
+							 null,
+							 "Do you want to restart this level?\nYou will lose all of your points!",
+							 "Warning!",
+							 JOptionPane.YES_NO_OPTION,
+							 JOptionPane.WARNING_MESSAGE, null,
+							 options, options[0]);
+		    
         	    if(selection==JOptionPane.YES_OPTION){
-        	           	 mgc.reset();
+			mgc.reset();
 		    }
 		    else
 			mgc.resume();
 		}
-	};
+	    };
 	highscore.addActionListener(highscoreListener);
 	pause.addActionListener(pauseListener);
-    music.addActionListener(musicListener);
+	music.addActionListener(musicListener);
 	reset.addActionListener(resetListener);
 	frame.getContentPane().add(mgc);
 	JPanel p = new JPanel(new BorderLayout());
@@ -109,13 +109,12 @@ public class MemoryGameGui {
 	JPanel p2 = new JPanel(new BorderLayout());
 	p.add(BorderLayout.EAST,p2);
 	p2.add(BorderLayout.WEST,pause);
-    p2.add(BorderLayout.CENTER,music);
+	p2.add(BorderLayout.CENTER,music);
 	p2.add(BorderLayout.EAST, reset);
-
+	
 	frame.getContentPane().add(BorderLayout.SOUTH,p);
-
+	
 	JPanel scorePanel = new JPanel(new BorderLayout());
-//	scorePanel.setLayout(new BoxLayout(scorePanel,BoxLayout.Y_AXIS));
 	score.setAlignmentX(Component.CENTER_ALIGNMENT);
 	scorePanel.add(BorderLayout.CENTER,score);
 	JPanel sp2 = new JPanel(new BorderLayout());
@@ -124,11 +123,11 @@ public class MemoryGameGui {
 	scorePanel.add(BorderLayout.EAST,sp2);
 	
 	frame.getContentPane().add(BorderLayout.NORTH,scorePanel);
-
+	
 	mgc.setMainFrame(frame);
 	mgc.setLabel(label);
 	mgc.setPauseButton(pause);
-    mgc.setMusicButton(music);
+	mgc.setMusicButton(music);
 	mgc.setScoreLabel(score);
 	mgc.setHighScoreBoard(board);
 	// to make sure that grids go left to right
@@ -138,7 +137,7 @@ public class MemoryGameGui {
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	frame.setLocation((int)(screenSize.getWidth()/2 - frame.getSize().getWidth()/2), (int)(screenSize.getHeight()/2 - frame.getSize().getHeight()/2));
 	frame.setVisible(true);
-
+	
 	JPanel panel = new JPanel();
 	text.setLineWrap(true);
 	text.setEditable(false);
@@ -154,7 +153,7 @@ public class MemoryGameGui {
 	instruction.setVisible(true);
 	
     }
-
+    
     /**
      *Adds instruction to the screen
      */
@@ -166,7 +165,7 @@ public class MemoryGameGui {
 									 new FileInputStream(file)));
 	    String line;
 	    while((line = br.readLine()) != null){
-		text.append(line+"\n");
+		text.append(line + "\n");
 	    }
 	    br.close();
 	} catch	(IOException e) {
