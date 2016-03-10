@@ -374,6 +374,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 		i = new ImageIcon(newimg);
 		
 		jb.setIcon(i); //set image according to val
+		jb.setDisabledIcon(i);
 		if(num!=1) //cheat code
 		    jb.setEnabled(false); //make unclickable
                 else
@@ -401,6 +402,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 		Image newimg = img.getScaledInstance(jb.getWidth()*3, jb.getHeight()*3, java.awt.Image.SCALE_SMOOTH);
 		i = new ImageIcon(newimg);
 		jb.setIcon(i); //set image according to val
+		jb.setDisabledIcon(i);
 		
                 jb.setEnabled(false);
                 if (grid.flippedEquals(num)){ //if they're matching keep num displayed and set flipped as false
@@ -447,7 +449,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	
 	firstImageFlipped = false;
 	pauseButton.setEnabled(false);
-    musicButton.setEnabled(true);
+	musicButton.setEnabled(true);
     }
 
     /**Resets the game
