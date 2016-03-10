@@ -28,10 +28,12 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     private JButton                   musicButton;
     private JLabel                       timeLabel = null;
     private JLabel	                    scoreLabel = null;
+    private JLabel                      levelLabel = null;
     private Timer                           timer; // used to get an event every 250 ms to
                                                    // update the time remaining display
     private MemoryGrid                       grid;
     private int                      currentLevel;
+    private int                        totalLevels = 4;
     private MemoryGameLevel[]              levels;
     private MemoryGameLevel                  level = new MemoryGameLevel(36, 100, 2000);
     
@@ -63,6 +65,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	super(); 
 	timeLabel = new JLabel("Time Remaining");
 	scoreLabel = new JLabel("Score");
+    levelLabel = new JLabel("Level");
 	mainFrame=new JFrame();
 	timer = new Timer(250, this);
 	this.grid = game;
@@ -226,7 +229,10 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	}
     }
     private void updateScore(){
-   	scoreLabel.setText("Score: "+score);
+   	    scoreLabel.setText("Score: "+score+" ");
+    }
+    private void updateLevel(){
+        levelLabel.setText("Level: "+(currentLevel+1)+"/"+totalLevels);
     }
     /**
        Callback from the timer. This is used to update the time remaining
@@ -246,19 +252,23 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	
         updateTimeLabel(timeRemaining / 60, timeRemaining % 60);
 	updateScore();
+    updateLevel();
     }
     
     /**setLabel()
      *@param label sets the timeLabel
      */
     public void setLabel(JLabel label) {
-	this.timeLabel = label;
+	    this.timeLabel = label;
     }	
     public void setMainFrame(JFrame f){
-	mainFrame = f;
+	    mainFrame = f;
     }
     public void setScoreLabel(JLabel l){
-	scoreLabel = l;
+	    scoreLabel = l;
+    }
+    public void setLevelLabel(JLabel l){
+        levelLabel = l;
     }
     public void setHighScoreBoard(HighScoreBoard h){
 	board=h;
@@ -470,6 +480,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	pauseTime = 0;
 	score=0;
 	updateScore();
+    updateLevel();
 	updateTimeLabel(level.getSecondsToSolve() / 60, 
 			level.getSecondsToSolve() % 60);	    
  	newGame(currentLevel);
@@ -485,6 +496,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     public void endGame() {
 	
 	timer.stop();
+    //AudioPlayer.player.stop(BGM);
 	long finalTime = new Date().getTime();
 	long deltaTime = (long)((finalTime - startTime) / 1000.0) - pauseTime / 1000;
 	pauseTime = 0;
@@ -493,7 +505,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	    score += (level.getSecondsToSolve()-deltaTime)*((2*currentLevel+1)-(currentLevel+1)/2);
 	
 	updateScore();
-        
+    updateLevel();    
 	if (deltaTime < level.getSecondsToSolve() && currentLevel<3) {
 	    JOptionPane popup = new JOptionPane("Good Job!");
 	    Object[] options= {"Continue","Quit"};
@@ -533,6 +545,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 		    newGame(0);
 		    score = 0;
 		    updateScore();
+            updateLevel();   
 		}
 	    else{
 		if(score > board.getLowestScore())

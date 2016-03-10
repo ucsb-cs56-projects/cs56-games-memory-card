@@ -32,7 +32,8 @@ public class MemoryGameGui {
     static JButton pause = new JButton("Pause");
     static JButton music = new JButton("Music Off");
     static JLabel label = new JLabel("Time Remaining: 1 minute, 15 seconds");
-    static JLabel score = new JLabel("Score: 0");
+    static JLabel score = new JLabel("Score: 0 ");
+    static JLabel level = new JLabel("Level: 1/4 ");
     static JFrame instruction = new JFrame("Instruction");
     static JTextArea text = new JTextArea(15,25);
     static JButton highscore = new JButton("High Score");
@@ -113,6 +114,7 @@ public class MemoryGameGui {
 	frame.getContentPane().add(mgc);
 	JPanel p = new JPanel(new BorderLayout());
 	p.add(BorderLayout.WEST,label);
+    
 	JPanel p2 = new JPanel(new BorderLayout());
 	p.add(BorderLayout.EAST,p2);
 	p2.add(BorderLayout.WEST,pause);
@@ -123,7 +125,8 @@ public class MemoryGameGui {
 	
 	JPanel scorePanel = new JPanel(new BorderLayout());
 	score.setAlignmentX(Component.CENTER_ALIGNMENT);
-	scorePanel.add(BorderLayout.CENTER,score);
+	scorePanel.add(BorderLayout.WEST,score);
+    scorePanel.add(BorderLayout.CENTER,level);
 	JPanel sp2 = new JPanel(new BorderLayout());
 	highscore.setAlignmentX(Component.RIGHT_ALIGNMENT);
 	sp2.add(BorderLayout.EAST,highscore);
@@ -136,6 +139,7 @@ public class MemoryGameGui {
 	mgc.setPauseButton(pause);
 	mgc.setMusicButton(music);
 	mgc.setScoreLabel(score);
+    mgc.setLevelLabel(level);
 	mgc.setHighScoreBoard(board);
 	// to make sure that grids go left to right
 	frame.applyComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
@@ -165,18 +169,18 @@ public class MemoryGameGui {
      *Adds instruction to the screen
      */
     public static void addInstruction(){
-	File file = new File("instructions.txt");
-	try {
-	    BufferedReader br = new BufferedReader(
-						   new InputStreamReader(
-									 new FileInputStream(file)));
-	    String line;
-	    while((line = br.readLine()) != null){
-		text.append(line + "\n");
-	    }
-	    br.close();
-	} catch	(IOException e) {
-	    e.printStackTrace();
-	}
+	    File file = new File("instructions.txt");
+	    try {
+	        BufferedReader br = new BufferedReader(
+						        new InputStreamReader(
+                                new FileInputStream(file)));
+	        String line;
+	        while((line = br.readLine()) != null){
+		        text.append(line + "\n");
+	        }
+	        br.close();
+	    } catch	(IOException e) {
+            e.printStackTrace();
+        }
     }
 }
