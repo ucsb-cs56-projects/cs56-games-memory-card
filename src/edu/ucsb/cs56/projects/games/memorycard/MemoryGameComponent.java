@@ -141,18 +141,20 @@ public class MemoryGameComponent extends JComponent implements ActionListener
         playSound("./resource/Final Fantasy VII - Victory.wav");
     }
     
+    AudioPlayer MGP = AudioPlayer.player;
+    AudioStream BGM;
+    AudioData MD;
+    
     /** Play background music
      */
     public void playMusic(){       
-        AudioPlayer MGP = AudioPlayer.player;
-        AudioStream BGM;
-        AudioData MD;
+
         System.out.println("Music button Pressed!");
-        ContinuousAudioDataStream loop = null;
+        //ContinuousAudioDataStream loop = null;
         try{
             InputStream test = new FileInputStream("./resource/Hiromi Haneda.wav");
             BGM = new AudioStream(test);
-            AudioPlayer.player.start(BGM);            
+            AudioPlayer.player.start(BGM);         
         }
         catch(FileNotFoundException e){
             System.out.print(e.toString());
@@ -160,7 +162,14 @@ public class MemoryGameComponent extends JComponent implements ActionListener
         catch(IOException error){
             System.out.print(error.toString());
         }
-        MGP.start(loop);
+        //MGP.start(loop);
+    }
+    
+    /** Stop background music
+    */
+    public void stopMusic(){
+        System.out.println("Music should pause!");
+        AudioPlayer.player.stop(BGM);
     }
     
     /**

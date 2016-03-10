@@ -54,9 +54,16 @@ public class MemoryGameGui {
 	
 	ActionListener musicListener = new ActionListener(){
 		public void actionPerformed(ActionEvent e){
-		    mgc.playMusic();
+            if (false){//e.getSource() == music){
+                mgc.stopMusic();
+                System.out.println(e.getActionCommand());
+            }
+            else{
+		        mgc.playMusic();
+                music.setLabel("Music On");
+            }
 		}
-	    };
+	};
 	
 	ActionListener highscoreListener = new ActionListener(){
 		public void actionPerformed(ActionEvent e){
