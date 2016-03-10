@@ -476,7 +476,6 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	timer.stop();
 	long finalTime = new Date().getTime();
 	long deltaTime = (long)((finalTime - startTime) / 1000.0) - pauseTime / 1000;
-	System.out.print(finalTime + ""+ startTime + deltaTime);
 	pauseTime = 0;
         grid.isOver=true;
 	if(deltaTime < level.getSecondsToSolve())
