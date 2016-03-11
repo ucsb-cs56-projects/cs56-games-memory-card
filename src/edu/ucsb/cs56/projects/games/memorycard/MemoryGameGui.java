@@ -18,7 +18,8 @@ import java.io.*;
 * @author Bryce McGaw and Jonathan Yau
 * @author Ryan Halbrook and Yun Suk Chang
 * @author Mathew Glodack, Christina Morris
-* @version CS56 Spring 2013
+* @author Xiaohe He, Shaoyi Zhang
+* @version CS56 Winter 2016
 * Edited Professor Phill Conrad's code from Lab06
 */
 public class MemoryGameGui {
@@ -38,8 +39,9 @@ public class MemoryGameGui {
     static JTextArea text = new JTextArea(15,25);
     static JButton highscore = new JButton("High Score");
     static HighScoreBoard board = new HighScoreBoard();
-    static JButton start = new JButton("Start!");
+    static JButton start = new JButton("Start/Resume");
     static JButton binstruction = new JButton("instruction");
+    static JButton menu = new JButton("menu");
     static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     static ActionListener highscoreListener = new ActionListener(){
 	    public void actionPerformed(ActionEvent e){
@@ -78,31 +80,29 @@ public class MemoryGameGui {
 		instruction.setVisible(true);
 	    }
 	};
-    
-    /** main method to open JFrame 
-     *
-     */
-    
-    public static void main (String[] args) {
-	
-	frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	instruction.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+    public static void menu() {
 	ActionListener startListener = new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
 		    frame.getContentPane().removeAll();
+		    frame.getContentPane().revalidate();
+		    frame.getContentPane().repaint();
 		    go();
 		}
 	    };
 	
+	frame.getContentPane().removeAll();
+	frame.getContentPane().revalidate();
+	frame.getContentPane().repaint();
 	start.addActionListener(startListener);
 	highscore.addActionListener(highscoreListener);
 	binstruction.addActionListener(instructionListener);
 	
-	frame.setSize(WINDOW_SIZE, WINDOW_SIZE);
+	
 	JPanel p = new JPanel();
 	p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 	
-	Font bigFont = new Font("serif", Font.BOLD, 65);
+	Font bigFont = new Font("serif", Font.BOLD, 60);
 	start.setFont(bigFont);
 	highscore.setFont(bigFont);
 	binstruction.setFont(bigFont);
@@ -119,11 +119,26 @@ public class MemoryGameGui {
 
 	p.setBackground(new Color(70,130,180));
 	frame.getContentPane().add(p);
+    }
+	
+    
+    /** main method to open JFrame 
+     *
+     */
+    
+    public static void main (String[] args) {
+	
+	frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	instruction.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	frame.setSize(WINDOW_SIZE, WINDOW_SIZE);
+	menu();
 
 	frame.setLocation((int)(screenSize.getWidth()/2 - frame.getSize().getWidth()/2), (int)(screenSize.getHeight()/2 - frame.getSize().getHeight()/2));
 	frame.setVisible(true);
     }
     public static void go(){
+
+	frame.setLocation((int)(screenSize.getWidth()/2 - frame.getSize().getWidth()/2), (int)(screenSize.getHeight()/2 - frame.getSize().getHeight()/2));
 	
 	ActionListener pauseListener = new ActionListener(){
 		public void actionPerformed(ActionEvent e){
@@ -133,16 +148,16 @@ public class MemoryGameGui {
 	
 	ActionListener musicListener = new ActionListener(){
 		public void actionPerformed(ActionEvent e){
-            if (e.getActionCommand() == "Music On"){
-                mgc.stopMusic();
-                music.setLabel("Music Off");
-            }
-            else{
+		    if (e.getActionCommand() == "Music On"){
+			mgc.stopMusic();
+			music.setLabel("Music Off");
+		    }
+		    else{
 		        mgc.playMusic();
-                music.setLabel("Music On");
-            }
+			music.setLabel("Music On");
+		    }
 		}
-	};
+	    };
 	
 	
 	ActionListener resetListener = new ActionListener(){
@@ -159,20 +174,28 @@ public class MemoryGameGui {
 							 JOptionPane.WARNING_MESSAGE, null,
 							 options, options[0]);
 		    
-        	    if(selection==JOptionPane.YES_OPTION){
+        	    if(selection == JOptionPane.YES_OPTION){
 			mgc.reset();
 		    }
 		    else
 			mgc.resume();
 		}
 	    };
-	//highscore.addActionListener(highscoreListener);
+
+	ActionListener menuListener = new ActionListener(){
+		public void actionPerformed(ActionEvent e){
+		    menu();
+		}
+	    };
+	
 	pause.addActionListener(pauseListener);
 	music.addActionListener(musicListener);
 	reset.addActionListener(resetListener);
+	menu.addActionListener(menuListener);
 	frame.getContentPane().add(mgc);
 	JPanel p = new JPanel(new BorderLayout());
 	p.add(BorderLayout.WEST,label);
+	
     
 	JPanel p2 = new JPanel(new BorderLayout());
 	p.add(BorderLayout.EAST,p2);
@@ -183,12 +206,11 @@ public class MemoryGameGui {
 	frame.getContentPane().add(BorderLayout.SOUTH,p);
 	
 	JPanel scorePanel = new JPanel(new BorderLayout());
-	score.setAlignmentX(Component.CENTER_ALIGNMENT);
-	scorePanel.add(BorderLayout.WEST,score);
-	scorePanel.add(BorderLayout.CENTER,level);
+	scorePanel.add(BorderLayout.WEST, score);
+	scorePanel.add(BorderLayout.CENTER, level);
+	frame.pack();
 	JPanel sp2 = new JPanel(new BorderLayout());
-	//highscore.setAlignmentX(Component.RIGHT_ALIGNMENT);
-	//sp2.add(BorderLayout.EAST,highscore);
+	sp2.add(menu);
 	scorePanel.add(BorderLayout.EAST,sp2);
 	
 	frame.getContentPane().add(BorderLayout.NORTH,scorePanel);
