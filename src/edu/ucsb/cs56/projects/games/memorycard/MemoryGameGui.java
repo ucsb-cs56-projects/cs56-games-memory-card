@@ -166,7 +166,7 @@ public class MemoryGameGui {
 			mgc.resume();
 		}
 	    };
-	highscore.addActionListener(highscoreListener);
+	//highscore.addActionListener(highscoreListener);
 	pause.addActionListener(pauseListener);
 	music.addActionListener(musicListener);
 	reset.addActionListener(resetListener);
@@ -187,8 +187,8 @@ public class MemoryGameGui {
 	scorePanel.add(BorderLayout.WEST,score);
 	scorePanel.add(BorderLayout.CENTER,level);
 	JPanel sp2 = new JPanel(new BorderLayout());
-	highscore.setAlignmentX(Component.RIGHT_ALIGNMENT);
-	sp2.add(BorderLayout.EAST,highscore);
+	//highscore.setAlignmentX(Component.RIGHT_ALIGNMENT);
+	//sp2.add(BorderLayout.EAST,highscore);
 	scorePanel.add(BorderLayout.EAST,sp2);
 	
 	frame.getContentPane().add(BorderLayout.NORTH,scorePanel);
