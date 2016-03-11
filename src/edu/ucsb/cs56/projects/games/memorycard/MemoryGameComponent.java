@@ -65,7 +65,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	super(); 
 	timeLabel = new JLabel("Time Remaining");
 	scoreLabel = new JLabel("Score");
-    levelLabel = new JLabel("Level");
+	levelLabel = new JLabel("Level");
 	mainFrame=new JFrame();
 	timer = new Timer(250, this);
 	this.grid = game;
@@ -252,7 +252,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	
         updateTimeLabel(timeRemaining / 60, timeRemaining % 60);
 	updateScore();
-    updateLevel();
+	updateLevel();
     }
     
     /**setLabel()
@@ -373,6 +373,8 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 					  classs.getResource("/images/000.jpg"));
 	    
 	    //if 2 MemoryCards are flipped, flip back over
+	    if (t!=null)
+		t.stop();
 	    flipBack();
 	    
             //if no MemoryCards are flipped, flip one
