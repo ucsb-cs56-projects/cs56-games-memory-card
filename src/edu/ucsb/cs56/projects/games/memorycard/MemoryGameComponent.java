@@ -14,7 +14,8 @@ import sun.audio.*;
 @author Bryce McGaw and Jonathan Yau (with some of Phill Conrad's code as a basis)
 @author Ryan Halbrook and Yun Suk Chang
 @author Mathew Glodack, Christina Morris
-@version CS56 Spring 2013
+@author Xiaohe He, Shaoyi Zhang
+@version CS56 Spring 2016
 @see MemoryGrid
 */
 public class MemoryGameComponent extends JComponent implements ActionListener
@@ -165,13 +166,11 @@ public class MemoryGameComponent extends JComponent implements ActionListener
         catch(IOException error){
             System.out.print(error.toString());
         }
-        //MGP.start(loop);
     }
     
     /** Stop background music
     */
     public void stopMusic(){
-        //System.out.println("Music should pause!");
         AudioPlayer.player.stop(BGM);
     }
     
@@ -482,7 +481,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	pauseTime = 0;
 	score=0;
 	updateScore();
-    updateLevel();
+	updateLevel();
 	updateTimeLabel(level.getSecondsToSolve() / 60, 
 			level.getSecondsToSolve() % 60);	    
  	newGame(currentLevel);
@@ -498,7 +497,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     public void endGame() {
 	
 	timer.stop();
-    //AudioPlayer.player.stop(BGM);
+	//AudioPlayer.player.stop(BGM);
 	long finalTime = new Date().getTime();
 	long deltaTime = (long)((finalTime - startTime) / 1000.0) - pauseTime / 1000;
 	pauseTime = 0;
@@ -507,20 +506,20 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	    score += (level.getSecondsToSolve()-deltaTime)*((2*currentLevel+1)-(currentLevel+1)/2);
 	
 	updateScore();
-    updateLevel();    
+	updateLevel();    
 	if (deltaTime < level.getSecondsToSolve() && currentLevel<3) {
 	    JOptionPane popup = new JOptionPane("Good Job!");
 	    Object[] options= {"Continue","Quit"};
 	    playWinSound();
-	    int selection=popup.showOptionDialog(
-						 null,
-						 "-~*´¨¯¨`*·~-.¸-  You beat the level!!  -,.-~*´¨¯¨`*·~-\nScore: "+score,
-						 "Good Job!",
-						 JOptionPane.YES_NO_OPTION,
-						 JOptionPane.INFORMATION_MESSAGE, null,
-						 options, options[0]);
+	    int selection = popup.showOptionDialog(
+						   null,
+						   "-~*´¨¯¨`*·~-.¸-  You beat the level!!  -,.-~*´¨¯¨`*·~-\nScore: "+score,
+						   "Good Job!",
+						   JOptionPane.YES_NO_OPTION,
+						   JOptionPane.INFORMATION_MESSAGE, null,
+						   options, options[0]);
 	    
-            if(selection==JOptionPane.YES_OPTION)
+            if(selection == JOptionPane.YES_OPTION)
 		{
 		    long time = levels[currentLevel+1].getSecondsToSolve();
 		    updateTimeLabel(time / 60, time % 60);
@@ -547,7 +546,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 		    newGame(0);
 		    score = 0;
 		    updateScore();
-            updateLevel();   
+		    updateLevel();   
 		}
 	    else{
 		if(score > board.getLowestScore())
@@ -586,7 +585,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 				long time = level.getSecondsToSolve();
 				updateTimeLabel(time / 60, time % 60);
 				newGame(currentLevel);
-				score=0;
+				score = 0;
 				break;
 			    }	
 		    }

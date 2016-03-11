@@ -81,9 +81,11 @@ public class MemoryGameGui {
 	    }
 	};
 
+    // the menu page
     public static void menu() {
 	ActionListener startListener = new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
+		    //clear up the frame
 		    frame.getContentPane().removeAll();
 		    frame.getContentPane().revalidate();
 		    frame.getContentPane().repaint();
@@ -102,11 +104,13 @@ public class MemoryGameGui {
 	JPanel p = new JPanel();
 	p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 	
+	//change the font of the buttons
 	Font bigFont = new Font("serif", Font.BOLD, 60);
 	start.setFont(bigFont);
 	highscore.setFont(bigFont);
 	binstruction.setFont(bigFont);
-	
+
+	//set the buttons
 	highscore.setAlignmentX(Component.CENTER_ALIGNMENT);
 	start.setAlignmentX(Component.CENTER_ALIGNMENT);
 	binstruction.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -131,11 +135,16 @@ public class MemoryGameGui {
 	frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	instruction.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	frame.setSize(WINDOW_SIZE, WINDOW_SIZE);
+
+	// go to the menu
 	menu();
 
+	// set the window to the middle of the screen
 	frame.setLocation((int)(screenSize.getWidth()/2 - frame.getSize().getWidth()/2), (int)(screenSize.getHeight()/2 - frame.getSize().getHeight()/2));
 	frame.setVisible(true);
     }
+
+    // the actual game
     public static void go(){
 
 	frame.setLocation((int)(screenSize.getWidth()/2 - frame.getSize().getWidth()/2), (int)(screenSize.getHeight()/2 - frame.getSize().getHeight()/2));
@@ -187,16 +196,19 @@ public class MemoryGameGui {
 		    menu();
 		}
 	    };
-	
+
+	// register events with the buttons
 	pause.addActionListener(pauseListener);
 	music.addActionListener(musicListener);
 	reset.addActionListener(resetListener);
 	menu.addActionListener(menuListener);
+
+	// the game
 	frame.getContentPane().add(mgc);
 	JPanel p = new JPanel(new BorderLayout());
 	p.add(BorderLayout.WEST,label);
-	
-    
+
+	// buttons on the bottom
 	JPanel p2 = new JPanel(new BorderLayout());
 	p.add(BorderLayout.EAST,p2);
 	p2.add(BorderLayout.WEST,pause);
@@ -204,11 +216,14 @@ public class MemoryGameGui {
 	p2.add(BorderLayout.EAST, reset);
 	
 	frame.getContentPane().add(BorderLayout.SOUTH,p);
-	
+
+	// information on the top
 	JPanel scorePanel = new JPanel(new BorderLayout());
 	scorePanel.add(BorderLayout.WEST, score);
 	scorePanel.add(BorderLayout.CENTER, level);
 	frame.pack();
+
+	// menu button on the upper right
 	JPanel sp2 = new JPanel(new BorderLayout());
 	sp2.add(menu);
 	scorePanel.add(BorderLayout.EAST,sp2);
