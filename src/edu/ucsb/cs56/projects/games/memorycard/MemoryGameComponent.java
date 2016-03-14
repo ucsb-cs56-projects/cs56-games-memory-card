@@ -14,7 +14,8 @@ import sun.audio.*;
 @author Bryce McGaw and Jonathan Yau (with some of Phill Conrad's code as a basis)
 @author Ryan Halbrook and Yun Suk Chang
 @author Mathew Glodack, Christina Morris
-@version CS56 Spring 2013
+@author Xiaohe He, Shaoyi Zhang
+@version CS56 Spring 2016
 @see MemoryGrid
 */
 public class MemoryGameComponent extends JComponent implements ActionListener
@@ -28,17 +29,18 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     private JButton                   musicButton;
     private JLabel                       timeLabel = null;
     private JLabel	                    scoreLabel = null;
+    private JLabel                      levelLabel = null;
     private Timer                           timer; // used to get an event every 250 ms to
                                                    // update the time remaining display
     private MemoryGrid                       grid;
     private int                      currentLevel;
+    private int                        totalLevels = 4;
     private MemoryGameLevel[]              levels;
     private MemoryGameLevel                  level = new MemoryGameLevel(36, 100, 2000);
-
+    
     private boolean              firstImageFlipped = false;
     private int                        gameCounter = 0;
-    private long                         startTime = 0; // used to calculate the
-                                                     // total game time.
+    private long                         startTime = 0; // used to calculate the total game time.
     private boolean                   cheatEnabled = false; // Cheat code related.
     private boolean	                        isOver = false; // Cheat code related.
     private int 	                         score = 0; 
@@ -53,7 +55,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     // adjust the elapsed time to the actual play time.
     private long pauseTime = 0;
     private long pauseStart;
-
+    
     /** Constructor
 	
 	@param game an object that implements the MemoryGrid interface
@@ -64,6 +66,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	super(); 
 	timeLabel = new JLabel("Time Remaining");
 	scoreLabel = new JLabel("Score");
+	levelLabel = new JLabel("Level");
 	mainFrame=new JFrame();
 	timer = new Timer(250, this);
 	this.grid = game;
@@ -75,38 +78,38 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	buildTiles();
 	startTime = new Date().getTime();
     }
-
+    
     /** 
 	Pause the timer and the game by showing a dialog box,
 	preventing the user from playing the game until they resume.
-     */
+    */
     public void pauseGame() {
 	pauseTimer();
         JOptionPane popup = new JOptionPane("PAUSED");
         Object[] options= {"Resume"};
-
+	
         int selection=popup.showOptionDialog(
 					     null,
 					     "GAME PAUSED",
 					     "PAUSED",
-					      JOptionPane.OK_CANCEL_OPTION,
-					      JOptionPane.INFORMATION_MESSAGE, null,
-					      options, options[0]);
-
+					     JOptionPane.OK_CANCEL_OPTION,
+					     JOptionPane.INFORMATION_MESSAGE, null,
+					     options, options[0]);
+	
         if(selection==JOptionPane.YES_OPTION)
-	{
+	    {
 		resume();
-	}
+	    }
     }
     /**
-         Pause just the game timer.
+       Pause just the game timer.
     */
     public void pauseTimer() {
 	pauseStart = new Date().getTime();
 	timer.stop();
- 
+	
     }
-
+    
     /** Play sound from a WAV filepath
         This is a helper method
     */
@@ -127,33 +130,35 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     }
     
     /** Play sound effect after flipping
-    */
+     */
     public void playFlipSound(){
         playSound("./resource/wall_pickup_01.wav");
     }
     /** Play sound effect if two cards matched
-    */
+     */
     public void playMatchSound(){
         playSound("./resource/training_finished_03.wav");
     }
     /** Play sound effect after winning the game
-    */
+     */
     public void playWinSound(){
         playSound("./resource/Final Fantasy VII - Victory.wav");
     }
-
+    
+    AudioPlayer MGP = AudioPlayer.player;
+    AudioStream BGM;
+    AudioData MD;
+    
     /** Play background music
-    */
+     */
     public void playMusic(){       
-        AudioPlayer MGP = AudioPlayer.player;
-        AudioStream BGM;
-        AudioData MD;
-        System.out.println("Music button Pressed!");
-        ContinuousAudioDataStream loop = null;
+
+        //System.out.println("Music button Pressed!");
+        //ContinuousAudioDataStream loop = null;
         try{
             InputStream test = new FileInputStream("./resource/Hiromi Haneda.wav");
             BGM = new AudioStream(test);
-            AudioPlayer.player.start(BGM);            
+            AudioPlayer.player.start(BGM);         
         }
         catch(FileNotFoundException e){
             System.out.print(e.toString());
@@ -161,26 +166,31 @@ public class MemoryGameComponent extends JComponent implements ActionListener
         catch(IOException error){
             System.out.print(error.toString());
         }
-        MGP.start(loop);
     }
-
+    
+    /** Stop background music
+    */
+    public void stopMusic(){
+        AudioPlayer.player.stop(BGM);
+    }
+    
     /**
-          Resume the game timer. In other words, recalculate total pause
-          time and start the timer.
+       Resume the game timer. In other words, recalculate total pause
+       time and start the timer.
     */
     public void pauseB() {
 	pauseStart = new Date().getTime();
 	timer.stop();
         JOptionPane popup = new JOptionPane("PAUSED");
-        Object[] options= {"Resume"};
+        Object[] options = {"Resume"};
 	
-        int selection=popup.showOptionDialog(
-					     null,
-					     "GAME PAUSED",
-					     "PAUSED",
-					     JOptionPane.OK_CANCEL_OPTION,
-					     JOptionPane.INFORMATION_MESSAGE, null,
-					     options, options[0]);
+        int selection = popup.showOptionDialog(
+					       null,
+					       "GAME PAUSED",
+					       "PAUSED",
+					       JOptionPane.OK_CANCEL_OPTION,
+					       JOptionPane.INFORMATION_MESSAGE, null,
+					       options, options[0]);
 	
         if(selection==JOptionPane.YES_OPTION)
 	    {
@@ -218,13 +228,16 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	}
     }
     private void updateScore(){
-   	scoreLabel.setText("Score: "+score);
+   	    scoreLabel.setText("Score: "+score+" ");
+    }
+    private void updateLevel(){
+        levelLabel.setText("Level: "+(currentLevel+1)+"/"+totalLevels);
     }
     /**
        Callback from the timer. This is used to update the time remaining
        label and to check if the game has ended as a result of the level
        time running out.
-     */
+    */
     public void actionPerformed(ActionEvent e) {
 	long finalTime = new Date().getTime();
 	long deltaTime = (long)((finalTime - startTime) / 1000.0);
@@ -238,40 +251,44 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	
         updateTimeLabel(timeRemaining / 60, timeRemaining % 60);
 	updateScore();
+	updateLevel();
     }
     
     /**setLabel()
      *@param label sets the timeLabel
      */
     public void setLabel(JLabel label) {
-	this.timeLabel = label;
+	    this.timeLabel = label;
     }	
     public void setMainFrame(JFrame f){
-	mainFrame =f;
+	    mainFrame = f;
     }
     public void setScoreLabel(JLabel l){
-	scoreLabel=l;
+	    scoreLabel = l;
+    }
+    public void setLevelLabel(JLabel l){
+        levelLabel = l;
     }
     public void setHighScoreBoard(HighScoreBoard h){
 	board=h;
     }
-
+    
     /**setPauseButton
      *@param b sets the pauseButton
      */
     public void setPauseButton(JButton b){
-	pauseButton=b;
+	pauseButton = b;
 	pauseButton.setEnabled(false);
     }
-
+    
     /**setMusicButton
      *@param b sets the musicButton
      */
     public void setMusicButton(JButton b){
-        musicButton=b;
+        musicButton = b;
         musicButton.setEnabled(false);
     }
-
+    
     /**
      * Loads a basic set of levels for the game
      */
@@ -305,7 +322,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
         
     };
     
-   
+    
     /**buildTiles() constructs the tiles
      */
     public void buildTiles() {
@@ -331,12 +348,13 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	this.validate();
 	startTime = new Date().getTime();
     }
-
+    
     /**Class ButtonListener implents ActionLister
      *defines the actionPerformed methods for the buttons
      */
     class ButtonListener implements ActionListener {
 	private int num;
+	private Timer t;
 	
 	/**ButtonListener method
 	 *@param i for the num
@@ -354,7 +372,10 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 					  classs.getResource("/images/000.jpg"));
 	    
 	    //if 2 MemoryCards are flipped, flip back over
+	    if (t!=null)
+		t.stop();
 	    flipBack();
+	    
             //if no MemoryCards are flipped, flip one
             if (!grid.isOneFlipped()){
 		if (!firstImageFlipped) {
@@ -362,10 +383,10 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 		    timer.start();
 		    firstImageFlipped = true;
 		    pauseButton.setEnabled(true);
-            musicButton.setEnabled(true);
+		    musicButton.setEnabled(true);
 		}
 		grid.flip(num);
-        playFlipSound();
+		playFlipSound();
 		JButton jb = buttons[num];
 		
 		ImageIcon i = imgIcons.get(grid.getVal(num)-1);
@@ -374,33 +395,35 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 		i = new ImageIcon(newimg);
 		
 		jb.setIcon(i); //set image according to val
-		if(num!=1) //cheat code
+		jb.setDisabledIcon(i);
+		if(num != 1) //cheat code
 		    jb.setEnabled(false); //make unclickable
                 else
 		    //cheat code. Needs to override the button so that button is same color as regular button.
-		    cheatEnabled=true;	
+		    cheatEnabled = true;	
 	    }
 	    
             //if one MemoryCard is flipped, flip other
             //then check if theyre matching
             else{
-		if((num==1&&cheatEnabled))//cheat code
-		{
-			cheatEnabled=false;
-            isOver=true;
+		if((num==1 && cheatEnabled))//cheat code
+		    {
+			cheatEnabled = false;
+			isOver = true;
 			endGame();
 			return;
-        }
-		cheatEnabled=false;//cheat code
-        grid.flip(num);
-        playFlipSound();
-        JButton jb = buttons[num];
-
+		    }
+		cheatEnabled = false;//cheat code
+		grid.flip(num);
+		playFlipSound();
+		JButton jb = buttons[num];
+		
 		ImageIcon i = imgIcons.get(grid.getVal(num)-1);
 		Image img = i.getImage();
 		Image newimg = img.getScaledInstance(jb.getWidth()*3, jb.getHeight()*3, java.awt.Image.SCALE_SMOOTH);
 		i = new ImageIcon(newimg);
 		jb.setIcon(i); //set image according to val
+		jb.setDisabledIcon(i);
 		
                 jb.setEnabled(false);
                 if (grid.flippedEquals(num)){ //if they're matching keep num displayed and set flipped as false
@@ -411,8 +434,8 @@ public class MemoryGameComponent extends JComponent implements ActionListener
                     playMatchSound();
                     score += 30;
                     //check if game is over
-                    if(gameCounter==grid.getSize()/2){
-			isOver=true;
+                    if(gameCounter == grid.getSize()/2){
+			isOver = true;
 			endGame();
                     }
                 } else {
@@ -420,15 +443,16 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 		    // start the flip back timer
 		    int delay = level.getFlipTime();
 		    ActionListener listener = new ActionListener() {
-			    public void actionPerformed(ActionEvent e) { flipBack(); }
+			    public void actionPerformed(ActionEvent e) { flipBack();}
 			};
-		    Timer t = new Timer(delay, listener);
+		    t = new Timer(delay, listener);
 		    t.setRepeats(false);
 		    t.start();
+		    
 		} // end of inner if else
 		
             } // end of outer if else
-        }
+	}
     }
     
     /**Starts a new level or restarts the current level
@@ -437,7 +461,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     public void newGame(int lvl) {
 	gameCounter = 0;
 	if (currentLevel < levels.length) {
-	    currentLevel=lvl;
+	    currentLevel = lvl;
 	    level = levels[currentLevel];
 	}
 	int gridSize = level.getGridSize();
@@ -447,9 +471,9 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	
 	firstImageFlipped = false;
 	pauseButton.setEnabled(false);
-    musicButton.setEnabled(true);
+	musicButton.setEnabled(true);
     }
-
+    
     /**Resets the game
      *
      */
@@ -457,6 +481,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	pauseTime = 0;
 	score=0;
 	updateScore();
+	updateLevel();
 	updateTimeLabel(level.getSecondsToSolve() / 60, 
 			level.getSecondsToSolve() % 60);	    
  	newGame(currentLevel);
@@ -472,28 +497,29 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     public void endGame() {
 	
 	timer.stop();
+	//AudioPlayer.player.stop(BGM);
 	long finalTime = new Date().getTime();
-	long deltaTime = (long)((finalTime - startTime) / 1000.0) - pauseTime * 1000;
+	long deltaTime = (long)((finalTime - startTime) / 1000.0) - pauseTime / 1000;
 	pauseTime = 0;
-        grid.isOver=true;
+        grid.isOver = true;
 	if(deltaTime < level.getSecondsToSolve())
-	score+=(level.getSecondsToSolve()-deltaTime)*((2*currentLevel+1)-(currentLevel+1)/2);
-    
+	    score += (level.getSecondsToSolve()-deltaTime)*((2*currentLevel+1)-(currentLevel+1)/2);
+	
 	updateScore();
-                    
-	if (deltaTime < level.getSecondsToSolve()&&currentLevel<3) {
+	updateLevel();    
+	if (deltaTime < level.getSecondsToSolve() && currentLevel<3) {
 	    JOptionPane popup = new JOptionPane("Good Job!");
 	    Object[] options= {"Continue","Quit"};
 	    playWinSound();
-	    int selection=popup.showOptionDialog(
-						 null,
-						 "-~*´¨¯¨`*·~-.¸-  You beat the level!!  -,.-~*´¨¯¨`*·~-\nScore: "+score,
-						 "Good Job!",
-						 JOptionPane.YES_NO_OPTION,
-						 JOptionPane.INFORMATION_MESSAGE, null,
-						 options, options[0]);
+	    int selection = popup.showOptionDialog(
+						   null,
+						   "-~*´¨¯¨`*·~-.¸-  You beat the level!!  -,.-~*´¨¯¨`*·~-\nScore: "+score,
+						   "Good Job!",
+						   JOptionPane.YES_NO_OPTION,
+						   JOptionPane.INFORMATION_MESSAGE, null,
+						   options, options[0]);
 	    
-            if(selection==JOptionPane.YES_OPTION)
+            if(selection == JOptionPane.YES_OPTION)
 		{
 		    long time = levels[currentLevel+1].getSecondsToSolve();
 		    updateTimeLabel(time / 60, time % 60);
@@ -502,77 +528,74 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	    else	
 		System.exit(0);
 	    
-}
+	}
         else if(deltaTime < level.getSecondsToSolve()&&currentLevel==3){
 	    JOptionPane popup = new JOptionPane("Good Job!");
-	    Object[] options= {"Play Again?","Quit"};
-	    int selection=popup.showOptionDialog(
-						 null,
-						 "-~*´¨¯¨`*·~-.¸-  You beat the game!!  -,.-~*´¨¯¨`*·~-\nScore: "+score,
-						 "Good Job!",
-						 JOptionPane.YES_NO_OPTION,
-						 JOptionPane.INFORMATION_MESSAGE, null,
-						 options, options[0]);
-	    if(selection==JOptionPane.YES_OPTION)
+	    Object[] options = {"Play Again?","Quit"};
+	    int selection = popup.showOptionDialog(
+						   null,
+						   "-~*´¨¯¨`*·~-.¸-  You beat the game!!  -,.-~*´¨¯¨`*·~-\nScore: "+score,
+						   "Good Job!",
+						   JOptionPane.YES_NO_OPTION,
+						   JOptionPane.INFORMATION_MESSAGE, null,
+						   options, options[0]);
+	    if(selection == JOptionPane.YES_OPTION)
 		{
 		    long time = levels[0].getSecondsToSolve();
 		    updateTimeLabel(time / 60, time % 60);
 		    newGame(0);
-		    score=0;
+		    score = 0;
 		    updateScore();
+		    updateLevel();   
 		}
 	    else{
-		if(score>board.getLowestScore())
-		{
+		if(score > board.getLowestScore())
+		    {
 			storeHighScore();		
-   		}
+		    }
 		else
-		System.exit(0);
+		    System.exit(0);
 	    }
-	
+	    
 	} 
         else {
 	    while(true){
-	    JOptionPane popup = new JOptionPane("Game Over");
-	    Object[] options= {"Try Again?","Quit"};
-	    int selection=popup.showOptionDialog(
-						 null,
-						 "Please Try Again\nScore: "+score,
-						 "Game Over",
-						 JOptionPane.YES_NO_OPTION,
-						 JOptionPane.INFORMATION_MESSAGE, null,
-						 options, options[0]);
-	    if(selection==JOptionPane.YES_OPTION)
-		{
-		    JOptionPane popup2 = new JOptionPane("Warning");
-		    Object[] options2= {"Continue","Cancel"};
-		    int selection2=popup2.showOptionDialog(
-							 null,
-							 "You will lose all of your points if you restart the game\nScore: "+score,
-							 "Warning",
-							 JOptionPane.YES_NO_OPTION,
-							 JOptionPane.WARNING_MESSAGE, null,
-							 options2, options2[0]);
-		    if(selection2==JOptionPane.YES_OPTION)
+		JOptionPane popup = new JOptionPane("Game Over");
+		Object[] options = {"Try Again?","Quit"};
+		int selection = popup.showOptionDialog(
+						       null,
+						       "Please Try Again\nScore: "+score,
+						       "Game Over",
+						       JOptionPane.YES_NO_OPTION,
+						       JOptionPane.INFORMATION_MESSAGE, null,
+						       options, options[0]);
+		if(selection == JOptionPane.YES_OPTION)
 		    {
-	
-
-		    	long time = level.getSecondsToSolve();
-		    	updateTimeLabel(time / 60, time % 60);
-		    	newGame(currentLevel);
-		    	score=0;
-			break;
+			JOptionPane popup2 = new JOptionPane("Warning");
+			Object[] options2 = {"Continue","Cancel"};
+			int selection2 = popup2.showOptionDialog(
+								 null,
+								 "You will lose all of your points if you restart the game\nScore: "+score,
+								 "Warning",
+								 JOptionPane.YES_NO_OPTION,
+								 JOptionPane.WARNING_MESSAGE, null,
+								 options2, options2[0]);
+			if(selection2 == JOptionPane.YES_OPTION)
+			    {	
+				long time = level.getSecondsToSolve();
+				updateTimeLabel(time / 60, time % 60);
+				newGame(currentLevel);
+				score = 0;
+				break;
+			    }	
 		    }
-		    
-		}
-	    else
-		if(score>board.getLowestScore())
-		{
-			storeHighScore();		
-   		}
 		else
-		System.exit(0);
-	
+		    if(score>board.getLowestScore())
+			{
+			    storeHighScore();		
+			}
+		    else
+			System.exit(0);	
 	    }
 	}
     }
@@ -591,7 +614,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	    jb.setEnabled(true);
 	    jb.setIcon(imgBlank);
 	    grid.flip(grid.getFlipped());
-        //playFlipSound();
+	    //playFlipSound();
 	}
     }
     
@@ -613,64 +636,62 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	imgBlank = new ImageIcon(classs.getResource("/images/000.jpg"));
     }
     public void storeHighScore(){			
-    		JOptionPane popup2 = new JOptionPane("Congratz!");
-   		 Object[] options2= {"Yes","No"};
-   		 int selection2=popup2.showOptionDialog(
-							 null,
-							 "You have recieved a high score!\nScore: "+score+"\nWould you like to save the score?",
-							 "Congratulation!",
-							 JOptionPane.YES_NO_OPTION,
-							 JOptionPane.INFORMATION_MESSAGE, null,
-							 options2, options2[0]);
-    		if(selection2==JOptionPane.YES_OPTION)
-		{
-			JButton b = new JButton("Submit");
-			text.setColumns(20);
-			ActionListener bListener = new ActionListener(){
-				public void actionPerformed(ActionEvent e){
-					String n = text.getText();
-					board.add(n,score);
-					inputBoard.dispatchEvent(new WindowEvent(inputBoard,WindowEvent.WINDOW_CLOSING));
-
-					showHighScoreBoard();
-					mainFrame.dispatchEvent(new WindowEvent(mainFrame,WindowEvent.WINDOW_CLOSING));
-
-
-				}
-			};
-			b.addActionListener(bListener);
-
-			inputBoard.getContentPane().add(BorderLayout.WEST,textLabel);
-			inputBoard.getContentPane().add(BorderLayout.EAST,b);
-			inputBoard.getContentPane().add(BorderLayout.CENTER,text);
-			inputBoard.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			inputBoard.applyComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-			inputBoard.setSize(300, 100);
-			inputBoard.pack();
-
-			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-			inputBoard.setLocation((int)(screenSize.getWidth()/2 - inputBoard.getSize().getWidth()/2), (int)(screenSize.getHeight()/2 - inputBoard.getSize().getHeight()/2));
-			inputBoard.setVisible(true);
-			text.requestFocus();
-		}
-		else{
-			System.exit(0);
-		}
-     }
-     public void showHighScoreBoard(){
-		JFrame scoreboard = new JFrame("High Score Board");
-		scoreboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		JTextArea txt = board.getBoard();
-		txt.setLineWrap(true);
-		txt.setEditable(false);
-		JScrollPane scroller2 = new JScrollPane(txt);
-		scroller2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scroller2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scoreboard.add(scroller2);
-		scoreboard.getContentPane().add(txt);
-	        scoreboard.setSize(350,350);
-		Dimension screenSize2 = Toolkit.getDefaultToolkit().getScreenSize();
-		scoreboard.setLocation((int)(screenSize2.getWidth()/2 - scoreboard.getSize().getWidth()/2), (int)(screenSize2.getHeight()/2 - scoreboard.getSize().getHeight()/2));
-		scoreboard.setVisible(true);
-     }
+	JOptionPane popup2 = new JOptionPane("Congratz!");
+	Object[] options2 = {"Yes","No"};
+	int selection2 = popup2.showOptionDialog(
+						 null,
+						 "You have recieved a high score!\nScore: "+score+"\nWould you like to save the score?",
+						 "Congratulation!",
+						 JOptionPane.YES_NO_OPTION,
+						 JOptionPane.INFORMATION_MESSAGE, null,
+						 options2, options2[0]);
+	if(selection2 == JOptionPane.YES_OPTION)
+	    {
+		JButton b = new JButton("Submit");
+		text.setColumns(20);
+		ActionListener bListener = new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+			    String n = text.getText();
+			    board.add(n,score);
+			    inputBoard.dispatchEvent(new WindowEvent(inputBoard,WindowEvent.WINDOW_CLOSING));
+			    
+			    showHighScoreBoard();
+			    mainFrame.dispatchEvent(new WindowEvent(mainFrame,WindowEvent.WINDOW_CLOSING));
+			}
+		    };
+		b.addActionListener(bListener);
+		
+		inputBoard.getContentPane().add(BorderLayout.WEST,textLabel);
+		inputBoard.getContentPane().add(BorderLayout.EAST,b);
+		inputBoard.getContentPane().add(BorderLayout.CENTER,text);
+		inputBoard.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		inputBoard.applyComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		inputBoard.setSize(300, 100);
+		inputBoard.pack();
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		inputBoard.setLocation((int)(screenSize.getWidth()/2 - inputBoard.getSize().getWidth()/2), (int)(screenSize.getHeight()/2 - inputBoard.getSize().getHeight()/2));
+		inputBoard.setVisible(true);
+		text.requestFocus();
+	    }
+	else{
+	    System.exit(0);
+	}
+    }
+    public void showHighScoreBoard(){
+	JFrame scoreboard = new JFrame("High Score Board");
+	scoreboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	JTextArea txt = board.getBoard();
+	txt.setLineWrap(true);
+	txt.setEditable(false);
+	JScrollPane scroller2 = new JScrollPane(txt);
+	scroller2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+	scroller2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+	scoreboard.add(scroller2);
+	scoreboard.getContentPane().add(txt);
+	scoreboard.setSize(350,350);
+	Dimension screenSize2 = Toolkit.getDefaultToolkit().getScreenSize();
+	scoreboard.setLocation((int)(screenSize2.getWidth()/2 - scoreboard.getSize().getWidth()/2), (int)(screenSize2.getHeight()/2 - scoreboard.getSize().getHeight()/2));
+	scoreboard.setVisible(true);
+    }
 }
