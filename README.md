@@ -1,7 +1,7 @@
 cs56-memory-card-game
 =====================
 
-A memory card game that players try to match all pairs of cards to go to next level before time runs out.
+A memory card game that the player tries to match all pairs of cards to go to next level before time runs out.
 
 launch the game with command
 ```
