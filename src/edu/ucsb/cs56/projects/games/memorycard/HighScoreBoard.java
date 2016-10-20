@@ -91,4 +91,3 @@ public class HighScoreBoard{
 	}	
 }
 
-//test github setup on home laptop
