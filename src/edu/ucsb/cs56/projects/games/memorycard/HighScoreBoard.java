@@ -6,6 +6,7 @@ public class HighScoreBoard{
 	private JTextArea board;
 	private int[] scores=new int[10];
 	private String[] names=new String[10];
+    
 	public HighScoreBoard(){
 		getHighScores();
 
@@ -89,3 +90,4 @@ public class HighScoreBoard{
 		return board;
 	}	
 }
+
