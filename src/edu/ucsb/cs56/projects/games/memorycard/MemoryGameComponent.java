@@ -15,7 +15,8 @@ import sun.audio.*;
 @author Ryan Halbrook and Yun Suk Chang
 @author Mathew Glodack, Christina Morris
 @author Xiaohe He, Shaoyi Zhang
-@version CS56 Spring 2016
+@author Hyemin Yoo
+@version CS56 Fall 2016
 @see MemoryGrid
 */
 public class MemoryGameComponent extends JComponent implements ActionListener

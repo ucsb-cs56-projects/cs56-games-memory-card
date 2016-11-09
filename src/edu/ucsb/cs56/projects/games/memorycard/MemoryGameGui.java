@@ -21,7 +21,7 @@ import javax.swing.text.DefaultCaret;
 * @author Mathew Glodack, Christina Morris
 * @author Xiaohe He, Shaoyi Zhang
 * @author Hyemin Yoo
-* @version CS56 Winter 2016
+* @version CS56 Fall 2016
 * Edited Professor Phill Conrad's code from Lab06
 */
 public class MemoryGameGui {
