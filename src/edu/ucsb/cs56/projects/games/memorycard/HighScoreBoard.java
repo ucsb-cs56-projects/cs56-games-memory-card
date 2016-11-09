@@ -1,4 +1,5 @@
 package edu.ucsb.cs56.projects.games.memorycard;
+import java.awt.Component;
 import java.io.*;
 import java.awt.Font;
 import javax.swing.JTextArea;
@@ -13,6 +14,8 @@ public class HighScoreBoard{
 	}
 	private void getHighScores(){
 		File file = new File("highscores.txt");
+//		revalidate();
+//		repaint();
 		try{
 			BufferedReader b = new BufferedReader(
 					   new InputStreamReader( 

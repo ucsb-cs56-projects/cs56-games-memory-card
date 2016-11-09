@@ -13,12 +13,14 @@ import javax.swing.JTextArea;
 import javax.swing.*;
 import java.awt.ComponentOrientation;
 import java.io.*;
+import javax.swing.text.DefaultCaret;
 /**
 *
 * @author Bryce McGaw and Jonathan Yau
 * @author Ryan Halbrook and Yun Suk Chang
 * @author Mathew Glodack, Christina Morris
 * @author Xiaohe He, Shaoyi Zhang
+* @author Hyemin Yoo
 * @version CS56 Winter 2016
 * Edited Professor Phill Conrad's code from Lab06
 */
@@ -45,29 +47,93 @@ public class MemoryGameGui {
     static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     static ActionListener highscoreListener = new ActionListener(){
 	    public void actionPerformed(ActionEvent e){
-		JFrame scoreboard = new JFrame("High Score Board");
-		scoreboard.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		JTextArea txt = board.getBoard();
-		txt.setLineWrap(true);
-		txt.setEditable(false);
-		JScrollPane scroller2 = new JScrollPane(txt);
-		scroller2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scroller2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scoreboard.add(scroller2);
-		
-		scoreboard.getContentPane().add(txt);
-		scoreboard.setSize(350,350);
-		Dimension screenSize2 = Toolkit.getDefaultToolkit().getScreenSize();
-		scoreboard.setLocation((int)(screenSize2.getWidth()/2 - scoreboard.getSize().getWidth()/2), (int)(screenSize2.getHeight()/2 - scoreboard.getSize().getHeight()/2));
-		scoreboard.setVisible(true);
-		
-	    }
-	};
-    static ActionListener instructionListener = new ActionListener(){
+  
+//clear up the frame
+          frame.getContentPane().removeAll();
+          frame.getContentPane().revalidate();
+          frame.getContentPane().repaint();
+          //go();
+      //}
+       
+   frame.setLocation((int)(screenSize.getWidth()/2 - frame.getSize().getWidth()/2), (int)(screenSize.getHeight()/2 - frame.getSize().getHeight()/2));
+    frame.setSize(WINDOW_SIZE, WINDOW_SIZE);
+    frame.setPreferredSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE));
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+	
+
+      //JTextArea textArea;
+   JPanel upperPanel = new JPanel();
+
+
+    //textField = new JTextField(20);
+    //textArea = new JTextArea(25, 45);
+    
+JTextArea textArea = board.getBoard();
+//textArea.setColumns(20);
+//textArea.setRows(25);
+      //textArea.setLineWrap(true);
+      //textArea.setEditable(false);
+
+   
+    upperPanel.setBackground(Color.gray);
+    //lowerPanel.setBackground(Color.pink);
+    textArea.setEditable(false);
+
+   //frame.add(upperPanel);//, "North");
+    frame.add(textArea);
+
+    //f.getContentPane().add(lowerPanel, "South");
+    //upperPanel.add(textArea);
+    //lowerPanel.add(textField);
+ 
+    frame.pack();
+    frame.setVisible(true);
+
+    //textArea.append("This is Test"+"\n");
+    //textArea.append(textArea);
+    //textField.requestFocus();
+    //textField.addActionListener(this);
+
+       ActionListener menuListener = new ActionListener(){
+      public void actionPerformed(ActionEvent e){
+          menu();
+      }
+       };
+
+   // register events with the buttons
+   
+   menu.addActionListener(menuListener);
+
+   //JPanel sp2 = new JPanel(new BorderLayout());
+   //sp2.add(menu);
+   //upperPanel.add(BorderLayout.EAST,menu);
+   frame.add(BorderLayout.NORTH,menu);
+
+    //frame.getContentPane().add(BorderLayout.NORTH,upperPanel);
+   //frame.add(upperPanel);
+   
+   // to make sure that grids go left to right
+   frame.applyComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+   //frame.setSize(WINDOW_SIZE, WINDOW_SIZE);
+        
+   frame.setVisible(true);
+
+
+   //frame.setVisible(true);
+
+
+    }
+   };
+
+ static ActionListener instructionListener = new ActionListener(){
 	    public void actionPerformed(ActionEvent e) {
 		JPanel panel = new JPanel();
 		text.setLineWrap(true);
 		text.setEditable(false);
+	
+		DefaultCaret caret=(DefaultCaret)text.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);		
+
 		JScrollPane scroller = new JScrollPane(text);
 		scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -80,6 +146,8 @@ public class MemoryGameGui {
 		instruction.setVisible(true);
 	    }
 	};
+
+
 
     // the menu page
     public static void menu() {

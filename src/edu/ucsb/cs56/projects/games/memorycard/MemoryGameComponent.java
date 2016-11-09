@@ -179,8 +179,9 @@ public class MemoryGameComponent extends JComponent implements ActionListener
        time and start the timer.
     */
     public void pauseB() {
-	pauseStart = new Date().getTime();
 	timer.stop();
+	pauseStart = new Date().getTime();
+	//timer.stop();
         JOptionPane popup = new JOptionPane("PAUSED");
         Object[] options = {"Resume"};
 	
