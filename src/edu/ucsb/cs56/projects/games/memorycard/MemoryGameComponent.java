@@ -15,7 +15,8 @@ import sun.audio.*;
 @author Ryan Halbrook and Yun Suk Chang
 @author Mathew Glodack, Christina Morris
 @author Xiaohe He, Shaoyi Zhang
-@version CS56 Spring 2016
+@author Hyemin Yoo
+@version CS56 Fall 2016
 @see MemoryGrid
 */
 public class MemoryGameComponent extends JComponent implements ActionListener
@@ -179,8 +180,9 @@ public class MemoryGameComponent extends JComponent implements ActionListener
        time and start the timer.
     */
     public void pauseB() {
-	pauseStart = new Date().getTime();
 	timer.stop();
+	pauseStart = new Date().getTime();
+	//timer.stop();
         JOptionPane popup = new JOptionPane("PAUSED");
         Object[] options = {"Resume"};
 	
@@ -640,7 +642,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	Object[] options2 = {"Yes","No"};
 	int selection2 = popup2.showOptionDialog(
 						 null,
-						 "You have recieved a high score!\nScore: "+score+"\nWould you like to save the score?",
+						 "You have received a high score!\nScore: "+score+"\nWould you like to save the score?",
 						 "Congratulation!",
 						 JOptionPane.YES_NO_OPTION,
 						 JOptionPane.INFORMATION_MESSAGE, null,
