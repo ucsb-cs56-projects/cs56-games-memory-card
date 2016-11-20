@@ -1,13 +1,46 @@
 cs56-memory-card-game
 =====================
 
-A memory card game that the player tries to match all pairs of cards to go to next level before time runs out.
+This is a memory card game in which the player tries to match pairs of cards
+based on their pictures.
 
-launch the game with command
+The faster the player can match the cards, the higher their score will be.
+Each time they make an incorrect match, they lose points.
+
+The first level begins with a small grid, and each level that follows gets
+increasing more difficult (the grid goes larger and larger).
+
+At any point during the game, the player can click the reset button if they
+would like to start over again.
+
+At the end of the game, if the user has reached a new high score, they get
+to enter their name into the leaderboard.
+
+
+
+Instructions
+============
+
+Launch the game on terminal with
 ```
 ant run
 ```
-Detailed instructions can be found by clicking on "instruction" in the main menu
+
+After launching the game, you can choose one of three options:
+
+### 1. Start the game
+Allows the user to begin playing.
+
+### 2. Instructions
+Gives the user detailed instructions on how to play the game.
+
+### 3. High Score
+Lets the user view the current leaderboard, with the names and scores of the best players.
+
+Developer Notes
+===============
+
+
 
 project history
 ===============
