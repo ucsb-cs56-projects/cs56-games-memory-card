@@ -40,6 +40,7 @@ Lets the user view the current leaderboard, with the names and scores of the bes
 Developer Notes
 ===============
 
+IN PROGRESS
 
 
 project history
