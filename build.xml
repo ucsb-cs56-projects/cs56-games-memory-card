@@ -9,14 +9,15 @@
   <property environment="env"/> <!-- load environment vars -->
 
   <property name="webRoot" value="${env.HOME}/public_html/cs56/13S/${env.USER}/games_memory_card" />
-  <property name="webBaseURL" value="http://www.cs.ucsb.edu/~${env.USER}/cs56" />
+  <property name="webBaseURL" value="UCSB-CS56-Projects.github.io" />
   <property name="webBaseURL1" value="https://foo.cs.ucsb.edu/56mantis/view.php?id=805" />
   
   <property name="course" value="cs56" />
   <property name="quarter" value="13S" />
   <property name="projectName" value="memorycard" />
   <property name="projectPath" value="${course}/projects/games/${projectName}"/>
-  <property name="javadocDest" value="${webRoot}/${projectName}/javadoc" />
+  <property name="javadocDest" value="./javadoc" />
+  <!--property name="javadocDest" value="${webRoot}/${projectName}/javadoc" /-->
   <property name="javadocURL" value="${webBaseURL}/${projectName}/javadoc" /> 
   <property name="mainClass" value="edu.ucsb.cs56.projects.games.memorycard.MemoryGameGui" />
 
@@ -56,7 +57,11 @@
       <fileset dir="src" includes="**/*.java" />
       <classpath refid="project.class.path" />
     </javadoc>
-    <delete quiet="true" dir="${javadocDest}" />
+	<mkdir dir="${javadocDest}"/>
+
+	<!-- Removed following line when making javadoc in root, not sure what it was for before -->
+    <!-- delete quiet="true" dir="${javadocDest}" /-->
+
     <copy todir="${javadocDest}" >
       <fileset dir="javadoc"/>
     </copy>
