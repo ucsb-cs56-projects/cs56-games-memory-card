@@ -41,9 +41,13 @@ public class MemoryGameGui {
     static JTextArea text = new JTextArea(15,25);
     static JButton highscore = new JButton("High Score");
     static HighScoreBoard highscoreBoard = new HighScoreBoard();
-    static JButton start = new JButton("Start/Resume");
+    static JButton start = new JButton("Start");
+    static JButton resume = new JButton("Resume");
+    static JButton beginner = new JButton("Beginner");
+    static JButton intermediate = new JButton("Intermediate");
+    static JButton advanced = new JButton("Advanced");
     static JButton binstruction = new JButton("instruction");
-    static JButton menu = new JButton("menu");
+    static JButton menu = new JButton("Menu");
     static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     static ActionListener highscoreListener = new ActionListener(){
 	    public void actionPerformed(ActionEvent e){
@@ -164,6 +168,16 @@ JTextArea textArea = highscoreBoard.getBoard();
 
     // the menu page
     public static void menu() {
+	ActionListener resumeListener = new ActionListener(){
+		public void actionPerformed(ActionEvent e) {
+		    //clear up the frame
+		    frame.getContentPane().removeAll();
+		    frame.getContentPane().revalidate();
+		    frame.getContentPane().repaint();
+		    go();
+		    mgc.resume();
+		}
+	    };
 	ActionListener startListener = new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
 		    //clear up the frame
@@ -171,6 +185,43 @@ JTextArea textArea = highscoreBoard.getBoard();
 		    frame.getContentPane().revalidate();
 		    frame.getContentPane().repaint();
 		    go();
+		    mgc.reset();
+		}
+	    };
+
+	ActionListener beginnerListener = new ActionListener(){
+		public void actionPerformed(ActionEvent e) {
+		    //clear up the frame
+		    frame.getContentPane().removeAll();
+		    frame.getContentPane().revalidate();
+		    frame.getContentPane().repaint();
+		    go();
+		    mgc.setLevels(mgc.loadLevelSet1());
+		    mgc.reset();
+		}
+	    };
+
+	ActionListener intermediateListener = new ActionListener(){
+		public void actionPerformed(ActionEvent e) {
+		    //clear up the frame
+		    frame.getContentPane().removeAll();
+		    frame.getContentPane().revalidate();
+		    frame.getContentPane().repaint();
+		    go();
+		    mgc.setLevels(mgc.loadLevelSet2());
+		    mgc.reset();
+		}
+	    };	
+
+	ActionListener advancedListener = new ActionListener(){
+		public void actionPerformed(ActionEvent e) {
+		    //clear up the frame
+		    frame.getContentPane().removeAll();
+		    frame.getContentPane().revalidate();
+		    frame.getContentPane().repaint();
+		    go();
+		    mgc.setLevels(mgc.loadLevelSet3());
+		    mgc.reset();
 		}
 	    };
 	
@@ -178,8 +229,12 @@ JTextArea textArea = highscoreBoard.getBoard();
 	frame.getContentPane().revalidate();
 	frame.getContentPane().repaint();
 	start.addActionListener(startListener);
+	resume.addActionListener(resumeListener);
 	highscore.addActionListener(highscoreListener);
 	binstruction.addActionListener(instructionListener);
+	beginner.addActionListener(beginnerListener);
+	intermediate.addActionListener(intermediateListener);
+	advanced.addActionListener(advancedListener);
 	
 	
 	JPanel p = new JPanel();
@@ -188,17 +243,29 @@ JTextArea textArea = highscoreBoard.getBoard();
 	//change the font of the buttons
 	Font bigFont = new Font("serif", Font.BOLD, 60);
 	start.setFont(bigFont);
+	beginner.setFont(bigFont);
+	intermediate.setFont(bigFont);
+	advanced.setFont(bigFont);
+	resume.setFont(bigFont);
 	highscore.setFont(bigFont);
 	binstruction.setFont(bigFont);
 
 	//set the buttons
 	highscore.setAlignmentX(Component.CENTER_ALIGNMENT);
 	start.setAlignmentX(Component.CENTER_ALIGNMENT);
+	beginner.setAlignmentX(Component.CENTER_ALIGNMENT);
+	intermediate.setAlignmentX(Component.CENTER_ALIGNMENT);
+	advanced.setAlignmentX(Component.CENTER_ALIGNMENT);
+	resume.setAlignmentX(Component.CENTER_ALIGNMENT);
 	binstruction.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 	p.add(highscore);
 	p.add(Box.createVerticalGlue());
-	p.add(start);
+	//p.add(start);
+	p.add(beginner);
+	p.add(intermediate);
+	p.add(advanced);
+	//p.add(resume);
 	p.add(Box.createVerticalGlue());
 	p.add(binstruction);
 
@@ -274,6 +341,7 @@ JTextArea textArea = highscoreBoard.getBoard();
 
 	ActionListener menuListener = new ActionListener(){
 		public void actionPerformed(ActionEvent e){
+		    mgc.pauseTimer();
 		    menu();
 		}
 	    };
@@ -318,6 +386,7 @@ JTextArea textArea = highscoreBoard.getBoard();
 	mgc.setScoreLabel(score);
 	mgc.setLevelLabel(level);
 	mgc.setHighScoreBoard(highscoreBoard);
+	//mgc.resume();
 	// to make sure that grids go left to right
 	frame.applyComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 	frame.setSize(WINDOW_SIZE, WINDOW_SIZE);
