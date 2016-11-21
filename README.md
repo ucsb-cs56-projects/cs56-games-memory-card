@@ -40,8 +40,26 @@ Lets the user view the current leaderboard, with the names and scores of the bes
 Developer Notes
 ===============
 
-IN PROGRESS
+### HighScoreBoard.java
+Creates the highscore board and the information that goes on the board
 
+### MemoryGameComponent.java
+A Swing component for playing the Memory Card Game
+
+### MemoryGameLevel.java
+Has the constructor to fully initialize the level, such as target time, grid size, and delay time before two cards flip back over
+
+### MemoryGrid.java
+makes the grid (arraylist of MemoryCards) for the game
+
+### MemoryCard.java
+makes objects for cards
+
+### MemoryGameGui.java
+GUI for the game, and has the main class
+
+### MemoryGameTest.java
+tests the MemoryGame class
 
 project history
 ===============
