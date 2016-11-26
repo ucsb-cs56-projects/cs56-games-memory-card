@@ -55,7 +55,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     // Therefore, this total pause time is used to
     // adjust the elapsed time to the actual play time.
     private long pauseTime = 0;
-    private long pauseStart;
+    private long pauseStart = 0;
     
     /** Constructor
 	
@@ -74,7 +74,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
         int gridSize = grid.getSize();
 	buttons= new JButton[gridSize];
 	
-	loadLevelSet1();
+	levels = loadLevelSet1();
 	loadImageIcons(); // loads the array list of icons and sets imgBlank
 	buildTiles();
 	startTime = new Date().getTime();
@@ -115,7 +115,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
         This is a helper method
     */
     public void playSound(String filepath){
-        AudioPlayer myPlyaer = AudioPlayer.player;
+        AudioPlayer myPlayer = AudioPlayer.player;
         AudioStream sound;
         try{
             InputStream test = new FileInputStream(filepath);
@@ -243,7 +243,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     public void actionPerformed(ActionEvent e) {
 	long finalTime = new Date().getTime();
 	long deltaTime = (long)((finalTime - startTime) / 1000.0);
-	long timeRemaining = (long)(level.getSecondsToSolve() - deltaTime + pauseTime / 1000.0);
+	long timeRemaining = (long)(level.getSecondsToSolve() - deltaTime - pauseTime / 1000.0);
 	
 	if (timeRemaining < 0) {
 	    endGame();
@@ -294,14 +294,37 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     /**
      * Loads a basic set of levels for the game
      */
-    private void loadLevelSet1() {
-	levels = new MemoryGameLevel[4];
-	levels[0] = new MemoryGameLevel(16, 75, 1500);
-	levels[1] = new MemoryGameLevel(16, 40, 750);
-	levels[2] = new MemoryGameLevel(36, 300, 1000);
-	levels[3] = new MemoryGameLevel(36, 150, 500);
+    public MemoryGameLevel[] loadLevelSet1() {
+	MemoryGameLevel[] levelSet = new MemoryGameLevel[4];
+	levelSet[0] = new MemoryGameLevel(4, 75, 1500);
+	levelSet[1] = new MemoryGameLevel(4, 40, 750);
+	levelSet[2] = new MemoryGameLevel(16, 300, 1000);
+	levelSet[3] = new MemoryGameLevel(16, 150, 500);
 	currentLevel = 0;
-	level = levels[currentLevel];
+	level = levelSet[currentLevel];
+	return levelSet;
+    }
+
+    public MemoryGameLevel[] loadLevelSet2() {
+	MemoryGameLevel[] levelSet = new MemoryGameLevel[4];
+	levelSet[0] = new MemoryGameLevel(16, 75, 1500);
+	levelSet[1] = new MemoryGameLevel(16, 40, 750);
+	levelSet[2] = new MemoryGameLevel(36, 300, 1000);
+	levelSet[3] = new MemoryGameLevel(36, 150, 500);
+	currentLevel = 0;
+	level = levelSet[currentLevel];
+	return levelSet;
+    }
+
+    public MemoryGameLevel[] loadLevelSet3() {
+	MemoryGameLevel[] levelSet = new MemoryGameLevel[4];
+	levelSet[0] = new MemoryGameLevel(36, 75, 1000);
+	levelSet[1] = new MemoryGameLevel(36, 40, 500);
+	levelSet[2] = new MemoryGameLevel(64, 300, 3000);
+	levelSet[3] = new MemoryGameLevel(64, 150, 1500);
+	currentLevel = 0;
+	level = levelSet[currentLevel];
+	return levelSet;
     }
     
     // The first 8 images. These will be used
@@ -695,5 +718,9 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 	Dimension screenSize2 = Toolkit.getDefaultToolkit().getScreenSize();
 	scoreboard.setLocation((int)(screenSize2.getWidth()/2 - scoreboard.getSize().getWidth()/2), (int)(screenSize2.getHeight()/2 - scoreboard.getSize().getHeight()/2));
 	scoreboard.setVisible(true);
+    }
+
+    public void setLevels(MemoryGameLevel[] newLevels) {
+	levels = newLevels;
     }
 }

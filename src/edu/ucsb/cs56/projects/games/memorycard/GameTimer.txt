@@ -1,0 +1,13 @@
+package edu.ucsb.cs56.projects.games.memorycard;
+
+import javax.swing.Timer;
+
+public class GameTimer extends Timer{
+    private static Timer instance = new Timer();
+    private GameTimer() {}
+
+    public static Timer getInstance() {
+	return instance;
+    }
+    
+}
