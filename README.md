@@ -99,7 +99,7 @@ inheritance used as needed. We also believe it could be better if there was a Mo
 and a Model for all of the data that the game uses. And of course, a whole new Controller class must be created.
 
 If there are a lot of classes that pertain to different parts of MVC, you can separate them into their own folders
-(e.g. /Model and /View)
+(e.g. src/package/name/Model/ and src/package/name/View)
 
 The timer is one of the more tricky things to work with in this project, and thus we believe that it should be made
 into its own class entirely.
