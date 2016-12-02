@@ -72,7 +72,7 @@ Xiaohe he and Shaoyi Zhang worked on this in W16.
 
 Several others have worked on it since then.
 
-W16 Final Remarks:
+# W16 Final Remarks:
 We don't think this is a good project for students at any level of proficiency with Java.
 The main reason is that this project is very well-built in terms of game logic and design.
 For Java newbees, you won't be able to learn much about GUI, since the main structure is well-built.
@@ -85,4 +85,24 @@ It might take hours to pinpoint a bug, but only write one line to fix the bug.
 However, if you are brave and choose to work on this project:
 We recomend you to start early and work on the issues created by Professor Conrad several years ago.
 You will learn a lot from those issues. We didn't work on those good issues because we are distract by those "shrinking" issues.
+
+# F16 Final Remarks:
+
+We highly recommend that the next people who take on this project start by refactoring the code.
+Although the code's structure isn't absolutely terrible, it could be improved drastically.
+We think that it might be better if the overall structure of the project followed the
+Model View Controller design pattern. This would make the project much easier to change in the future.
+
+One of the largest problems with the current structure, if following MVC, is that MemoryGameGui.java is acting as
+both the View and Controller. We believe it might be better if each menu display was separated into its own class, with
+inheritance used as needed. We also believe it could be better if there was a Model for the current state of the game,
+and a Model for all of the data that the game uses. And of course, a whole new Controller class must be created.
+
+If there are a lot of classes that pertain to different parts of MVC, you can separate them into their own folders
+(e.g. src/package/name/Model/ and src/package/name/View)
+
+The timer is one of the more tricky things to work with in this project, and thus we believe that it should be made
+into its own class entirely.
+
+Refactoring would allow you to more easily fix issues #14, #15, and #16.
 
