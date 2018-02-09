@@ -19,7 +19,7 @@ The software successfully runs. When running, the software first gives the user 
 - User Story 2: As a player, I want to see more special effects so that the game will be more attractive to me.
 
 ## Possible improvement of README.md
-I believe including a working log of the project would be helpful. I also think the existing features and potential features that may be implemented should also be included
+We believe including a working log of the project would be helpful. We also think the existing features and potential features that may be implemented in the future should be included
 
 ## Evaluation of the build.xml
 It's based on Ant. So far so good. The code is clean with sufficient descriptions.
