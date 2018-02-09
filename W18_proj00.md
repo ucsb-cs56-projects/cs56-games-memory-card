@@ -5,7 +5,7 @@ This project is a game that requires the player to match pairs of identical pict
 
 ## Current features as described by user stories 
 - User Story 1: As a game lover, I can identify two same pictures and match them together so that I can get points.
-- User Story 2: As a proficient player, I can choose the different kinds of difficulties of the game so that I will not get bored playing the low level.
+- User Story 2: As a proficient player, I can choose different levels of difficulties of the game so that I will not get bored playing the easiest level.
 - User Story 3: As a player, I can check the highest score so that I can know my rank.
 
 ## Current state of the project
@@ -31,7 +31,7 @@ There are enough issues to work on. The descriptions of the issues are clear eno
 Cannot resume in one click after pausing the game https://github.com/ucsb-cs56-projects/cs56-games-memory-card/issues/71
 
 ## Evaluation of current codes
-Overall the codes are organized very well. However, some comments can be removed as they are just some codes that are commented out. Some indentation can be improved.
+Overall the codes are organized very well. Class names, method names and variables are chosen well and easy to understand. There is not much room for refactoring. However, some comments can be removed as they are just some codes that are commented out. Some indentation can be improved. Besides, there are bugs in the codes that need to be fixed.
 
 ## Evaluation of current test coverage
 Right now, the test covers a lot of things but still not all the things. Also, the test for each case is not enough. We can add a few tests for each case in the future
