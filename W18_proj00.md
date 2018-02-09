@@ -1,7 +1,6 @@
 Annan Zhang, Shihua Lu
 
-Game 
-Description
+Game <br />Description
 1. This project is a game that requires the player to match pairs of identical pictures from a bunch of pictures. The game has three different levels, from beginner to advanced.
 2. - User Story 1: As a game lover, I can identify two same pictures and match them together so that I can get points.
    - User Story 2: As a proficient player, I can choose the different kinds of difficulties of the game so that I will not get bored playing the low level.
