@@ -25,7 +25,7 @@ I believe including a working log of the project would be helpful. I also think 
 It's based on Ant. So far so good. The code is clean with sufficient descriptions.
 
 ## Evaluation of current issues
-7. There are enough issues to work on. The descriptions of the issues are clear enough.
+There are enough issues to work on. The descriptions of the issues are clear enough.
 
 ## Proposal of new issues
 Cannot resume in one click after pausing the game https://github.com/ucsb-cs56-projects/cs56-games-memory-card/issues/71
