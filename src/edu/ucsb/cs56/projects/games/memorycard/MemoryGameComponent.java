@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.lang.Math;
 import java.io.*;
-import sun.audio.*;
+import javax.sound.sampled.*;
 /**
 * A Swing component for playing the Memory Card Game
 @author Bryce McGaw and Jonathan Yau (with some of Phill Conrad's code as a basis)
@@ -56,7 +56,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     // adjust the elapsed time to the actual play time.
     private long pauseTime = 0;
     private long pauseStart = 0;
-    
+    private Clip clip;
     /** Constructor
 	
 	@param game an object that implements the MemoryGrid interface
@@ -96,7 +96,6 @@ public class MemoryGameComponent extends JComponent implements ActionListener
 					     JOptionPane.OK_CANCEL_OPTION,
 					     JOptionPane.INFORMATION_MESSAGE, null,
 					     options, options[0]);
-	
         if(selection==JOptionPane.YES_OPTION)
 	    {
 		resume();
@@ -114,65 +113,56 @@ public class MemoryGameComponent extends JComponent implements ActionListener
     /** Play sound from a WAV filepath
         This is a helper method
     */
-    public void playSound(String filepath){
-        AudioPlayer myPlayer = AudioPlayer.player;
-        AudioStream sound;
+    public void playSound(String filepath, boolean music_status){
         try{
-            InputStream test = new FileInputStream(filepath);
-            sound = new AudioStream(test);
-            AudioPlayer.player.start(sound);
+        	if (music_status == true){
+        		clip = AudioSystem.getClip();
+        		File test = new File(filepath);
+        		AudioInputStream audio = AudioSystem.getAudioInputStream(test);
+        		clip.open(audio);
+        		clip.start();
+        	}
+        	if (music_status == false){
+        		clip.stop();
+        	}
+
         }
-        catch(FileNotFoundException e){
-            System.out.print(e.toString());
+        catch(Exception e){
+        	e.printStackTrace();
         }
-        catch(IOException error){
-            System.out.print(error.toString());
-        }      
     }
     
     /** Play sound effect after flipping
      */
     public void playFlipSound(){
-        playSound("./resource/wall_pickup_01.wav");
+        playSound("./resource/wall_pickup_01.wav", true);
     }
     /** Play sound effect if two cards matched
      */
     public void playMatchSound(){
-        playSound("./resource/training_finished_03.wav");
+        playSound("./resource/training_finished_03.wav", true);
     }
     /** Play sound effect after winning the game
      */
     public void playWinSound(){
-        playSound("./resource/Final Fantasy VII - Victory.wav");
+        playSound("./resource/Final Fantasy VII - Victory.wav", true);
     }
     
-    AudioPlayer MGP = AudioPlayer.player;
-    AudioStream BGM;
-    AudioData MD;
+    //AudioPlayer MGP = AudioPlayer.player;
+    //AudioStream BGM;
+    //AudioData MD;
     
     /** Play background music
      */
     public void playMusic(){       
-
-        //System.out.println("Music button Pressed!");
-        //ContinuousAudioDataStream loop = null;
-        try{
-            InputStream test = new FileInputStream("./resource/Hiromi Haneda.wav");
-            BGM = new AudioStream(test);
-            AudioPlayer.player.start(BGM);         
-        }
-        catch(FileNotFoundException e){
-            System.out.print(e.toString());
-        }
-        catch(IOException error){
-            System.out.print(error.toString());
-        }
+        playSound("./resource/Hiromi Haneda.wav", true);
     }
     
     /** Stop background music
     */
     public void stopMusic(){
-        AudioPlayer.player.stop(BGM);
+        //AudioPlayer.player.stop(BGM);
+        playSound("./resource/Hiromi Haneda.wav", false);
     }
     
     /**
