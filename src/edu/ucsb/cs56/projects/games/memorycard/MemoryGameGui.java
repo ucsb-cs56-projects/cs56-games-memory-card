@@ -306,12 +306,12 @@ JTextArea textArea = highscoreBoard.getBoard();
 	ActionListener musicListener = new ActionListener(){
 		public void actionPerformed(ActionEvent e){
 		    if (e.getActionCommand() == "Music On"){
-				mgc.stopMusic();
-				music.setLabel("Music Off");
+			mgc.stopMusic();
+			music.setLabel("Music Off");
 		    }
 		    else{
 		        mgc.playMusic();
-				music.setLabel("Music On");
+			music.setLabel("Music On");
 		    }
 		}
 	    };
