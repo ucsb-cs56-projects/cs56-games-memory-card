@@ -108,7 +108,7 @@ public class MemoryGameComponentModel implements ActionListener {
     }
 
     public long getPauseTime() {
-        return this.pauseTime();
+        return this.pauseTime;
     }
 
     /**
@@ -201,7 +201,6 @@ public class MemoryGameComponentModel implements ActionListener {
         }
         int gridSize = level.getGridSize();
         grid = new MemoryGrid(gridSize);
-        buildTiles();
         if (timer != null) timer.stop();
         
     }
@@ -209,10 +208,6 @@ public class MemoryGameComponentModel implements ActionListener {
     public void reset(){
         pauseTime = 0;
         score = 0;
-        updateScore();
-        updateLevel();
-        updateTimeLabel(level.getSecondsToSolve() / 60,
-                        level.getSecondsToSolve() % 60);
         newGame(currentLevel);
     }
     
