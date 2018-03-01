@@ -3,6 +3,7 @@
   <!-- build.xml for Memory Card Game, S12, CS56
        name: Bryce McGaw and Jonathan Yau 
        name: Mathew Glodack, Christina Morris, S13, CS56
+       name: Annan Zhang, Shihua Lu, W18, CS56
   -->
 
   
@@ -19,7 +20,7 @@
   <property name="javadocDest" value="./javadoc" />
   <!--property name="javadocDest" value="${webRoot}/${projectName}/javadoc" /-->
   <property name="javadocURL" value="${webBaseURL}/${projectName}/javadoc" /> 
-  <property name="mainClass" value="edu.ucsb.cs56.projects.games.memorycard.MemoryGameGui" />
+  <property name="mainClass" value="edu.ucsb.cs56.projects.games.memorycard.MemoryCardGame" />
 
 
   <path id="project.class.path">
