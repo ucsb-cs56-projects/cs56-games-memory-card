@@ -22,8 +22,7 @@ import javax.sound.sampled.*;
  * @version CS56 Winter 2018
  * @see MemoryGrid
  */
-public class MemoryGameComponent extends JComponent implements ActionListener {
-    MemoryGameComponentController MGCcontroller;
+public class MemoryGameComponentView extends JComponent implements ActionListener {
 
     private JButton[] buttons;
     private ArrayList<ImageIcon> imgIcons = new ArrayList<ImageIcon>();
@@ -41,6 +40,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener {
     private HighScoreBoard board = null;
     private Clip clip;
     private boolean firstImageFlipped = false;
+    private MemoryGameComponent MGCcontroller;
 
     /**
      * Constructor
@@ -49,40 +49,26 @@ public class MemoryGameComponent extends JComponent implements ActionListener {
      *             to keep track of the moves in each game, ensuring the rules are
      *             followed and detecting when the user has won.
      */
-    public MemoryGameComponent(MemoryGrid game) {
+    public MemoryGameComponentView(MemoryGameComponent controller) {
         super();
-        MGCcontroller = new MemoryGameComponentController(game);
+        int gridSize = controller.getGridSize();
+        this.MGCcontroller = controller;
         timeLabel = new JLabel("Time Remaining");
         scoreLabel = new JLabel("Score");
         levelLabel = new JLabel("Level");
         mainFrame = new JFrame();
-        buttons = new JButton[MGCcontroller.getGridSize()];
+        buttons = new JButton[gridSize];
         loadImageIcons(); // loads the array list of icons and sets imgBlank
-        buildTiles();
+        buildTiles(gridSize);
     }
     
-    public MemoryGameLevel[] loadLevelSet1(){
-        return MGCcontroller.loadLevelSet1();
-    }
-    
-    public MemoryGameLevel[] loadLevelSet2(){
-        return MGCcontroller.loadLevelSet2();
-    }
 
-    public MemoryGameLevel[] loadLevelSet3(){
-        return MGCcontroller.loadLevelSet3();
-    }
-    
-    public void setLevels(MemoryGameLevel[] newLevels){
-        MGCcontroller.setLevels(newLevels);
-    }
     
     /**
      * Pause the timer and the game by showing a dialog box,
      * preventing the user from playing the game until they resume.
      */
-    public void pauseGame() {
-        MGCcontroller.pauseTimer();
+    public boolean pauseGame() {
         JOptionPane popup = new JOptionPane("PAUSED");
         Object[] options = {"Resume"};
 
@@ -93,9 +79,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener {
                 JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.INFORMATION_MESSAGE, null,
                 options, options[0]);
-        if (selection == JOptionPane.YES_OPTION) {
-            MGCcontroller.resume();
-        }
+        return (selection == JOptionPane.YES_OPTION);
     }
 
     /**
@@ -155,9 +139,6 @@ public class MemoryGameComponent extends JComponent implements ActionListener {
     /**
      * Stop background music
      */
-    public void resume(){
-        MGCcontroller.resume();
-    }
     public void stopMusic() {
         //AudioPlayer.player.stop(BGM);
         playSound("./resource/Hiromi Haneda.wav", false);
@@ -167,9 +148,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener {
      * Resume the game timer. In other words, recalculate total pause
      * time and start the timer.
      */
-    public void pauseB() {
-        MGCcontroller.stopTimer();
-        //timer.stop();
+    public boolean pauseB() {
         JOptionPane popup = new JOptionPane("PAUSED");
         Object[] options = {"Resume"};
 
@@ -181,12 +160,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener {
                 JOptionPane.INFORMATION_MESSAGE, null,
                 options, options[0]);
 
-        if (selection == JOptionPane.YES_OPTION) {
-            MGCcontroller.resume();
-        }
-    }
-    public void pauseTimer(){
-        MGCcontroller.pauseTimer();
+        return (selection == JOptionPane.YES_OPTION);
     }
 
     /**pause() pauses the time
@@ -214,14 +188,11 @@ public class MemoryGameComponent extends JComponent implements ActionListener {
         }
     }
 
-    private void updateScore() {
-        int score = MGCcontroller.getScore();
+    private void updateScore(int score) {
         scoreLabel.setText("Score: " + score + " ");
     }
 
-    private void updateLevel() {
-        int totalLevels = MGCcontroller.getTotalLevels();
-        int currentLevel = MGCcontroller.getCurrentLevel();
+    private void updateLevel(int totalLevels, int currentLevel) {
         levelLabel.setText("Level: " + (currentLevel + 1) + "/" + totalLevels);
     }
 
@@ -245,8 +216,8 @@ public class MemoryGameComponent extends JComponent implements ActionListener {
             timeRemaining = 0;
 
         updateTimeLabel(timeRemaining / 60, timeRemaining % 60);
-        updateScore();
-        updateLevel();
+        updateScore(MGCcontroller.getScore());
+        updateLevel(MGCcontroller.getTotalLevels(), MGCcontroller.getCurrentLevel());
     }
 
     /**
@@ -319,14 +290,11 @@ public class MemoryGameComponent extends JComponent implements ActionListener {
     /**
      * buildTiles() constructs the tiles
      */
-    public void buildTiles() {
+    public void buildTiles(int gridSize) {
         this.removeAll();
-        int gridSize = MGCcontroller.getGridSize();
-
-
         //set layout to a grid of length sqrt(grid size)
         this.setLayout(new GridLayout(0, (int) Math.sqrt(gridSize)));
-        buttons = new JButton[MGCcontroller.getGridSize()];
+        buttons = new JButton[gridSize];
         for (int i = 0; i <= (gridSize - 1); i++) {
             //initially all buttons are blank
             JButton jb = new JButton(imgBlank);
@@ -442,6 +410,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener {
                     }
                 } else {
                     MGCcontroller.setScore(-5);
+
                     // start the flip back timer
                     int delay = level.getFlipTime();
                     ActionListener listener = new ActionListener() {
@@ -457,6 +426,20 @@ public class MemoryGameComponent extends JComponent implements ActionListener {
 
             } // end of outer if else
         }
+
+        public void flipBack() {
+            if (grid.isTwoFlipped()) {
+                JButton jb = buttons[grid.getFlipped()];
+                jb.setEnabled(true);
+                jb.setIcon(imgBlank);
+                grid.flip(grid.getFlipped());
+                jb = buttons[grid.getFlipped()];
+                jb.setEnabled(true);
+                jb.setIcon(imgBlank);
+                grid.flip(grid.getFlipped());
+                //playFlipSound();
+            }
+        }
     }
 
     /**
@@ -465,7 +448,6 @@ public class MemoryGameComponent extends JComponent implements ActionListener {
      * @param lvl changes the level of the game
      */
     public void newGame(int lvl) {
-        MGCcontroller.newGame(lvl);
         pauseButton.setEnabled(false);
         musicButton.setEnabled(true);
         firstImageFlipped = false;
@@ -475,7 +457,6 @@ public class MemoryGameComponent extends JComponent implements ActionListener {
      * Resets the game
      */
     public void reset() {
-        MGCcontroller.reset();
         firstImageFlipped = false;
         pauseButton.setEnabled(false);
         musicButton.setEnabled(true);
@@ -488,8 +469,8 @@ public class MemoryGameComponent extends JComponent implements ActionListener {
     public void endGame() {
         long deltaTime = MGCcontroller.endGame();
         int currentLevel = MGCcontroller.getCurrentLevel();
-        updateScore();
-        updateLevel();
+        updateScore(MGCcontroller.getScore());
+        updateLevel(MGCcontroller.getTotalLevels(), MGCcontroller.getCurrentLevel());
         MemoryGameLevel level = MGCcontroller.getLevel();
         int score = MGCcontroller.getScore();
         if (deltaTime < level.getSecondsToSolve() && currentLevel < 3) {
@@ -508,7 +489,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener {
                 MemoryGameLevel[] levels = MGCcontroller.getLevels();
                 long time = levels[currentLevel + 1].getSecondsToSolve();
                 updateTimeLabel(time / 60, time % 60);
-                newGame(currentLevel + 1);
+                MGCcontroller.newGame(currentLevel + 1);
             } else
                 System.exit(0);
 
@@ -526,10 +507,10 @@ public class MemoryGameComponent extends JComponent implements ActionListener {
                 MemoryGameLevel[] levels = MGCcontroller.getLevels();
                 long time = levels[0].getSecondsToSolve();
                 updateTimeLabel(time / 60, time % 60);
-                newGame(0);
+                MGCcontroller.newGame(0);
                 MGCcontroller.setScore(0);
-                updateScore();
-                updateLevel();
+                updateScore(MGCcontroller.getScore());
+                updateLevel(MGCcontroller.getTotalLevels(), MGCcontroller.getCurrentLevel());
             } else {
                 if (score > board.getLowestScore()) {
                     storeHighScore();
@@ -561,7 +542,7 @@ public class MemoryGameComponent extends JComponent implements ActionListener {
                     if (selection2 == JOptionPane.YES_OPTION) {
                         long time = level.getSecondsToSolve();
                         updateTimeLabel(time / 60, time % 60);
-                        newGame(currentLevel);
+                        MGCcontroller.newGame(currentLevel);
                         MGCcontroller.setScore(0);
                         break;
                     }
@@ -573,23 +554,6 @@ public class MemoryGameComponent extends JComponent implements ActionListener {
         }
     }
 
-    /**
-     * If two cards are showing, flips them back over
-     */
-    public void flipBack() {
-        MemoryGrid grid = MGCcontroller.getGrid();
-        if (grid.isTwoFlipped()) {
-            JButton jb = buttons[grid.getFlipped()];
-            jb.setEnabled(true);
-            jb.setIcon(imgBlank);
-            grid.flip(grid.getFlipped());
-            jb = buttons[grid.getFlipped()];
-            jb.setEnabled(true);
-            jb.setIcon(imgBlank);
-            grid.flip(grid.getFlipped());
-            //playFlipSound();
-        }
-    }
 
     /**
      * Loads the imageIcons

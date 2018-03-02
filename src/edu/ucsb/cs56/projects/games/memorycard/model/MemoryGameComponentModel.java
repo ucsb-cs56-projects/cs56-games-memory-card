@@ -23,8 +23,6 @@ import javax.sound.sampled.*;
  * @see MemoryGrid
  */
 public class MemoryGameComponentModel implements ActionListener {
-    MemoryGameComponentController MGCcontroller;
-
     private MemoryGrid grid;
     private int currentLevel;
     private int totalLevels = 4;
@@ -46,7 +44,6 @@ public class MemoryGameComponentModel implements ActionListener {
     private long pauseStart = 0;
 
     public MemoryGameComponentModel(MemoryGrid game) {
-        MemoryGameComponentController MGCcontroller = new MemoryGameComponentController(game);
         timer = new Timer(250, this);
         this.grid = game;
         int gridSize = grid.getSize();

@@ -32,6 +32,7 @@ public class MemoryCardGameView {
     static JFrame frame = new JFrame("Memory Card Game");
     static MemoryGrid grid = new MemoryGrid(16);
     static MemoryGameComponent mgc = new MemoryGameComponent(grid);
+    static MemoryGameComponentView mgcView = mgc.getView();
     static JButton reset = new JButton("Reset");
     static JButton pause = new JButton("Pause");
     static JButton music = new JButton("Music Off");
@@ -337,7 +338,7 @@ JTextArea textArea = highscoreBoard.getBoard();
 	menu.addActionListener(menuListener);
 
 	// the game
-	frame.getContentPane().add(mgc);
+	frame.getContentPane().add(mgcView);
 	JPanel p = new JPanel(new BorderLayout());
 	p.add(BorderLayout.WEST,label);
 
