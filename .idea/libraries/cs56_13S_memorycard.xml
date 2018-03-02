@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="cs56_13S_memorycard">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/dist/cs56_13S_memorycard.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
