@@ -225,6 +225,10 @@ public class MemoryGameComponent {
     public long endGame(){
         return this.MGCmodel.endGame();
     }
+
+    public void viewEndGame(){
+        this.MGCview.endGame();
+    }
     
     public void setScore(int score){
         this.MGCmodel.setScore(score);

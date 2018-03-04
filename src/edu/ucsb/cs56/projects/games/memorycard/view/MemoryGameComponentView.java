@@ -527,7 +527,7 @@ public class MemoryGameComponentView extends JComponent {
                         long time = level.getSecondsToSolve();
                         updateTimeLabel(time / 60, time % 60);
                         MGCcontroller.newGame(currentLevel);
-                        MGCcontroller.setScore(0);
+                        MGCcontroller.setScore(-1 * MGCcontroller.getScore());  // set score to 0
                         break;
                     }
                 } else if (score > board.getLowestScore()) {
