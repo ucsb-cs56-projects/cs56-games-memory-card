@@ -42,13 +42,15 @@ public class MemoryGameComponentModel implements ActionListener {
     // adjust the elapsed time to the actual play time.
     private long pauseTime = 0;
     private long pauseStart = 0;
+    private MemoryGameComponent MGCcontroller;
 
-    public MemoryGameComponentModel(MemoryGrid game) {
+    public MemoryGameComponentModel(MemoryGrid game, MemoryGameComponent controller) {
         timer = new Timer(250, this);
         this.grid = game;
         int gridSize = grid.getSize();
         levels = loadLevelSet1();
         startTime = new Date().getTime();
+        MGCcontroller = controller;
 
     }
 
@@ -225,10 +227,15 @@ public class MemoryGameComponentModel implements ActionListener {
         if (timeRemaining < 0) {
             endGame();
         }
-        if (timeRemaining < 0)
+        if (timeRemaining < 0){
             timeRemaining = 0;
+        }
 
+        MGCcontroller.updateTimeLabel(timeRemaining / 60, timeRemaining % 60);
+        MGCcontroller.updateScore();
+        MGCcontroller.updateLevel();
     }
+
     
 }
 

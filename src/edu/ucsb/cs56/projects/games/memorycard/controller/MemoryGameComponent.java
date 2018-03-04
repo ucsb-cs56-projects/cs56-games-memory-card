@@ -28,7 +28,7 @@ public class MemoryGameComponent {
     private MemoryGameComponentView MGCview;
     
     public MemoryGameComponent(MemoryGrid game){
-        this.MGCmodel = new MemoryGameComponentModel(game);
+        this.MGCmodel = new MemoryGameComponentModel(game,this);
         this.MGCview = new MemoryGameComponentView(this);
     }
 
@@ -113,21 +113,21 @@ public class MemoryGameComponent {
      * @param minutes
      * @param seconds
      */
-    /**
-    private void updateTimeLabel(long minutes, long seconds) {
+    
+    public void updateTimeLabel(long minutes, long seconds) {
         MGCview.updateTimeLabel(minutes,seconds);
     }
 
 
-    private void updateScore() {
-        MGCview.updageScore(getScore());
+    public void updateScore() {
+        MGCview.updateScore(getScore());
     }
 
 
-    private void updateLevel() {
+    public void updateLevel() {
         MGCview.updateLevel(getTotalLevels(), getCurrentLevel());
     }
-*/
+
     /**
      * setLabel()
      *
@@ -240,7 +240,7 @@ public class MemoryGameComponent {
     
     public void newGame(int lvl){
         this.MGCmodel.newGame(lvl);
-        this.MGCview.newGame(lvl);
+        this.MGCview.newGame();
     }
     
     public void reset(){
