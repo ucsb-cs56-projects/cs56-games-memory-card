@@ -22,7 +22,7 @@ import javax.sound.sampled.*;
  * @version CS56 Winter 2018
  * @see MemoryGrid
  */
-public class MemoryGameComponentView extends JComponent implements ActionListener {
+public class MemoryGameComponentView extends JComponent {
 
     private JButton[] buttons;
     private ArrayList<ImageIcon> imgIcons = new ArrayList<ImageIcon>();
@@ -51,15 +51,14 @@ public class MemoryGameComponentView extends JComponent implements ActionListene
      */
     public MemoryGameComponentView(MemoryGameComponent controller) {
         super();
-        int gridSize = controller.getGridSize();
         this.MGCcontroller = controller;
         timeLabel = new JLabel("Time Remaining");
         scoreLabel = new JLabel("Score");
         levelLabel = new JLabel("Level");
         mainFrame = new JFrame();
-        buttons = new JButton[gridSize];
+        buttons = new JButton[MGCcontroller.getGridSize()];
         loadImageIcons(); // loads the array list of icons and sets imgBlank
-        buildTiles(gridSize);
+        buildTiles(MGCcontroller.getGridSize());
     }
     
 
@@ -178,7 +177,7 @@ public class MemoryGameComponentView extends JComponent implements ActionListene
      * @param minutes
      * @param seconds
      */
-    private void updateTimeLabel(long minutes, long seconds) {
+    public void updateTimeLabel(long minutes, long seconds) {
         String m = " minutes, ";
         if (minutes == 1) m = " minute, ";
         if (minutes > 0) {
@@ -188,37 +187,14 @@ public class MemoryGameComponentView extends JComponent implements ActionListene
         }
     }
 
-    private void updateScore(int score) {
+    public void updateScore(int score) {
         scoreLabel.setText("Score: " + score + " ");
     }
 
-    private void updateLevel(int totalLevels, int currentLevel) {
+    public void updateLevel(int totalLevels, int currentLevel) {
         levelLabel.setText("Level: " + (currentLevel + 1) + "/" + totalLevels);
     }
 
-    /**
-     * Callback from the timer. This is used to update the time remaining
-     * label and to check if the game has ended as a result of the level
-     * time running out.
-     */
-    public void actionPerformed(ActionEvent e) {
-        MemoryGameLevel level = MGCcontroller.getLevel();
-        long startTime = MGCcontroller.getStartTime();
-        long pauseTime = MGCcontroller.getPauseTime();
-        long finalTime = new Date().getTime();
-        long deltaTime = (long) ((finalTime - startTime) / 1000.0);
-        long timeRemaining = (long) (level.getSecondsToSolve() - deltaTime - pauseTime / 1000.0);
-
-        if (timeRemaining < 0) {
-            endGame();
-        }
-        if (timeRemaining < 0)
-            timeRemaining = 0;
-
-        updateTimeLabel(timeRemaining / 60, timeRemaining % 60);
-        updateScore(MGCcontroller.getScore());
-        updateLevel(MGCcontroller.getTotalLevels(), MGCcontroller.getCurrentLevel());
-    }
 
     /**
      * setLabel()
@@ -402,6 +378,7 @@ public class MemoryGameComponentView extends JComponent implements ActionListene
                     grid.flip(grid.getFlipped());
                     playMatchSound();
                     MGCcontroller.setScore(30);
+                    updateScore(MGCcontroller.getScore());
                     //check if game is over
                     int gameCounter = MGCcontroller.getGameCounter();
                     if (gameCounter == grid.getSize() / 2) {
@@ -410,7 +387,7 @@ public class MemoryGameComponentView extends JComponent implements ActionListene
                     }
                 } else {
                     MGCcontroller.setScore(-5);
-
+                    updateScore(MGCcontroller.getScore());
                     // start the flip back timer
                     int delay = level.getFlipTime();
                     ActionListener listener = new ActionListener() {
@@ -447,10 +424,11 @@ public class MemoryGameComponentView extends JComponent implements ActionListene
      *
      * @param lvl changes the level of the game
      */
-    public void newGame(int lvl) {
+    public void newGame() {
         pauseButton.setEnabled(false);
         musicButton.setEnabled(true);
         firstImageFlipped = false;
+        buildTiles(MGCcontroller.getGridSize());
     }
 
     /**
@@ -460,6 +438,12 @@ public class MemoryGameComponentView extends JComponent implements ActionListene
         firstImageFlipped = false;
         pauseButton.setEnabled(false);
         musicButton.setEnabled(true);
+        updateScore(MGCcontroller.getScore());
+        updateLevel(MGCcontroller.getTotalLevels(), MGCcontroller.getCurrentLevel());
+        updateTimeLabel(MGCcontroller.getLevel().getSecondsToSolve() / 60,
+                        MGCcontroller.getLevel().getSecondsToSolve() % 60);
+        newGame();
+
     }
 
     /**

@@ -11,8 +11,8 @@ public class MemoryCardGame{
     //this is main function
     
     public static void main (String[] args) {
-        MemoryCardGameController controller = new MemoryCardGameController();
-        controller.mainGUI();
+        //MemoryCardGameController controller = new MemoryCardGameController();
+        MemoryCardGameController.mainGUI();
         
 
     }

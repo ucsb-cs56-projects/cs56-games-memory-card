@@ -292,11 +292,11 @@ JTextArea textArea = highscoreBoard.getBoard();
 		public void actionPerformed(ActionEvent e){
 		    if (e.getActionCommand() == "Music On"){
 			mgc.stopMusic();
-			music.setLabel("Music Off");
+			music.setText("Music Off");
 		    }
 		    else{
 		        mgc.playMusic();
-			music.setLabel("Music On");
+			music.setText("Music On");
 		    }
 		}
 	    };

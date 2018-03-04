@@ -1,19 +1,4 @@
 package edu.ucsb.cs56.projects.games.memorycard;
-import java.awt.GridLayout;
-import javax.swing.JComponent;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
-import java.awt.*;
-import java.util.ArrayList;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
-import javax.swing.*;
-import java.awt.ComponentOrientation;
-import java.io.*;
-import javax.swing.text.DefaultCaret;
 /**
 *
 * @author Bryce McGaw and Jonathan Yau
@@ -25,11 +10,9 @@ import javax.swing.text.DefaultCaret;
 * @version CS56 Winter 2018
 * Edited Professor Phill Conrad's code from Lab06
 */
-public class MemoryCardGameController{
-    MemoryCardGameView view = new MemoryCardGameView();
-    
-    public void mainGUI(){
-        view.mainGUI();
+public class MemoryCardGameController{    
+    public static void mainGUI(){
+        MemoryCardGameView.mainGUI();
     }
     
 }
