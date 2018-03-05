@@ -226,6 +226,7 @@ public class MemoryGameComponentModel implements ActionListener {
         
         if (timeRemaining < 0) {
             endGame();
+            MGCcontroller.viewEndGame();
         }
         if (timeRemaining < 0){
             timeRemaining = 0;
