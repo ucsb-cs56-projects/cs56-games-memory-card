@@ -3,8 +3,14 @@ import java.awt.Component;
 import java.io.*;
 import java.awt.Font;
 import javax.swing.JTextArea;
+/**
+ *@author Annan Zhang, Shihua Lu
+ *@version CS56 Winter 2018
+ */
+
+
 public class HighScoreBoard{
-	private JTextArea board;
+    HighScoreBoardController controller = new HighScoreBoardController();
 	private int[] scores=new int[10];
 	private String[] names=new String[10];
     
@@ -32,16 +38,11 @@ public class HighScoreBoard{
 			b.close();
 		} catch(IOException e){
 			e.printStackTrace();
-		}
-		board = new JTextArea(15,25);
-		board.setFont(new Font(Font.MONOSPACED,Font.PLAIN,12));
-		for(int i=0;i<10;i++){
-			if(scores[i]==0)
-				break;
-			board.append((i+1)+". "+names[i]+scores[i]+"\n");
+        }
+        controller.setBoard(scores, names);
 
-		}
 	}
+    
 	public int getLowestScore(){
 		return scores[9];
 	}
@@ -90,7 +91,7 @@ public class HighScoreBoard{
 		getHighScores();
 	}
 	public JTextArea getBoard(){
-		return board;
+        return controller.getBoard();
 	}	
 }
 

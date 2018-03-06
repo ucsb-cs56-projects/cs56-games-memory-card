@@ -21,16 +21,18 @@ import javax.swing.text.DefaultCaret;
 * @author Mathew Glodack, Christina Morris
 * @author Xiaohe He, Shaoyi Zhang
 * @author Hyemin Yoo
-* @version CS56 Fall 2016
+* @author Annan Zhang, Shihua Lu
+* @version CS56 Winter 2018
 * Edited Professor Phill Conrad's code from Lab06
 */
-public class MemoryGameGui {
+public class MemoryCardGameView {
     
     static final int WINDOW_SIZE = 500;
     
     static JFrame frame = new JFrame("Memory Card Game");
     static MemoryGrid grid = new MemoryGrid(16);
     static MemoryGameComponent mgc = new MemoryGameComponent(grid);
+    static MemoryGameComponentView mgcView = mgc.getView();
     static JButton reset = new JButton("Reset");
     static JButton pause = new JButton("Pause");
     static JButton music = new JButton("Music Off");
@@ -273,24 +275,7 @@ JTextArea textArea = highscoreBoard.getBoard();
 	frame.getContentPane().add(p);
     }
 	
-    
-    /** main method to open JFrame 
-     *
-     */
-    
-    public static void main (String[] args) {
-	
-	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	instruction.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	frame.setSize(WINDOW_SIZE, WINDOW_SIZE);
 
-	// go to the menu
-	menu();
-
-	// set the window to the middle of the screen
-	frame.setLocation((int)(screenSize.getWidth()/2 - frame.getSize().getWidth()/2), (int)(screenSize.getHeight()/2 - frame.getSize().getHeight()/2));
-	frame.setVisible(true);
-    }
 
     // the actual game
     public static void go(){
@@ -307,11 +292,11 @@ JTextArea textArea = highscoreBoard.getBoard();
 		public void actionPerformed(ActionEvent e){
 		    if (e.getActionCommand() == "Music On"){
 			mgc.stopMusic();
-			music.setLabel("Music Off");
+			music.setText("Music Off");
 		    }
 		    else{
 		        mgc.playMusic();
-			music.setLabel("Music On");
+			music.setText("Music On");
 		    }
 		}
 	    };
@@ -353,7 +338,7 @@ JTextArea textArea = highscoreBoard.getBoard();
 	menu.addActionListener(menuListener);
 
 	// the game
-	frame.getContentPane().add(mgc);
+	frame.getContentPane().add(mgcView);
 	JPanel p = new JPanel(new BorderLayout());
 	p.add(BorderLayout.WEST,label);
 
@@ -431,4 +416,31 @@ JTextArea textArea = highscoreBoard.getBoard();
 	    return instructionTextArea;
     }
 
+    public static void loadGame(){
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        instruction.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(WINDOW_SIZE, WINDOW_SIZE);
+        // go to the menu
+        menu();
+
+        // set the window to the middle of the screen
+        frame.setLocation((int)(screenSize.getWidth()/2 - frame.getSize().getWidth()/2), (int)(screenSize.getHeight()/2 - frame.getSize().getHeight()/2));
+        frame.setVisible(true);
+
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
