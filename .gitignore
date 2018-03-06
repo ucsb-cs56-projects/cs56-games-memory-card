@@ -1,6 +1,5 @@
 *.class
 .DS_Store
-cs56_13S_memorycard.jar
 
 # Package Files #
 *.war
