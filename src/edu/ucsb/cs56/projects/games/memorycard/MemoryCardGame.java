@@ -12,7 +12,7 @@ public class MemoryCardGame{
     
     public static void main (String[] args) {
         //MemoryCardGameController controller = new MemoryCardGameController();
-        MemoryCardGameController.mainGUI();
+        MemoryCardGameController.loadGame();
         
 
     }

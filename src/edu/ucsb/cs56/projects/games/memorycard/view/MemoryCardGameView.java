@@ -416,7 +416,7 @@ JTextArea textArea = highscoreBoard.getBoard();
 	    return instructionTextArea;
     }
 
-    public static void mainGUI(){
+    public static void loadGame(){
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         instruction.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(WINDOW_SIZE, WINDOW_SIZE);

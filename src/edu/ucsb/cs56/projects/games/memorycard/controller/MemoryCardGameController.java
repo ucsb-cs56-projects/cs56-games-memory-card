@@ -11,8 +11,8 @@ package edu.ucsb.cs56.projects.games.memorycard;
 * Edited Professor Phill Conrad's code from Lab06
 */
 public class MemoryCardGameController{    
-    public static void mainGUI(){
-        MemoryCardGameView.mainGUI();
+    public static void loadGame(){
+        MemoryCardGameView.loadGame();
     }
     
 }
