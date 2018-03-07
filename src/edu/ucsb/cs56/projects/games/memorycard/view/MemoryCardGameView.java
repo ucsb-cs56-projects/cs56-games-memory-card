@@ -410,6 +410,7 @@ JTextArea textArea = highscoreBoard.getBoard();
 		        instructionTextArea.append(line + "\n");
 	        }
 	        br.close();
+	        instructionTextArea.setCaretPosition(0);
 	    } catch	(IOException e) {
 		e.printStackTrace();
 	    }
