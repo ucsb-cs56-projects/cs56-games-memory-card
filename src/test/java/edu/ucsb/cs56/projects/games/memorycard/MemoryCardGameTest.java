@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 	@version 1.0.0 5/14/2012
 	@see MemoryGame.java
 */
-public class MemoryGameTest
+public class MemoryCardGameTest
 {
 	@Test public void testConstructor01()
 	{
@@ -77,13 +77,15 @@ public class MemoryGameTest
             t1.memGrid.get(6).flip();
             assertTrue(t1.isTwoFlipped());
         }
-        
+    
+    
         @Test public void testgetFlipped()
         {
             MemoryGrid t1 = new MemoryGrid(16);
             t1.memGrid.get(13).flip();
             assertEquals(t1.getFlipped(), 13);
         }
+    
         
         @Test public void testgetFlipped2()
         {
@@ -92,7 +94,16 @@ public class MemoryGameTest
             t1.memGrid.get(4).flip();
             assertEquals(t1.getFlipped(10), 4);
         }
-        
+    
+        @Test public void testgetFlipped3()
+        {
+            MemoryGrid t1 = new MemoryGrid(16);
+            t1.memGrid.get(10).flip();
+            t1.memGrid.get(4).flip();
+            assertEquals(t1.getFlipped(10), 4);
+        }
+    
+    
         @Test public void testisOver()
         {
             MemoryGrid t1 = new MemoryGrid(16);
