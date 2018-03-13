@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 /**
 	The test class MemoryGameTest - tests the MemoryGame class
 	@author Bryce McGaw and Jonathan Yau
+    @author Annan Zhang and Shihua Lu
 	
 	Minor changes made by Ryan Halbrook for cs56 proj1, Spring 2013
 	I only made minor changes in this file because I added a parameter 
@@ -13,9 +14,10 @@ import static org.junit.Assert.*;
 	all constructors to make this compile. A good change would be to test 
 	other parameters.
 	
-	@version 1.0.0 5/14/2012
+	@version 1.0.1 3/12/2018
 	@see MemoryGame.java
 */
+
 public class MemoryCardGameTest
 {
 	@Test public void testConstructor01()
@@ -46,7 +48,7 @@ public class MemoryCardGameTest
             for(MemoryCard temp: test1.memGrid){
                 if(temp.getVal()==temp2.getVal())
                     i++;
-		  j++;
+                j++;
 
 		  if(j<test1.size)
                     temp2 = test2.memGrid.get(j);
@@ -98,9 +100,9 @@ public class MemoryCardGameTest
         @Test public void testgetFlipped3()
         {
             MemoryGrid t1 = new MemoryGrid(16);
-            t1.memGrid.get(10).flip();
-            t1.memGrid.get(4).flip();
-            assertEquals(t1.getFlipped(10), 4);
+            t1.memGrid.get(13).flip();
+            t1.memGrid.get(5).flip();
+            assertEquals(t1.getFlipped(13), 5);
         }
     
     
