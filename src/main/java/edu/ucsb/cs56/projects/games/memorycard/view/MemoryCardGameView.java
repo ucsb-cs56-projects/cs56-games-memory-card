@@ -15,20 +15,20 @@ import java.awt.ComponentOrientation;
 import java.io.*;
 import javax.swing.text.DefaultCaret;
 /**
-*
-* @author Bryce McGaw and Jonathan Yau
-* @author Ryan Halbrook and Yun Suk Chang
-* @author Mathew Glodack, Christina Morris
-* @author Xiaohe He, Shaoyi Zhang
-* @author Hyemin Yoo
-* @author Annan Zhang, Shihua Lu
-* @version CS56 Winter 2018
-* Edited Professor Phill Conrad's code from Lab06
-*/
+ *
+ * @author Bryce McGaw and Jonathan Yau
+ * @author Ryan Halbrook and Yun Suk Chang
+ * @author Mathew Glodack, Christina Morris
+ * @author Xiaohe He, Shaoyi Zhang
+ * @author Hyemin Yoo
+ * @author Annan Zhang, Shihua Lu
+ * @version CS56 Winter 2018
+ * Edited Professor Phill Conrad's code from Lab06
+ */
 public class MemoryCardGameView {
-    
+
     static final int WINDOW_SIZE = 500;
-    
+
     static JFrame frame = new JFrame("Memory Card Game");
     static MemoryGrid grid = new MemoryGrid(16);
     static MemoryGameComponent mgc = new MemoryGameComponent(grid);
@@ -51,73 +51,75 @@ public class MemoryCardGameView {
     static JButton binstruction = new JButton("instruction");
     static JButton menu = new JButton("Menu");
     static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    static ActionListener highscoreListener = new ActionListener(){
-	    public void actionPerformed(ActionEvent e){
-  
-//clear up the frame
-          frame.getContentPane().removeAll();
-          frame.getContentPane().revalidate();
-          frame.getContentPane().repaint();
-          //go();
-      //}
-       
-   frame.setLocation((int)(screenSize.getWidth()/2 - frame.getSize().getWidth()/2), (int)(screenSize.getHeight()/2 - frame.getSize().getHeight()/2));
-    frame.setSize(WINDOW_SIZE, WINDOW_SIZE);
-    frame.setPreferredSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE));
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-	
-
-      //JTextArea textArea;
-   JPanel upperPanel = new JPanel();
-
-
     
-JTextArea textArea = highscoreBoard.getBoard();
-
-   
-    upperPanel.setBackground(Color.gray);
-    textArea.setEditable(false);
-
-    frame.add(textArea);
-
-    frame.pack();
-    frame.setVisible(true);
 
 
-	ActionListener menuListener = new ActionListener(){
-	      public void actionPerformed(ActionEvent e){
-		  menu();
-	      }
-       };
+    static ActionListener highscoreListener = new ActionListener(){
+        public void actionPerformed(ActionEvent e){
+            System.out.println("Check if occurs multiple times");//clear up the frame
+            frame.getContentPane().removeAll();
+            frame.revalidate();
+            frame.repaint();
+            //go();
+            //}
 
-   // register events with the buttons
-   
-   menu.addActionListener(menuListener);
-
-   //JPanel sp2 = new JPanel(new BorderLayout());
-   //sp2.add(menu);
-   //upperPanel.add(BorderLayout.EAST,menu);
-   frame.add(BorderLayout.NORTH,menu);
-
-    //frame.getContentPane().add(BorderLayout.NORTH,upperPanel);
-   //frame.add(upperPanel);
-   
-   // to make sure that grids go left to right
-   frame.applyComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-   //frame.setSize(WINDOW_SIZE, WINDOW_SIZE);
-        
-   frame.setVisible(true);
+            frame.setLocation((int)(screenSize.getWidth()/2 - frame.getSize().getWidth()/2), (int)(screenSize.getHeight()/2 - frame.getSize().getHeight()/2));
+            frame.setSize(WINDOW_SIZE, WINDOW_SIZE);
+            frame.setPreferredSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE));
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
-   //frame.setVisible(true);
+            //JTextArea textArea;
+            JPanel upperPanel = new JPanel();
 
 
-    }
-   };
 
- static ActionListener instructionListener = new ActionListener(){
-	    public void actionPerformed(ActionEvent e) {
-		JPanel panel = new JPanel();
+            JTextArea textArea = highscoreBoard.getBoard();
+
+
+            upperPanel.setBackground(Color.gray);
+            textArea.setEditable(false);
+
+            frame.add(textArea);
+
+            frame.pack();
+            frame.setVisible(true);
+
+
+            ActionListener menuListener = new ActionListener(){
+                public void actionPerformed(ActionEvent e){
+                    displayMenu();
+                }
+            };
+
+            // register events with the buttons
+
+            menu.addActionListener(menuListener);
+
+            //JPanel sp2 = new JPanel(new BorderLayout());
+            //sp2.add(menu);
+            //upperPanel.add(BorderLayout.EAST,menu);
+            frame.add(BorderLayout.NORTH,menu);
+
+            //frame.getContentPane().add(BorderLayout.NORTH,upperPanel);
+            //frame.add(upperPanel);
+
+            // to make sure that grids go left to right
+            frame.applyComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+            //frame.setSize(WINDOW_SIZE, WINDOW_SIZE);
+
+            frame.setVisible(true);
+
+
+            //frame.setVisible(true);
+
+
+        }
+    };
+
+    static ActionListener instructionListener = new ActionListener(){
+        public void actionPerformed(ActionEvent e) {
+            JPanel panel = new JPanel();
 	/*	
 	text.setLineWrap(true);
 		text.setEditable(false);
@@ -126,295 +128,297 @@ JTextArea textArea = highscoreBoard.getBoard();
 		caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);		
 	*/
 
-   frame.getContentPane().removeAll();
+            frame.getContentPane().removeAll();
             frame.getContentPane().revalidate();
             frame.getContentPane().repaint();
- frame.setLocation((int)(screenSize.getWidth()/2 - frame.getSize().getWidth()/2), (int)((screenSize.getHeight())/2 - frame.getSize().getHeight()/2));
-      frame.setSize(WINDOW_SIZE, WINDOW_SIZE);
-      frame.setPreferredSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE));
-      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setLocation((int)(screenSize.getWidth()/2 - frame.getSize().getWidth()/2), (int)((screenSize.getHeight())/2 - frame.getSize().getHeight()/2));
+            frame.setSize(WINDOW_SIZE, WINDOW_SIZE);
+            frame.setPreferredSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE));
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 //JPanel panel = new JPanel();
 
-		JTextArea instructionText = getInstructions();
-		instructionText.setEditable(false);
+            JTextArea instructionText = getInstructions();
+            instructionText.setEditable(false);
 
-		DefaultCaret caret=(DefaultCaret)instructionText.getCaret();		
-		caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);		
-		
-		JScrollPane scroller = new JScrollPane(instructionText);
-		scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-	        scroller.setPreferredSize(new Dimension(WINDOW_SIZE/2, WINDOW_SIZE/2));
-		
-		//frame.add(scroller);
-		panel.add(scroller);
-		
-		
+            DefaultCaret caret=(DefaultCaret)instructionText.getCaret();
+            caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
 
-		//panel.getContentPane().add(panel);
-		//frame.setSize(350,350);
-		panel.setSize(350,350);
-		//frame.add(instructionText);
-		frame.add(panel);
-		menu.addActionListener((event) -> menu());
-		frame.add(BorderLayout.NORTH, menu);
-		frame.pack();
-		frame.setVisible(true);
-    
-	        
-	    }
-	};
+            JScrollPane scroller = new JScrollPane(instructionText);
+            scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+            scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            scroller.setPreferredSize(new Dimension(WINDOW_SIZE/2, WINDOW_SIZE/2));
+
+            //frame.add(scroller);
+            panel.add(scroller);
+
+
+
+            //panel.getContentPane().add(panel);
+            //frame.setSize(350,350);
+            panel.setSize(350,350);
+            //frame.add(instructionText);
+            frame.add(panel);
+            menu.addActionListener((event) -> displayMenu());
+            frame.add(BorderLayout.NORTH, menu);
+            frame.pack();
+            frame.setVisible(true);
+
+
+        }
+    };
+
+    static ActionListener resumeListener = new ActionListener(){
+        public void actionPerformed(ActionEvent e) {
+            //clear up the frame
+            frame.getContentPane().removeAll();
+            frame.revalidate();
+            frame.repaint();
+            go();
+            mgc.resume();
+        }
+    };
+    static ActionListener startListener = new ActionListener(){
+        public void actionPerformed(ActionEvent e) {
+            //clear up the frame
+            frame.getContentPane().removeAll();
+            frame.revalidate();
+            frame.repaint();
+            go();
+            mgc.reset();
+        }
+    };
+
+    static ActionListener beginnerListener = new ActionListener(){
+        public void actionPerformed(ActionEvent e) {
+            //clear up the frame
+            frame.getContentPane().removeAll();
+            frame.revalidate();
+            frame.repaint();
+            go();
+            mgc.setLevels(mgc.loadLevelSet1());
+            mgc.reset();
+        }
+    };
+
+    static ActionListener intermediateListener = new ActionListener(){
+        public void actionPerformed(ActionEvent e) {
+            //clear up the frame
+            frame.getContentPane().removeAll();
+            frame.revalidate();
+            frame.repaint();
+            go();
+            mgc.setLevels(mgc.loadLevelSet2());
+            mgc.reset();
+        }
+    };
+
+    static ActionListener advancedListener = new ActionListener(){
+        public void actionPerformed(ActionEvent e) {
+            //clear up the frame
+            frame.getContentPane().removeAll();
+            frame.revalidate();
+            frame.repaint();
+            go();
+            mgc.setLevels(mgc.loadLevelSet3());
+            mgc.reset();
+        }
+    };
 
 
 
     // the menu page
-    public static void menu() {
-	ActionListener resumeListener = new ActionListener(){
-		public void actionPerformed(ActionEvent e) {
-		    //clear up the frame
-		    frame.getContentPane().removeAll();
-		    frame.getContentPane().revalidate();
-		    frame.getContentPane().repaint();
-		    go();
-		    mgc.resume();
-		}
-	    };
-	ActionListener startListener = new ActionListener(){
-		public void actionPerformed(ActionEvent e) {
-		    //clear up the frame
-		    frame.getContentPane().removeAll();
-		    frame.getContentPane().revalidate();
-		    frame.getContentPane().repaint();
-		    go();
-		    mgc.reset();
-		}
-	    };
+    public static void setMenu() {
+        start.addActionListener(startListener);
+        resume.addActionListener(resumeListener);
+        highscore.addActionListener(highscoreListener);
+        binstruction.addActionListener(instructionListener);
+        beginner.addActionListener(beginnerListener);
+        intermediate.addActionListener(intermediateListener);
+        advanced.addActionListener(advancedListener);
+                // register events with the buttons
+        pause.addActionListener(pauseListener);
+        music.addActionListener(musicListener);
+        reset.addActionListener(resetListener);
+        menu.addActionListener(menuListener);
 
-	ActionListener beginnerListener = new ActionListener(){
-		public void actionPerformed(ActionEvent e) {
-		    //clear up the frame
-		    frame.getContentPane().removeAll();
-		    frame.getContentPane().revalidate();
-		    frame.getContentPane().repaint();
-		    go();
-		    mgc.setLevels(mgc.loadLevelSet1());
-		    mgc.reset();
-		}
-	    };
-
-	ActionListener intermediateListener = new ActionListener(){
-		public void actionPerformed(ActionEvent e) {
-		    //clear up the frame
-		    frame.getContentPane().removeAll();
-		    frame.getContentPane().revalidate();
-		    frame.getContentPane().repaint();
-		    go();
-		    mgc.setLevels(mgc.loadLevelSet2());
-		    mgc.reset();
-		}
-	    };	
-
-	ActionListener advancedListener = new ActionListener(){
-		public void actionPerformed(ActionEvent e) {
-		    //clear up the frame
-		    frame.getContentPane().removeAll();
-		    frame.getContentPane().revalidate();
-		    frame.getContentPane().repaint();
-		    go();
-		    mgc.setLevels(mgc.loadLevelSet3());
-		    mgc.reset();
-		}
-	    };
-	
-	frame.getContentPane().removeAll();
-	frame.getContentPane().revalidate();
-	frame.getContentPane().repaint();
-	start.addActionListener(startListener);
-	resume.addActionListener(resumeListener);
-	highscore.addActionListener(highscoreListener);
-	binstruction.addActionListener(instructionListener);
-	beginner.addActionListener(beginnerListener);
-	intermediate.addActionListener(intermediateListener);
-	advanced.addActionListener(advancedListener);
-	
-	
-	JPanel p = new JPanel();
-	p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-	
-	//change the font of the buttons
-	Font bigFont = new Font("serif", Font.BOLD, 60);
-	start.setFont(bigFont);
-	beginner.setFont(bigFont);
-	intermediate.setFont(bigFont);
-	advanced.setFont(bigFont);
-	resume.setFont(bigFont);
-	highscore.setFont(bigFont);
-	binstruction.setFont(bigFont);
-
-	//set the buttons
-	highscore.setAlignmentX(Component.CENTER_ALIGNMENT);
-	start.setAlignmentX(Component.CENTER_ALIGNMENT);
-	beginner.setAlignmentX(Component.CENTER_ALIGNMENT);
-	intermediate.setAlignmentX(Component.CENTER_ALIGNMENT);
-	advanced.setAlignmentX(Component.CENTER_ALIGNMENT);
-	resume.setAlignmentX(Component.CENTER_ALIGNMENT);
-	binstruction.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-	p.add(highscore);
-	p.add(Box.createVerticalGlue());
-	//p.add(start);
-	p.add(beginner);
-	p.add(intermediate);
-	p.add(advanced);
-	//p.add(resume);
-	p.add(Box.createVerticalGlue());
-	p.add(binstruction);
-
-	p.setBackground(new Color(70,130,180));
-	frame.getContentPane().add(p);
     }
-	
 
+    public static void displayMenu() {
+        frame.getContentPane().removeAll();
+        frame.getContentPane().revalidate();
+        frame.getContentPane().repaint();
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+
+        //change the font of the buttons
+        Font bigFont = new Font("serif", Font.BOLD, 60);
+        start.setFont(bigFont);
+        beginner.setFont(bigFont);
+        intermediate.setFont(bigFont);
+        advanced.setFont(bigFont);
+        resume.setFont(bigFont);
+        highscore.setFont(bigFont);
+        binstruction.setFont(bigFont);
+
+        //set the buttons
+        highscore.setAlignmentX(Component.CENTER_ALIGNMENT);
+        start.setAlignmentX(Component.CENTER_ALIGNMENT);
+        beginner.setAlignmentX(Component.CENTER_ALIGNMENT);
+        intermediate.setAlignmentX(Component.CENTER_ALIGNMENT);
+        advanced.setAlignmentX(Component.CENTER_ALIGNMENT);
+        resume.setAlignmentX(Component.CENTER_ALIGNMENT);
+        binstruction.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        p.add(highscore);
+        p.add(Box.createVerticalGlue());
+        //p.add(start);
+        p.add(beginner);
+        p.add(intermediate);
+        p.add(advanced);
+        //p.add(resume);
+        p.add(Box.createVerticalGlue());
+        p.add(binstruction);
+
+        p.setBackground(new Color(70,130,180));
+        frame.getContentPane().add(p);
+    }
+
+
+    static ActionListener pauseListener = new ActionListener(){
+        public void actionPerformed(ActionEvent e){
+            mgc.pauseB();
+        }
+    };
+
+    static ActionListener musicListener = new ActionListener(){
+        public void actionPerformed(ActionEvent e){
+            if (e.getActionCommand() == "Music On"){
+                mgc.stopMusic();
+                music.setText("Music Off");
+            }
+            else{
+                mgc.playMusic();
+                music.setText("Music On");
+            }
+        }
+    };
+
+
+    static ActionListener resetListener = new ActionListener(){
+        public void actionPerformed(ActionEvent e){
+            mgc.pauseTimer();
+            JOptionPane popup = new JOptionPane("Warning!");
+            Object[] options= {"Start Over","Cancel"};
+
+            int selection=popup.showOptionDialog(
+                    null,
+                    "Do you want to restart this level?\nYou will lose all of your points!",
+                    "Warning!",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE, null,
+                    options, options[0]);
+
+            if(selection == JOptionPane.YES_OPTION){
+                mgc.reset();
+            }
+            else
+                mgc.resume();
+        }
+    };
+
+
+    static ActionListener menuListener = new ActionListener(){
+        public void actionPerformed(ActionEvent e){
+            mgc.pauseTimer();
+            displayMenu();
+        }
+    };
 
     // the actual game
     public static void go(){
+        frame.setLocation((int)(screenSize.getWidth()/2 - frame.getSize().getWidth()/2), (int)(screenSize.getHeight()/2 - frame.getSize().getHeight()/2));
 
-	frame.setLocation((int)(screenSize.getWidth()/2 - frame.getSize().getWidth()/2), (int)(screenSize.getHeight()/2 - frame.getSize().getHeight()/2));
-	
-	ActionListener pauseListener = new ActionListener(){
-		public void actionPerformed(ActionEvent e){
-		    mgc.pauseB();
-		}
-	};
-	
-	ActionListener musicListener = new ActionListener(){
-		public void actionPerformed(ActionEvent e){
-		    if (e.getActionCommand() == "Music On"){
-			mgc.stopMusic();
-			music.setText("Music Off");
-		    }
-		    else{
-		        mgc.playMusic();
-			music.setText("Music On");
-		    }
-		}
-	    };
-	
-	
-	ActionListener resetListener = new ActionListener(){
-		public void actionPerformed(ActionEvent e){
-		    mgc.pauseTimer();
-		    JOptionPane popup = new JOptionPane("Warning!");
-	            Object[] options= {"Start Over","Cancel"};
-		    
-	            int selection=popup.showOptionDialog(
-							 null,
-							 "Do you want to restart this level?\nYou will lose all of your points!",
-							 "Warning!",
-							 JOptionPane.YES_NO_OPTION,
-							 JOptionPane.WARNING_MESSAGE, null,
-							 options, options[0]);
-		    
-        	    if(selection == JOptionPane.YES_OPTION){
-			mgc.reset();
-		    }
-		    else
-			mgc.resume();
-		}
-	    };
 
-	ActionListener menuListener = new ActionListener(){
-		public void actionPerformed(ActionEvent e){
-		    mgc.pauseTimer();
-		    menu();
-		}
-	    };
 
-	// register events with the buttons
-	pause.addActionListener(pauseListener);
-	music.addActionListener(musicListener);
-	reset.addActionListener(resetListener);
-	menu.addActionListener(menuListener);
+        // the game
+        frame.getContentPane().add(mgcView);
+        JPanel p = new JPanel(new BorderLayout());
+        p.add(BorderLayout.WEST,label);
 
-	// the game
-	frame.getContentPane().add(mgcView);
-	JPanel p = new JPanel(new BorderLayout());
-	p.add(BorderLayout.WEST,label);
+        // buttons on the bottom
+        JPanel p2 = new JPanel(new BorderLayout());
+        p.add(BorderLayout.EAST,p2);
+        p2.add(BorderLayout.WEST,pause);
+        p2.add(BorderLayout.CENTER,music);
+        p2.add(BorderLayout.EAST, reset);
 
-	// buttons on the bottom
-	JPanel p2 = new JPanel(new BorderLayout());
-	p.add(BorderLayout.EAST,p2);
-	p2.add(BorderLayout.WEST,pause);
-	p2.add(BorderLayout.CENTER,music);
-	p2.add(BorderLayout.EAST, reset);
-	
-	frame.getContentPane().add(BorderLayout.SOUTH,p);
+        frame.getContentPane().add(BorderLayout.SOUTH,p);
 
-	// information on the top
-	JPanel scorePanel = new JPanel(new BorderLayout());
-	scorePanel.add(BorderLayout.WEST, score);
-	scorePanel.add(BorderLayout.CENTER, level);
-	frame.pack();
+        // information on the top
+        JPanel scorePanel = new JPanel(new BorderLayout());
+        scorePanel.add(BorderLayout.WEST, score);
+        scorePanel.add(BorderLayout.CENTER, level);
+        frame.pack();
 
-	// menu button on the upper right
-	JPanel sp2 = new JPanel(new BorderLayout());
-	sp2.add(menu);
-	scorePanel.add(BorderLayout.EAST,sp2);
-	
-	frame.getContentPane().add(BorderLayout.NORTH,scorePanel);
-	
-	mgc.setMainFrame(frame);
-	mgc.setLabel(label);
-	mgc.setPauseButton(pause);
-	mgc.setMusicButton(music);
-	mgc.setScoreLabel(score);
-	mgc.setLevelLabel(level);
-	mgc.setHighScoreBoard(highscoreBoard);
-	//mgc.resume();
-	// to make sure that grids go left to right
-	frame.applyComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-	frame.setSize(WINDOW_SIZE, WINDOW_SIZE);
-        
-	frame.setVisible(true);
+        // menu button on the upper right
+        JPanel sp2 = new JPanel(new BorderLayout());
+        sp2.add(menu);
+        scorePanel.add(BorderLayout.EAST,sp2);
+
+        frame.getContentPane().add(BorderLayout.NORTH,scorePanel);
+
+        mgc.setMainFrame(frame);
+        mgc.setLabel(label);
+        mgc.setPauseButton(pause);
+        mgc.setMusicButton(music);
+        mgc.setScoreLabel(score);
+        mgc.setLevelLabel(level);
+        mgc.setHighScoreBoard(highscoreBoard);
+        //mgc.resume();
+        // to make sure that grids go left to right
+        frame.applyComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        frame.setSize(WINDOW_SIZE, WINDOW_SIZE);
+
+        frame.setVisible(true);
     }
-    
+
     /**
      *Adds instruction to the screen
      */
     public static void addInstruction(){
-	    File file = new File("instructions.txt");
-	    //JTextArea instructionTextArea = new JTextArea();
-	    try {
-	        BufferedReader br = new BufferedReader(
-						        new InputStreamReader(
-                                new FileInputStream(file)));
-	        String line;
-	        while((line = br.readLine()) != null){
-		        text.append(line + "\n");
-	        }
-	        br.close();
-	    } catch	(IOException e) {
+        File file = new File("instructions.txt");
+        //JTextArea instructionTextArea = new JTextArea();
+        try {
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(
+                            new FileInputStream(file)));
+            String line;
+            while((line = br.readLine()) != null){
+                text.append(line + "\n");
+            }
+            br.close();
+        } catch	(IOException e) {
             e.printStackTrace();
         }
     }
     public static JTextArea getInstructions(){
-	    File file = new File("instructions.txt");
-	    JTextArea instructionTextArea = new JTextArea();
-	    try {
-	        BufferedReader br = new BufferedReader(
-						        new InputStreamReader(
-                                new FileInputStream(file)));
-	        String line;
-	        while((line = br.readLine()) != null){
-		        instructionTextArea.append(line + "\n");
-	        }
-	        br.close();
-	        instructionTextArea.setCaretPosition(0);
-	    } catch	(IOException e) {
-		e.printStackTrace();
-	    }
-	    return instructionTextArea;
+        File file = new File("instructions.txt");
+        JTextArea instructionTextArea = new JTextArea();
+        try {
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(
+                            new FileInputStream(file)));
+            String line;
+            while((line = br.readLine()) != null){
+                instructionTextArea.append(line + "\n");
+            }
+            br.close();
+            instructionTextArea.setCaretPosition(0);
+        } catch	(IOException e) {
+            e.printStackTrace();
+        }
+        return instructionTextArea;
     }
 
     public static void loadGame(){
@@ -422,7 +426,8 @@ JTextArea textArea = highscoreBoard.getBoard();
         instruction.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(WINDOW_SIZE, WINDOW_SIZE);
         // go to the menu
-        menu();
+        setMenu();
+        displayMenu();
 
         // set the window to the middle of the screen
         frame.setLocation((int)(screenSize.getWidth()/2 - frame.getSize().getWidth()/2), (int)(screenSize.getHeight()/2 - frame.getSize().getHeight()/2));

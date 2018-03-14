@@ -107,21 +107,21 @@ public class MemoryGameComponentView extends JComponent {
      * Play sound effect after flipping
      */
     public void playFlipSound() {
-        playSound("./resource/wall_pickup_01.wav", true);
+        playSound("./src/main/resources/wall_pickup_01.wav", true);
     }
 
     /**
      * Play sound effect if two cards matched
      */
     public void playMatchSound() {
-        playSound("./resource/training_finished_03.wav", true);
+        playSound("./src/main/resources/training_finished_03.wav", true);
     }
 
     /**
      * Play sound effect after winning the game
      */
     public void playWinSound() {
-        playSound("./resource/Final Fantasy VII - Victory.wav", true);
+        playSound("./src/main/resources/Final Fantasy VII - Victory.wav", true);
     }
 
     //AudioPlayer MGP = AudioPlayer.player;
@@ -132,7 +132,7 @@ public class MemoryGameComponentView extends JComponent {
      * Play background music
      */
     public void playMusic() {
-        playSound("./resource/Hiromi Haneda.wav", true);
+        playSound("./src/main/resources/Hiromi Haneda.wav", true);
     }
 
     /**
@@ -140,7 +140,7 @@ public class MemoryGameComponentView extends JComponent {
      */
     public void stopMusic() {
         //AudioPlayer.player.stop(BGM);
-        playSound("./resource/Hiromi Haneda.wav", false);
+        playSound("./src/main/resources/Hiromi Haneda.wav", false);
     }
 
     /**
