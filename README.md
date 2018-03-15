@@ -20,7 +20,7 @@ to enter their name into the leaderboard.
 
 Instructions
 ============
-Launch the game on terminal with
+## Launch the game on terminal with
 ```
 ant run
 ```
@@ -36,7 +36,7 @@ Gives the user detailed instructions on how to play the game.
 ### 3. High Score
 Lets the user view the current leaderboard, with the names and scores of the best players.
 
-Using Jacoco Testing via Maven by tying on terminal with
+## Using Jacoco Testing via Maven by tying on terminal with
 ```
 mvn package
 ```
@@ -70,16 +70,17 @@ It can change the data and view.
 
 project history
 ===============
-```
-In W18, Shihua Lu and Annan Zhang worked on refactoring the code with the concept of "MVC".
-Since then, the code of this project is divided into three classes: Model, View and Controller.
-It would help later students to modify code easily by figuring out which part to work on first.
-Description of different parts of MVC is in "Developer Notes" above.
-```
+## Yun Suk Chang worked on this in S13.  There were other authors before him.
 
-Yun Suk Chang worked on this in S13.  There were other authors before him.
-Xiaohe he and Shaoyi Zhang worked on this in W16.
-Annan Zhang and Shihua Lu worked on this in W18.
+## Xiaohe he and Shaoyi Zhang worked on this in W16.
+
+## Annan Zhang and Shihua Lu worked on this in W18.
+  - Refactor code into MVC
+  - Replace sun.audio.* with javax.sound.sampled.* as sun.audio is deprecated
+  - Add support to maven with test coverage
+  - Fix the issue that multiple dialogs appear when user hits menu->reset
+  - Fix the bug that instruction starts from the botttom instead of the top
+
 
 # W16 Final Remarks:
 We don't think this is a good project for students at any level of proficiency with Java.
