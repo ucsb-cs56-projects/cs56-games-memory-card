@@ -79,6 +79,18 @@ project history
   - Fix the issue that multiple dialogs appear when user hits menu->reset
   - Fix the bug that instruction starts from the botttom instead of the top
 
+# W18 Final Remarks:
+We have refactored the code into MVC pattern, which we believe will help future students locate issues.
+Students should have a firm knowledge of MVC pattern so that they may find the structure of the code clear.
+We tried to fix the bugs that are related to javax.swing.timer. However, it turned out that these bugs can be hard to fix.
+Therefore, we suggest that students who want to start from easy issues should avoid working on these bugs first.
+We also suggest future students consider making some fundamental changes to the game such as adding more features.
+
+We believe that it is a good idea for future students to add more test cases to the project because when we took over this project, there were barely any junit tests. 
+We have added some tests to the project but they are still far from full coverage.
+
+Overall, this is a pretty interesting project and I hope future students will enjoy working on it.
+
 
 # W16 Final Remarks:
 We don't think this is a good project for students at any level of proficiency with Java.
@@ -112,7 +124,3 @@ The timer is one of the more tricky things to work with in this project, and thu
 into its own class entirely.
 
 Refactoring would allow you to more easily fix issues #14, #15, and #16.
-
-# W18 Final Remarks:
-
-
