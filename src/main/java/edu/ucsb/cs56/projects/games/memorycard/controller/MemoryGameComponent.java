@@ -49,9 +49,6 @@ public class MemoryGameComponent {
         }
     }
 
-    public void playSound(String filepath, boolean music_status) {
-        MGCview.playSound(filepath,music_status);
-    }
 
 
     /**

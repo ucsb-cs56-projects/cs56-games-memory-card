@@ -38,7 +38,10 @@ public class MemoryGameComponentView extends JComponent {
     private JLabel textLabel = new JLabel("ENTER YOUR NAME: ");//for inputing name for high score board
     private JFrame mainFrame = null;
     private HighScoreBoard board = null;
-    private Clip clip;
+    private Clip flipClip;
+    private Clip matchClip;
+    private Clip winClip;
+    private Clip backgroundClip;
     private boolean firstImageFlipped = false;
     private MemoryGameComponent MGCcontroller;
 
@@ -81,47 +84,53 @@ public class MemoryGameComponentView extends JComponent {
         return (selection == JOptionPane.YES_OPTION);
     }
 
-    /**
-     * Play sound from a WAV filepath
-     * This is a helper method
-     */
-    public void playSound(String filepath, boolean music_status) {
-        try {
-            if (music_status == true) {
-                clip = AudioSystem.getClip();
-                File test = new File(filepath);
-                AudioInputStream audio = AudioSystem.getAudioInputStream(test);
-                clip.open(audio);
-                clip.start();
-            }
-            if (music_status == false) {
-                clip.stop();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * Play sound effect after flipping
      */
     public void playFlipSound() {
-        playSound("./src/main/resources/wall_pickup_01.wav", true);
+        try {
+            flipClip = AudioSystem.getClip();
+            File test = new File("./src/main/resources/wall_pickup_01.wav");
+            AudioInputStream audio = AudioSystem.getAudioInputStream(test);
+            flipClip.open(audio);
+            flipClip.start();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * Play sound effect if two cards matched
      */
     public void playMatchSound() {
-        playSound("./src/main/resources/training_finished_03.wav", true);
+        try {
+            matchClip = AudioSystem.getClip();
+            File test = new File("./src/main/resources/training_finished_03.wav");
+            AudioInputStream audio = AudioSystem.getAudioInputStream(test);
+            matchClip.open(audio);
+            matchClip.start();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * Play sound effect after winning the game
      */
     public void playWinSound() {
-        playSound("./src/main/resources/Final Fantasy VII - Victory.wav", true);
+        try {
+            winClip = AudioSystem.getClip();
+            File test = new File("./src/main/resources/Final Fantasy VII - Victory.wav");
+            AudioInputStream audio = AudioSystem.getAudioInputStream(test);
+            winClip.open(audio);
+            winClip.start();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //AudioPlayer MGP = AudioPlayer.player;
@@ -131,16 +140,33 @@ public class MemoryGameComponentView extends JComponent {
     /**
      * Play background music
      */
-    public void playMusic() {
-        playSound("./src/main/resources/Hiromi Haneda.wav", true);
+    public void playMusic(boolean music_status) {
+        try {
+            if (music_status == true){
+                backgroundClip = AudioSystem.getClip();
+                File test = new File("./src/main/resources/Hiromi Haneda.wav");
+                AudioInputStream audio = AudioSystem.getAudioInputStream(test);
+                backgroundClip.open(audio);
+                backgroundClip.start();
+            }
+            else if (music_status == false){
+                backgroundClip.stop();
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void playMusic(){
+        playMusic(true);
     }
 
     /**
      * Stop background music
      */
     public void stopMusic() {
-        //AudioPlayer.player.stop(BGM);
-        playSound("./src/main/resources/Hiromi Haneda.wav", false);
+        playMusic(false);
     }
 
     /**
