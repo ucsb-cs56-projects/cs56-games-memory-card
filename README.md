@@ -46,7 +46,7 @@ Then, go to the "target/site/jacoco" directory and open "index.html". You will s
 
 Javadoc Link
 ===============
--https://ucsb-cs56-projects.github.io/cs56-games-memory-card/javadoc/
+- https://ucsb-cs56-projects.github.io/cs56-games-memory-card/javadoc/
 
 
 Developer Notes
