@@ -70,11 +70,9 @@ It can change the data and view.
 
 project history
 ===============
-## Yun Suk Chang worked on this in S13.  There were other authors before him.
-
-## Xiaohe he and Shaoyi Zhang worked on this in W16.
-
-## Annan Zhang and Shihua Lu worked on this in W18.
+### Yun Suk Chang worked on this in S13.  There were other authors before him.
+### Xiaohe he and Shaoyi Zhang worked on this in W16.
+### Annan Zhang and Shihua Lu worked on this in W18.
   - Refactor code into MVC
   - Replace sun.audio.* with javax.sound.sampled.* as sun.audio is deprecated
   - Add support to maven with test coverage
