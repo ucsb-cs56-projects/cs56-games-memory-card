@@ -88,6 +88,7 @@ We have refactored the code into MVC pattern, which we believe will help future 
 Students should have a firm knowledge of MVC pattern so that they may find the structure of the code clear.
 We tried to fix the bugs that are related to javax.swing.timer. However, it turned out that these bugs can be hard to fix.
 Therefore, we suggest that students who want to start from easy issues should avoid working on these bugs first.
+It may be a good start to merge all model classes, view classes, and controller classes into one model, one view, and one controller.
 We also suggest future students consider making some fundamental changes to the game such as adding more features.
 
 We believe that it is a good idea for future students to add more test cases to the project because when we took over this project, there were barely any junit tests. 
