@@ -387,7 +387,7 @@ public class MemoryCardGameView {
      *Adds instruction to the screen
      */
     public static void addInstruction(){
-        File file = new File("instructions.txt");
+        File file = new File("./src/main/resources/instructions.txt");
         //JTextArea instructionTextArea = new JTextArea();
         try {
             BufferedReader br = new BufferedReader(
@@ -403,7 +403,7 @@ public class MemoryCardGameView {
         }
     }
     public static JTextArea getInstructions(){
-        File file = new File("instructions.txt");
+        File file = new File("./src/main/resources/instructions.txt");
         JTextArea instructionTextArea = new JTextArea();
         try {
             BufferedReader br = new BufferedReader(

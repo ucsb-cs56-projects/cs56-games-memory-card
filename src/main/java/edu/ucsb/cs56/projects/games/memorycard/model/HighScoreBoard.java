@@ -19,7 +19,7 @@ public class HighScoreBoard{
 
 	}
 	private void getHighScores(){
-		File file = new File("highscores.txt");
+		File file = new File("./src/main/resources/highscores.txt");
 //		revalidate();
 //		repaint();
 		try{
@@ -75,7 +75,7 @@ public class HighScoreBoard{
 		update();
 	}
 	private void update(){
-		File file = new File("highscores.txt");
+		File file = new File("./src/main/resources/highscores.txt");
 		try{
 			BufferedWriter writer = new BufferedWriter(
 						new FileWriter(file));
