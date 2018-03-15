@@ -44,6 +44,10 @@ mvn package
 Then, go to the "target/site/jacoco" directory and open "index.html". You will see the test coverage.
 
 
+Javadoc Link
+===============
+-https://ucsb-cs56-projects.github.io/cs56-games-memory-card/javadoc/
+
 
 Developer Notes
 ===============
@@ -80,7 +84,7 @@ project history
   - Fix the bug that instruction starts from the botttom instead of the top
 
 # W18 Final Remarks:
-We have refactored the code into MVC pattern, which we believe will help future students locate issues.
+We have refactored the code into MVC pattern, which we believe will help future students locate different issues.
 Students should have a firm knowledge of MVC pattern so that they may find the structure of the code clear.
 We tried to fix the bugs that are related to javax.swing.timer. However, it turned out that these bugs can be hard to fix.
 Therefore, we suggest that students who want to start from easy issues should avoid working on these bugs first.
