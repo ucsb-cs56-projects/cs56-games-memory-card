@@ -113,11 +113,6 @@ public class MemoryCardGameTest {
         assertEquals(t1.isOver(), true);
     }
 
-    @Test
-    public void testgetView(){
-        MemoryGrid t1 = new MemoryGrid(16);
-        MemoryGameComponent t2 = new MemoryGameComponent(t1);
-        t2.MGCview.getView() = 10;
-        assertEquals(t2.MGCview.getView(),10);
-    }
+	
+
 }
