@@ -20,8 +20,7 @@ to enter their name into the leaderboard.
 
 Instructions
 ============
-
-Launch the game on terminal with
+## Launch the game on terminal with
 ```
 ant run
 ```
@@ -37,40 +36,66 @@ Gives the user detailed instructions on how to play the game.
 ### 3. High Score
 Lets the user view the current leaderboard, with the names and scores of the best players.
 
+## Using Jacoco Testing via Maven by tying on terminal with
+```
+mvn package
+```
+
+Then, go to the "target/site/jacoco" directory and open "index.html". You will see the test coverage.
+
+
+Javadoc Link
+===============
+- https://ucsb-cs56-projects.github.io/cs56-games-memory-card/javadoc/
+
+
 Developer Notes
 ===============
 
-### HighScoreBoard.java
-Creates the highscore board and the information that goes on the board
+### Model
+In Model directory, you will find all the java files that are related to data. 
+According to the concept of "MVC", model only deals with data.
+It stores all kinds of data for all the classes.
+It will not change the view or change the data itself.
 
-### MemoryGameComponent.java
-A Swing component for playing the Memory Card Game
+### View
+In View directory, you will find all the java files that are related to GUI.
+According to the concept of "MVC", view only present game structures to players.
+All the classes in View are about changing the outlook.
+It will not change the data itself.
 
-### MemoryGameLevel.java
-Has the constructor to fully initialize the level, such as target time, grid size, and delay time before two cards flip back over
+### Controller
+In Controller directory, you will find all the java files that call classes in View or Model.
+Since View cannot change Model and vice versa, we need use Controller to help call the classes.
+Controller acts like a brige that communicates with two sides, View and Model.
+It can change the data and view.
 
-### MemoryGrid.java
-makes the grid (arraylist of MemoryCards) for the game
 
-### MemoryCard.java
-makes objects for cards
-
-### MemoryGameGui.java
-GUI for the game, and has the main class
-
-### MemoryGameTest.java
-tests the MemoryGame class
 
 project history
 ===============
-```
- N/A
-```
+### Yun Suk Chang worked on this in S13.  There were other authors before him.
+### Xiaohe he and Shaoyi Zhang worked on this in W16.
+### Annan Zhang and Shihua Lu worked on this in W18.
+  - Refactor code into MVC
+  - Replace sun.audio.* with javax.sound.sampled.* as sun.audio is deprecated
+  - Add support to maven with test coverage
+  - Fix the issue that multiple dialogs appear when user hits menu->reset
+  - Fix the bug that instruction starts from the botttom instead of the top
 
-Yun Suk Chang worked on this in S13.  There were other authors before him.
-Xiaohe he and Shaoyi Zhang worked on this in W16.
+# W18 Final Remarks:
+We have refactored the code into MVC pattern, which we believe will help future students locate different issues.
+Students should have a firm knowledge of MVC pattern so that they may find the structure of the code clear.
+We tried to fix the bugs that are related to javax.swing.timer. However, it turned out that these bugs can be hard to fix.
+Therefore, we suggest that students who want to start from easy issues should avoid working on these bugs first.
+It may be a good start to merge all model classes, view classes, and controller classes into one model, one view, and one controller.
+We also suggest future students consider making some fundamental changes to the game such as adding more features.
 
-Several others have worked on it since then.
+We believe that it is a good idea for future students to add more test cases to the project because when we took over this project, there were barely any junit tests. 
+We have added some tests to the project but they are still far from full coverage.
+
+Overall, this is a pretty interesting project and I hope future students will enjoy working on it.
+
 
 # W16 Final Remarks:
 We don't think this is a good project for students at any level of proficiency with Java.
@@ -87,7 +112,6 @@ We recomend you to start early and work on the issues created by Professor Conra
 You will learn a lot from those issues. We didn't work on those good issues because we are distract by those "shrinking" issues.
 
 # F16 Final Remarks:
-
 We highly recommend that the next people who take on this project start by refactoring the code.
 Although the code's structure isn't absolutely terrible, it could be improved drastically.
 We think that it might be better if the overall structure of the project followed the
@@ -105,4 +129,3 @@ The timer is one of the more tricky things to work with in this project, and thu
 into its own class entirely.
 
 Refactoring would allow you to more easily fix issues #14, #15, and #16.
-
